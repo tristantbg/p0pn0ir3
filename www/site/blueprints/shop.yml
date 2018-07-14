@@ -1,7 +1,7 @@
-title: Events
+title: Shop
 pages:
   template:
-    - event
+    - shop.category
   num:
     mode: default
     display: null
@@ -14,6 +14,3 @@ fields:
   title:
     label: Title
     type: title
-  archivesText:
-    label: Archives
-    type: textarea

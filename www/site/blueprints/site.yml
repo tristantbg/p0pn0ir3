@@ -1,10 +1,5 @@
 title: Site
-pages:
-  template:
-    - default
-    - radio
-    - events
-    - journal
+pages: true
 fields:
   generalSettings:
     label: Site Settings

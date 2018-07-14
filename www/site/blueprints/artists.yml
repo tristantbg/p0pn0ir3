@@ -1,0 +1,23 @@
+title: Artists
+pages:
+  template:
+    - artist
+  num:
+    mode: default
+    display: null
+  max: null
+  limit: 20
+  sort: false
+  hide: false
+files: false
+fields:
+  title:
+    label: Title
+    type: title
+  pageindex:
+    label: Artists
+    type: index
+    options: children
+    columns:
+      title: Title
+      uid: Slug

@@ -1,0 +1,14 @@
+title: Category
+pages: shop.product
+files: false
+fields:
+  title:
+    label: Title
+    type: title
+  pageindex:
+    label: Products
+    type: index
+    options: children
+    columns:
+      title: Title
+      uid: Slug
