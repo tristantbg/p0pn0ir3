@@ -1,0 +1,47 @@
+#page-content[page-type=projects]
+	margin-top calc(20vh + (1.6rem + 2px))
+
+#projects-grid
+	span(1)
+	padding $padding
+	padding-bottom 0
+	.project-item
+		display block
+		float left
+		position relative
+		width 'calc((100% - %s)/3)' % ($padding*2)
+		margin-bottom $padding
+		+above($md + 1)
+			&:not(:nth-child(3n))
+				margin-right $padding
+		+below($md)
+			width 'calc((100% - %s)/2)' % ($padding)
+			&:not(:nth-child(2n))
+				margin-right $padding
+		+below($sm)
+			width 100%
+		&.format-png, &.format-gif
+			.responsive-image
+				background alpha($secondary, 0.05)
+			img
+				mix-blend-mode darken
+	.project-item--infos
+		display flex
+		justify-content space-between
+		div:first-child
+			padding-right $padding
+		+above($md + 1)
+			position absolute
+			top 0
+			left 0
+			width 100%
+			height 100%
+			padding 0.7rem
+			color $primary
+			background $secondary
+			z-index 1
+			&:not(:hover)
+				opacity 0
+		+below($sm)
+			margin-top .3em
+

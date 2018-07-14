@@ -1,0 +1,37 @@
+title: Journal
+pages: false
+files:
+  sortable: false
+  max: null
+  hide: false
+  sanitize: true
+  fields: null
+  size: null
+  width: null
+  height: null
+  fields:
+    caption:
+      label: Caption
+      type: textarea
+    embedUrl:
+      label: Embed URL
+      type: url
+    pageLink:
+      label: Page link
+      type: quickselect
+      options: query
+      query:
+        page: /
+        fetch: pages
+        text: '{{title}} ({{uri}})'
+        value: '{{uri}}'
+    externalUrl:
+      label: External URL
+      type: url
+fields:
+  title:
+    label: Title
+    type: title
+  medias:
+    label: Medias
+    type: images

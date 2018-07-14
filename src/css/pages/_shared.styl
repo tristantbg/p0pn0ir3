@@ -1,0 +1,56 @@
+.infos--title
+	padding 0 0 0.6em
+	box-shadow 1px 0 $primary, -1px 0 $primary, 0 1px
+	display flex
+	justify-content space-between
+	div:first-child
+		flex-grow 1
+
+.infos--display
+	padding-top 0.6em
+
+.infos-display--level[data-level="0"]
+	& > .infos--title
+		[event-target=less], [event-target=close]
+			display none
+		[event-target=more]
+			display block
+			animation blink 2s linear infinite
+	& > .infos--display
+		.infos--level-1, .infos--level-2, [event-target=less], [event-target=close]
+			display none
+
+.infos-display--level[data-level="1"]
+	[event-target=more], [event-target=close]
+		display none
+	&.has-more
+		& > .infos--title
+			[event-target=more]
+				display block
+				animation blink 2s linear infinite
+	& > .infos--display
+		.infos--level-2, [event-target=close]
+			display none
+
+.infos-display--level[data-level="2"]
+	& > .infos--title
+		[event-target=more]
+			display none
+
+[event-target=more]
+	cursor pointer
+	position relative
+	width 1.6rem
+	plus()
+
+[event-target=less]
+	cursor pointer
+	position relative
+	width 1.6rem
+	minus()
+
+[event-target=close]
+	cursor pointer
+	position relative
+	width 1.6rem
+	cross()

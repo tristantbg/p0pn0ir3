@@ -1,0 +1,43 @@
+webfont('NH', 'NHaasGroteskTXPro55Rg')
+
+text()
+	font-family 'NH', Helvetica Neue, Arial, sans-serif
+
+small()
+	line-height 1.2
+	+above($md + 1)
+		font-size 0.7rem
+
+// Main font styles
+
+::selection
+	background alpha($secondary, 0.5)
+
+::-moz-selection
+	background alpha($secondary, 0.5)
+
+body,html
+	-webkit-text-size-adjust 100%
+
+html
+	font-size 1vw
+	+below($md)
+		font-size 12px
+
+body
+	text()
+	font-size 1rem
+	line-height 1
+	// text-rendering optimizeLegibility
+	font-smoothing()
+
+p
+	line-height inherit
+	&:not(:last-child)
+		margin-bottom 1em
+
+.uppercase
+	text-transform uppercase
+
+.text-center
+	text-align center

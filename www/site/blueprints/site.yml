@@ -1,0 +1,62 @@
+title: Site
+pages:
+  template:
+    - default
+    - radio
+    - events
+    - journal
+fields:
+  generalSettings:
+    label: Site Settings
+    type: headline
+  title:
+    label: Title
+    type:  text
+  description:
+    label: Description
+    type:  textarea
+  keywords:
+    label: Keywords
+    type:  tags
+  customcss:
+    label: Custom CSS
+    type: textarea
+    buttons: false
+  googleAnalytics:
+    label: Google Analytics ID
+    type: text
+    icon: code
+    help: Tracking ID in the form UA-XXXXXXXX-X. Keep this field empty if you are not using it.
+    width: 1/2
+  ogimage:
+    label: Facebook OpenGraph image
+    type: image
+    help: 1200x630px minimum
+    width: 1/2
+  introSettings:
+    label: Intro Settings
+    type: headline
+  introTitle:
+    label: Intro title
+    type: tags
+    separator: ,
+  introImage:
+    label: Intro image
+    type: image
+  introDescription:
+    label: Intro description
+    type: text
+  introExternalLink:
+    label: Intro external link
+    type: url
+    width: 1/2
+  introPagelink:
+    label: Intro pagelink
+    type: quickselect
+    options: query
+    width: 1/2
+    query:
+      page: /
+      fetch: pages
+      text: '{{title}} ({{uri}})'
+      value: '{{uri}}'

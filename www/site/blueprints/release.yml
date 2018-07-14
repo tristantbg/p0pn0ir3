@@ -1,0 +1,116 @@
+title: Release
+pages: false
+files:
+  sortable: false
+  max: null
+  hide: false
+  sanitize: true
+  fields: null
+  size: null
+  width: null
+  height: null
+fields:
+  prevnext: prevnext
+  title:
+    label: Title
+    type: title
+    width: 3/4
+  featured:
+    label: Featured
+    type: image
+    width: 1/4
+  artist:
+    label: Artist
+    type: text
+    width: 2/4
+  date:
+    label: Release date
+    type: date
+    format: DD/MM/YYYY
+    width: 1/4
+  catalogueNumber:
+    label: Cat. number
+    type: text
+    width: 1/4
+  medias:
+    label: Additional images
+    type: images
+  text:
+    label: Description
+    type: textarea
+  tracklist:
+    label: Tracklist
+    type: structure
+    style: table
+    width: 1/2
+    fields:
+      title:
+        label: Title
+        type: text
+        required: true
+      audioLink:
+        label: URL
+        type: url
+      audioFile:
+        label: File
+        type: quickselect
+        options: audio
+  # playlistLink:
+  #   label: Tracklist
+  #   type: url
+  #   help: Soundcloud URL
+  #   width: 1/2
+  buy:
+    label: Buy
+    type: structure
+    style: table
+    width: 1/2
+    fields: 
+      title: 
+        label: Title
+        type: text
+      url: 
+        label: URL
+        type: url
+    default:
+      -
+        title: Vinyl
+        url: 
+      -
+        title: Digital
+        url: 
+  composer:
+    label: Composer
+    type: textarea
+    width: 1/2
+  format:
+    label: Format
+    type: textarea
+    width: 1/2
+  mastering:
+    label: Mastering
+    type: textarea
+    width: 1/2
+  distribution:
+    label: Distribution
+    type: textarea
+    width: 1/2
+  additionalText:
+    label: Additional infos
+    type: structure
+    style: table
+    fields: 
+      title: 
+        label: Title
+        type: text
+      text: 
+        label: Text
+        type: textarea
+  front:
+    label: Front cover
+    type: textarea
+    width: 1/2
+  back:
+    label: Back
+    type: textarea
+    width: 1/2

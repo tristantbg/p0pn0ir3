@@ -1,0 +1,19 @@
+title: Events
+pages:
+  template:
+    - event
+  num:
+    mode: default
+    display: null
+  max: null
+  limit: 20
+  sort: false
+  hide: false
+files: false
+fields:
+  title:
+    label: Title
+    type: title
+  archivesText:
+    label: Archives
+    type: textarea
