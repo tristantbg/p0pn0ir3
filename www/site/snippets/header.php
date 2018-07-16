@@ -68,7 +68,7 @@
 
 </head>
 
-<body page-type="<?= $page->intendedTemplate() ?>" data-filter="<?php e(param('type'), 'true', 'false') ?>" data-menu="<?= $menuPosition ?>">
+<body page-type="<?= $page->intendedTemplate() ?>">
 
 <div id="outdated">
 	<div class="inner">
@@ -87,4 +87,4 @@
 
 	<div id="container">
 
-		<div id="page-content" page-type="<?= $page->intendedTemplate() ?>" data-filter="<?php e(param('type'), 'true', 'false') ?>" data-menu="<?= $menuPosition ?>">
+		<div id="page-content" page-type="<?= $page->intendedTemplate() ?>">

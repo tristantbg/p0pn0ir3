@@ -13,6 +13,7 @@ import {
 } from 'gsap'
 import Barba from 'barba.js'
 
+
 const resizeWindow = () => {
   var event = document.createEvent('HTMLEvents');
   event.initEvent('resize', true, false);
@@ -253,128 +254,9 @@ const Pjax = {
       // if (App.linkClicked) App.linkClicked.classList.add('active')
 
       App.nextPageType = newContent.getAttribute('page-type')
-      App.menuPosition = newContent.getAttribute('data-menu')
-      App.filtering = newContent.getAttribute('data-filter')
 
-      if (true || App.isMobile || App.nextPageType == 'contact' || App.nextPageType == 'home') _this.newContainer.querySelector('#menu').classList.remove('visible')
-      if (true || App.isMobile) _this.oldContainer.querySelector('#menu').classList.remove('visible')
+      if (App.pageType == 'ok') {
 
-      if (App.pageType == 'about') {
-        if (App.nextPageType == 'projects') _this.newContainer.querySelector('#menu').classList.remove('visible')
-        new TimelineMax({
-          onComplete: () => {
-            _this.endTransition(_this, newContent)
-          }
-        }).to(_this.oldContainer.querySelector('#page-content'), 1.3, {
-          y: App.isMobile ? '100%' : App.height,
-          ease: Expo.easeInOut
-        }).to(_this.oldContainer.querySelector('#menu'), 0.2, {
-          classList: '-=visible'
-        }, '-=0.7').to(document.body, Pjax.titleTransition, {
-          attr: {
-            'page-type': App.nextPageType
-          }
-        }).to(document.body, 0, {
-          attr: {
-            'data-menu': App.menuPosition,
-          }
-        }, '-=0.1')
-      } else if (App.pageType == 'projects') {
-        if (App.nextPageType !== 'projects' && App.nextPageType !== 'project') {
-
-          _this.newContainer.querySelector('#menu').classList.remove('visible')
-          new TimelineMax({
-            onComplete: () => {
-              _this.endTransition(_this, newContent)
-            }
-          }).to(_this.oldContainer.querySelector('#page-content'), 0.3, {
-            y: 50,
-            force3D: true,
-            opacity: 0
-          }).to(_this.oldContainer.querySelector('#menu'), 0.2, {
-            classList: '-=visible'
-          }).to(document.body, Pjax.titleTransition, {
-            attr: {
-              'page-type': App.nextPageType,
-              'data-menu': App.menuPosition,
-            }
-          })
-
-        } else {
-          new TimelineMax({
-            onComplete: () => {
-              document.body.setAttribute('page-type', App.nextPageType)
-              document.body.setAttribute('data-menu', App.menuPosition)
-              setTimeout(function() {
-                _this.endTransition(_this, newContent)
-              }, Pjax.titleTransition * 1000)
-            }
-          }).to(_this.oldContainer.querySelector('#page-content'), 0.3, {
-            y: 50,
-            force3D: true,
-            opacity: 0
-          })
-
-        }
-      } else if (App.pageType == 'project' && App.nextPageType == 'projects' || App.pageType == 'project' && App.nextPageType == 'project') {
-        new TimelineMax({
-          onComplete: () => {
-            document.body.setAttribute('page-type', App.nextPageType)
-            document.body.setAttribute('data-menu', App.menuPosition)
-            setTimeout(function() {
-              _this.endTransition(_this, newContent)
-            }, Pjax.titleTransition * 1000)
-          }
-        }).to(_this.oldContainer.querySelector('#page-content'), 0.3, {
-          y: 50,
-          force3D: true,
-          opacity: 0
-        })
-      } else if (App.pageType == 'project') {
-        _this.newContainer.querySelector('#menu').classList.remove('visible')
-        new TimelineMax({
-          onComplete: () => {
-            document.body.setAttribute('page-type', App.nextPageType)
-            document.body.setAttribute('data-menu', App.menuPosition)
-            setTimeout(function() {
-              _this.endTransition(_this, newContent)
-            }, Pjax.titleTransition * 1000)
-          }
-        }).to(_this.oldContainer.querySelector('#page-content'), 0.3, {
-          y: 50,
-          force3D: true,
-          opacity: 0
-        }).to(_this.oldContainer.querySelector('#menu'), 0.2, {
-          classList: '-=visible'
-        })
-      } else if (App.pageType == 'contact') {
-        _this.newContainer.querySelector('#menu').classList.remove('visible')
-        new TimelineMax({
-          onComplete: () => {
-            _this.endTransition(_this, newContent)
-          }
-        }).to(_this.oldContainer.querySelector('#menu'), 0.2, {
-          classList: '-=visible'
-        }).to(document.body, Pjax.titleTransition, {
-          attr: {
-            'page-type': App.nextPageType,
-            'data-menu': App.menuPosition,
-          }
-        })
-      } else if (App.pageType == 'home') {
-        _this.newContainer.querySelector('#menu').classList.remove('visible')
-        new TimelineMax({
-          onComplete: () => {
-            _this.endTransition(_this, newContent)
-          }
-        }).to(_this.oldContainer.querySelector('#menu'), 0.2, {
-          classList: '-=visible'
-        }).to(document.body, Pjax.titleTransition, {
-          attr: {
-            'page-type': App.nextPageType,
-            'data-menu': App.menuPosition
-          }
-        })
       } else {
         document.body.setAttribute('page-type', App.nextPageType)
         document.body.setAttribute('data-menu', App.menuPosition)
@@ -385,71 +267,9 @@ const Pjax = {
     endTransition: function(_this, newContent) {
       window.scroll(0, 0)
       resizeWindow()
-      if (App.nextPageType == 'projects') {
-        TweenMax.set(_this.newContainer.querySelector('#page-content'), {
-          y: 50,
-          force3D: true,
-          opacity: 0
-        })
-        _this.finish(_this, newContent)
-        setTimeout(function() {
-          new TimelineMax({
-            onComplete: () => {
-              TweenMax.set(document.querySelector('#page-content'), {
-                clearProps: 'transform,opacity'
-              })
-            }
-          }).fromTo(_this.newContainer.querySelector('#page-content'), 0.3, {
-            y: 50,
-            opacity: 0
-          }, {
-            y: 0,
-            force3D: true,
-            opacity: 1
-          });
-        }, 500);
-      }
-      if (App.nextPageType == 'project') {
-        TweenMax.set(_this.newContainer.querySelector('#page-content'), {
-          y: 50,
-          opacity: 0
-        })
-        _this.finish(_this, newContent)
-        new TimelineMax({
-          onComplete: () => {
-            TweenMax.set(document.querySelector('#page-content'), {
-              clearProps: 'transform,opacity'
-            })
-          }
-        }).fromTo(_this.newContainer.querySelector('#page-content'), 0.3, {
-          y: 50,
-          opacity: 0
-        }, {
-          y: 0,
-          force3D: true,
-          opacity: 1
-        });
-      } else if (App.nextPageType == 'about') {
-
-        new TimelineMax({
-          onComplete: () => {
-            new TimelineMax({
-              onComplete: () => {
-                TweenMax.set(document.querySelector('#page-content'), {
-                  clearProps: 'transform,opacity'
-                })
-              }
-            }).fromTo(_this.newContainer.querySelector('#page-content'), 1.3, {
-              y: App.height
-            }, {
-              y: 0,
-              ease: Expo.easeInOut
-            });
-            _this.finish(_this, newContent)
-          }
-        }).to(_this.newContainer.querySelector('#menu'), 0.2, {
-          classList: '+=visible'
-        })
+      
+      if (App.nextPageType == 'ok') {
+        
       } else {
         _this.finish(_this, newContent)
       }
@@ -458,13 +278,11 @@ const Pjax = {
 
       _this.done()
       App.pageType = App.nextPageType
-      document.body.setAttribute('data-filter', App.filtering)
 
       App.sizeSet()
       App.interact.init()
       Sliders.init()
       document.body.classList.remove('is-loading')
-      App.menu.classList.add('visible')
 
       setTimeout(function() {
         TweenMax.set(document.querySelector('#page-content'), {
