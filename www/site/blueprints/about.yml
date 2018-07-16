@@ -6,8 +6,18 @@ fields:
     label: Title
     type:  text
   text:
-    label: Text
+    label: Description
     type:  textarea
-  contact:
-    label: Contact
-    type: textarea
+  socials:
+    label: Socials
+    type: structure
+    style: table
+    fields:
+      title:
+        label: Title
+        type: text
+        required: true
+      url:
+        label: URL
+        type: url
+        required: true

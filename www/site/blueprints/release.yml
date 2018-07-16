@@ -19,10 +19,6 @@ fields:
     label: Featured
     type: image
     width: 1/4
-  artist:
-    label: Artist
-    type: text
-    width: 2/4
   date:
     label: Release date
     type: date
@@ -35,9 +31,11 @@ fields:
   medias:
     label: Additional images
     type: images
+    width: 1/2
   text:
     label: Description
     type: textarea
+    width: 1/2
   tracklist:
     label: Tracklist
     type: structure
@@ -60,57 +58,33 @@ fields:
   #   type: url
   #   help: Soundcloud URL
   #   width: 1/2
-  buy:
-    label: Buy
-    type: structure
-    style: table
-    width: 1/2
-    fields: 
-      title: 
-        label: Title
-        type: text
-      url: 
-        label: URL
-        type: url
-    default:
-      -
-        title: Vinyl
-        url: 
-      -
-        title: Digital
-        url: 
-  composer:
-    label: Composer
-    type: textarea
-    width: 1/2
-  format:
-    label: Format
-    type: textarea
-    width: 1/2
-  mastering:
-    label: Mastering
-    type: textarea
-    width: 1/2
-  distribution:
-    label: Distribution
-    type: textarea
-    width: 1/2
-  additionalText:
-    label: Additional infos
-    type: structure
-    style: table
-    fields: 
-      title: 
-        label: Title
-        type: text
-      text: 
-        label: Text
-        type: textarea
-  front:
-    label: Front cover
-    type: textarea
-    width: 1/2
-  back:
-    label: Back
-    type: textarea
-    width: 1/2
+  # buy:
+  #   label: Buy
+  #   type: structure
+  #   style: table
+  #   width: 1/2
+  #   fields:
+  #     title:
+  #       label: Title
+  #       type: text
+  #     url:
+  #       label: URL
+  #       type: url
+  #   default:
+  #     -
+  #       title: Vinyl
+  #       url:
+  #     -
+  #       title: Digital
+  #       url:
+  # additionalText:
+  #   label: Additional infos
+  #   type: structure
+  #   style: table
+  #   fields:
+  #     title:
+  #       label: Title
+  #       type: text
+  #     text:
+  #       label: Text
+  #       type: textarea

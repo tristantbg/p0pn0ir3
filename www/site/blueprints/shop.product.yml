@@ -5,3 +5,33 @@ fields:
   title:
     label: Title
     type: title
+  text:
+    label: Description
+    type: textarea
+  tracklist:
+    label: Tracklist
+    type: tablex
+    options:
+      maxColumns: 3
+      minColumns: 2
+      header: false
+  infos:
+    label: Infos
+    type: tablex
+    options:
+      maxColumns: 2
+      minColumns: 2
+      header: false
+  buy:
+    label: Buy
+    type: structure
+    style: table
+    limit: 1
+    fields:
+      link:
+        label: URL
+        type: url
+        required: true
+      price:
+        label: Price
+        type: text

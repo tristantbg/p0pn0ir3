@@ -8,25 +8,3 @@ fields:
   text:
     label: Text
     type:  textarea
-  sectionsLeft:
-    label: Sections left
-    type: structure
-    style: table
-    fields: 
-      title: 
-        label: Title
-        type: text
-      text: 
-        label: Text
-        type: textarea
-  sectionsRight:
-    label: Sections right
-    type: structure
-    style: table
-    fields: 
-      title: 
-        label: Title
-        type: text
-      text: 
-        label: Text
-        type: textarea
