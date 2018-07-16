@@ -259,7 +259,6 @@ const Pjax = {
 
       } else {
         document.body.setAttribute('page-type', App.nextPageType)
-        document.body.setAttribute('data-menu', App.menuPosition)
         _this.endTransition(_this, newContent)
       }
 
