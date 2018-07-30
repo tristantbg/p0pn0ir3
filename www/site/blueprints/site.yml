@@ -28,30 +28,8 @@ fields:
     type: image
     help: 1200x630px minimum
     width: 1/2
-  introSettings:
-    label: Intro Settings
-    type: headline
-  introTitle:
-    label: Intro title
-    type: tags
-    separator: ,
-  introImage:
-    label: Intro image
-    type: image
-  introDescription:
-    label: Intro description
-    type: text
-  introExternalLink:
-    label: Intro external link
-    type: url
+  aboutPage:
+    label: About Page
+    type: select
+    options: pages
     width: 1/2
-  introPagelink:
-    label: Intro pagelink
-    type: quickselect
-    options: query
-    width: 1/2
-    query:
-      page: /
-      fetch: pages
-      text: '{{title}} ({{uri}})'
-      value: '{{uri}}'

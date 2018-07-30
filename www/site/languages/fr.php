@@ -1,7 +1,7 @@
 <?php
 
-l::set('about', 'À propos');
-l::set('credits', 'Crédits');
-l::set('cv', 'Curriculum Vitae');
-l::set('technical', 'Spécifications techniques');
-l::set('description', 'Description');
+l::set('close', 'Fermer');
+l::set('dates', 'Dates');
+l::set('listen', 'Écouter');
+l::set('follow', 'Suivre');
+l::set('infos-btn', 'Infos & sorties');

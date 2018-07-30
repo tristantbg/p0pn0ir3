@@ -4,12 +4,12 @@
 		<?php
 		if(!isset($maxWidth)) $maxWidth = 3400;
 		if (isset($ratio)) {
-			$placeholder = $image->crop(50, floor(50/$ratio))->url();
+			$placeholder = $image->crop(10, floor(10/$ratio))->dataURI();
 			$src = $image->crop(1000, floor(1000/$ratio))->url();
 			$srcset = $image->crop(340, floor(340/$ratio))->url() . ' 340w,';
 			for ($i = 680; $i <= $maxWidth; $i += 340) $srcset .= $image->crop($i, floor($i/$ratio))->url() . ' ' . $i . 'w,';
 		} else {
-			$placeholder = $image->width(50)->url();
+			$placeholder = $image->width(10)->dataURI();
 			$src = $image->width(1000)->url();
 			$srcset = $image->width(340)->url() . ' 340w,';
 			for ($i = 680; $i <= $maxWidth; $i += 340) $srcset .= $image->width($i)->url() . ' ' . $i . 'w,';
@@ -22,6 +22,7 @@
     <?php endif ?>
 		<img 
 		class="lazy lazyload<?php if(isset($preload)) echo ' lazypreload' ?>"
+		src="<?= $placeholder ?>"
 		data-src="<?= $src ?>"
 		data-srcset="<?= $srcset ?>"
 		data-sizes="auto"

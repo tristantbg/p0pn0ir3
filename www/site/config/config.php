@@ -43,7 +43,7 @@ c::set('plugin.updateid', array(
 ));
 
 //Typo
-c::set('typography', false);
+c::set('typography', true);
 c::set('typography.ordinal.suffix', false);
 c::set('typography.fractions', false);
 c::set('typography.dashes.spacing', false);

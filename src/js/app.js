@@ -1,6 +1,6 @@
 /* jshint esversion: 6 */
 
-import 'babel-polyfill'
+// import 'babel-polyfill'
 import lazysizes from 'lazysizes'
 import optimumx from 'lazysizes'
 require('../../node_modules/lazysizes/plugins/object-fit/ls.object-fit.js')
@@ -82,37 +82,23 @@ const App = {
     init: () => {
       App.interact.embedKirby()
       App.interact.linkTargets()
-      App.interact.moreLess()
+      App.interact.previews()
     },
-    moreLess: () => {
-      const more = document.querySelectorAll('[event-target=more]')
-      const less = document.querySelectorAll('[event-target=less]')
-      const close = document.querySelectorAll('[event-target=close]')
+    previews: () => {
+      const artistsLinks = document.querySelectorAll('[data-page=artist][data-id]')
 
-      for (var i = 0; i < more.length; i++) {
-        const elem = more[i]
-        elem.addEventListener('click', e => {
-          const container = e.currentTarget.closest(".infos-display--level")
-          const currentLevel = parseInt(container.dataset.level, 10)
-          container.dataset.level = currentLevel + 1
-        })
-      }
+      for (var i = 0; i < artistsLinks.length; i++) {
+        const elem = artistsLinks[i]
+        const preview = document.querySelector('.artist-preview[data-id="' + elem.dataset.id + '"]')
 
-      for (var i = 0; i < less.length; i++) {
-        const elem = less[i]
-        elem.addEventListener('click', e => {
-          const container = e.currentTarget.closest(".infos-display--level")
-          const currentLevel = parseInt(container.dataset.level, 10)
-          container.dataset.level = currentLevel - 1
-        })
-      }
-
-      for (var i = 0; i < close.length; i++) {
-        const elem = close[i]
-        elem.addEventListener('click', e => {
-          const container = e.currentTarget.closest(".infos-display--level")
-          container.dataset.level = 0
-        })
+        if (preview) {
+          elem.addEventListener('mouseenter', e => {
+            preview.style.visibility = 'visible'
+          })
+          elem.addEventListener('mouseleave', e => {
+            preview.style.visibility = 'hidden'
+          })
+        }
       }
     },
     linkTargets: () => {
@@ -266,9 +252,9 @@ const Pjax = {
     endTransition: function(_this, newContent) {
       window.scroll(0, 0)
       resizeWindow()
-      
+
       if (App.nextPageType == 'ok') {
-        
+
       } else {
         _this.finish(_this, newContent)
       }

@@ -13,17 +13,42 @@
 	+below($sm)
 		display block
 
-#primary-nav
+#primary-nav, #secondary-nav
+	text-transform uppercase
 	display inline-flex
 	padding 0 ($padding)
-	overflow hidden
-	+below($sm)
-		width 100%
-		padding 0 $padding
 	& > *
+		position relative
 		padding .3em 0
-		padding-right 1em
-		&.active
+		&:not(:last-child)
+			padding-right 1em
+	& > li > ul
+		display inline-flex
+		position absolute
+		background $secondary
+		width 100vw
+		top 1.2em
+		left 0
+		&::after
+			content ''
+			position fixed
+			z-index -1
+			background $secondary
+			height 2.8em
+			width 100%
+			left 0
+			top 0
+		& > li
 			position relative
+			padding .3em 0
+			z-index 1
+			&:not(:last-child) a
+				padding-right 1em
 	& > li:not(:hover) > ul
 		display none
+
+#languages
+	text-transform uppercase
+	a:not(:last-child)
+		&::after
+			content ' / '

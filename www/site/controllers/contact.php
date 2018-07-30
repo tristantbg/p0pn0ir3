@@ -4,7 +4,7 @@ return function ($site, $pages, $page) {
 
 	return array(
 		'ptemplate' => $page->intendedTemplate(),
-		'menuPosition' => 'top',
+		'artists' => $site->index()->visible()->filterBy('intendedTemplate', 'artist'),
 	);
 }
 

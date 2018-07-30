@@ -1,10 +1,78 @@
 #artist-medias
 	hideselect()
 	span(1)
-	display inline-flex
-	height 100vh
+	position relative
+	transition transform 500ms $kinetic
+	[data-scroller]
+		span(1)
+		display inline-flex
+		height 100vh
+		overflow hidden
 	.artist-image
-		height 100%
+		img
+			height 100vh
+			display block
 		&:not(:last-child)
 			margin-right 5px
 
+#infos-btn
+	position absolute
+	bottom 0
+	left 0
+	padding $padding
+	mix-blend-mode difference
+	color $primary
+	z-index 10
+
+#artist-panel
+	span(1)
+	color $secondary
+	background $primary
+	padding $padding
+	height 50vh
+	position fixed
+	width 100%
+	left 0
+	top 100%
+	transition transform 500ms $kinetic
+
+#panel-close
+	position absolute
+	bottom 0
+	left 0
+	padding $padding
+
+#artist-infos
+	span(1/2)
+	height 100%
+	padding-right ($padding/2)
+	line-height 1.1
+	[data-scroller]
+		height calc(100% - 2rem)
+		overflow hidden
+	#artist-title
+		margin-bottom $padding
+	#artist-description, #artist-links
+		span(1/2)
+	#artist-description
+		padding-right $padding
+		// text-align justify
+	#artist-links
+		& > div
+			&:not(:last-child)
+				margin-bottom $padding
+			div:first-child
+				span(1/4)
+			div:last-child
+				span(3/4)
+
+#artist-releases
+	span(1/2)
+	height 100%
+	padding-left ($padding/2)
+
+body.infos-panel
+	#artist-medias
+		transform translateY(-50vh) translateZ(0)
+	#artist-panel
+		transform translateY(-50vh) translateZ(0)

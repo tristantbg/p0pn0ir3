@@ -6,7 +6,7 @@ return function ($site, $pages, $page) {
 		'ptemplate' => $page->intendedTemplate(),
 		'menuPosition' => 'bottom',
 		'medias' => $page->medias()->toStructure(),
-    'projects' => $page->parent()->children()->visible()
+    	'projects' => $page->parent()->children()->visible()
 	);
 }
 

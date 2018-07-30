@@ -2,9 +2,20 @@
 
 </div>
 
+<div id="artists-preview">
+	<?php foreach ($artists as $key => $artist): ?>
+		<?php if ($artist->hero()->isNotEmpty()): ?>
+			<div class="artist-preview" data-id="<?= $artist->uid() ?>"><?php snippet('responsive-image', ['field' => $artist->hero(), 'preload' => true]) ?></div>
+		<?php elseif ($artist->featured()->isNotEmpty()): ?>
+			<div class="artist-preview" data-id="<?= $artist->uid() ?>"><?php snippet('responsive-image', ['field' => $artist->featured(), 'preload' => true]) ?></div>
+		<?php endif ?>
+	<?php endforeach ?>
 </div>
 
 </div>
+
+</div>
+
 
 <?php if($site->googleanalytics()->isNotEmpty()): ?>
 	<!-- Global site tag (gtag.js) - Google Analytics -->
