@@ -1,0 +1,32 @@
+.video-container
+	position relative
+	cursor none
+	.video-cursor
+		align()
+		opacity 0
+		pointer-events none
+		width 4.2rem
+		height 4.2rem
+		background $primary
+		color $secondary
+		border 1px solid
+		border-radius 100%
+		display flex
+		justify-content center
+		align-items center
+	.play-cursor
+		&::after
+			content 'PLAY'
+	.pause-cursor
+		display none
+		&::after
+			content 'PAUSE'
+	&.video-is-playing
+		.play-cursor
+			display none
+		.pause-cursor
+			display flex
+	&:hover
+		+above($md + 1)
+			.video-cursor
+				opacity 1

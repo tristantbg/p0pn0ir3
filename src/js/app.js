@@ -5,7 +5,11 @@ import lazysizes from 'lazysizes'
 import optimumx from 'lazysizes'
 require('../../node_modules/lazysizes/plugins/object-fit/ls.object-fit.js')
 require('../../node_modules/lazysizes/plugins/unveilhooks/ls.unveilhooks.js')
+import Amplitude from 'amplitudejs'
+import imagesLoaded from 'imagesloaded'
 import Flickity from 'flickity'
+import IScroll from 'iscroll'
+import Hls from 'hls.js'
 import throttle from 'lodash.throttle'
 import {
   TweenMax,
@@ -48,11 +52,10 @@ const App = {
     App.pageType = document.body.getAttribute('page-type');
     App.sizeSet()
     App.interact.init()
-    Sliders.init()
-    Pjax.init()
     window.addEventListener('resize', throttle(App.sizeSet, 128), false);
-    document.getElementById("loader").style.display = "none"
+    document.getElementById('loader').style.display = 'none'
 
+    // document.addEventListener('lazybeforeunveil', Scroller.refresh);
   },
   sizeSet: () => {
     App.width = (window.innerWidth || document.documentElement.clientWidth);
@@ -82,7 +85,14 @@ const App = {
     init: () => {
       App.interact.embedKirby()
       App.interact.linkTargets()
+      App.interact.eventTargets()
       App.interact.previews()
+      Audio.init()
+      Sliders.init()
+      Players.init()
+      Scroller.init()
+      Pjax.init()
+      imagesLoaded(document.getElementById('main'), Scroller.refresh)
     },
     previews: () => {
       const artistsLinks = document.querySelectorAll('[data-page=artist][data-id]')
@@ -100,6 +110,32 @@ const App = {
           })
         }
       }
+    },
+    eventTargets: () => {
+      const panelToggle = document.querySelectorAll('[event-target=panel]')
+
+      for (var i = 0; i < panelToggle.length; i++) {
+        panelToggle[i].addEventListener('click', e => {
+          document.body.classList.toggle('infos-panel')
+        })
+      }
+
+      const productToggle = document.querySelectorAll('[event-target=product-panel]')
+
+      for (var i = 0; i < productToggle.length; i++) {
+        const elem = productToggle[i]
+        elem.addEventListener('click', e => {
+          elem.parentNode.classList.toggle('opened')
+        })
+      }
+
+      const artistMedias = document.getElementById('artist-medias')
+
+      if(artistMedias) artistMedias.addEventListener('click', e => {
+
+          if(!e.target.getAttribute('event-target') && e.target.tagName !== 'SPAN' && e.target.tagName !== 'DIV') document.body.classList.remove('infos-panel')
+        })
+
     },
     linkTargets: () => {
       const links = document.querySelectorAll("a");
@@ -209,6 +245,249 @@ const Sliders = {
   }
 }
 
+const Players = {
+  elements: [],
+  init: () => {
+    const videoPlayers = document.getElementsByClassName('video-player')
+
+    const options = {
+      controls: [''],
+      fullscreen: {
+        enabled: true,
+        fallback: true,
+        iosNative: true
+      },
+      // iconUrl: _root + "/assets/images/player.svg"
+    }
+
+
+    for (var i = 0; i < videoPlayers.length; i++) {
+      const videoElement = videoPlayers[i]
+      const player = {
+        element: videoElement,
+        container: videoElement.parentNode
+      }
+      Players.elements.push(player)
+    }
+
+    Players.prepareStream(Players.elements)
+    Players.events()
+    Players.accessibility()
+
+  },
+  events: () => {
+
+    for (var i = 0; i < Players.elements.length; i++) {
+      const player = Players.elements[i]
+      player.element.addEventListener('playing', e => {
+        player.container.classList.add('video-is-playing')
+      })
+      player.element.addEventListener('pause', e => {
+        player.container.classList.remove('video-is-playing')
+      })
+      player.container.addEventListener('click', e => {
+        if (player.element.paused) {
+          player.element.play()
+        } else {
+          player.element.pause()
+        }
+      })
+    }
+
+  },
+  prepareStream: (players) => {
+
+    if (players.length === 0) return;
+
+    const attachStream = (player) => {
+      if (player.element.dataset.stream && Hls.isSupported()) {
+        player.hls = new Hls({
+          minAutoBitrate: 1700000
+        });
+        player.hls.loadSource(player.element.dataset.stream);
+        player.hls.attachMedia(player.element);
+      }
+    };
+
+    for (var i = 0; i < players.length; i++) {
+      attachStream(players[i]);
+    }
+  },
+  pauseAll: () => {
+    for (var i = 0; i < Players.elements.length; i++) {
+      const player = Players.elements[i];
+      player.element.pause()
+    }
+  },
+  muteAll: () => {
+    for (var i = 0; i < Players.elements.length; i++) {
+      const player = Players.elements[i];
+      player.container.classList.add('video-is-muted')
+      player.element.muted = true
+    }
+  },
+  unmute: player => {
+    if (!Players.forceMute && player.muted) {
+      Players.muteAll()
+      player.container.classList.remove('video-is-muted')
+      player.element.muted = false
+    }
+  },
+  mute: player => {
+    if (!player.muted) {
+      player.container.classList.add('video-is-muted')
+      player.element.muted = true
+    }
+  },
+  accessibility: () => {
+    for (var i = 0; i < Players.elements.length; i++) {
+      const player = Players.elements[i];
+
+      const playPause = player.container.querySelectorAll('[event-target=playpause]')
+      const muteBtn = player.container.querySelector('[event-target=mute]')
+      const unmuteBtn = player.container.querySelector('[event-target=unmute]')
+      const fullscreenBtn = player.container.querySelector('[event-target=fullscreen]')
+
+      if (playPause) {
+        for (var j = 0; j < playPause.length; j++) {
+          playPause[j].addEventListener('click', () => {
+            if (player.playing) {
+              player.forceStop = true;
+            } else {
+              player.forceStop = false;
+            }
+            player.togglePlay()
+          })
+        }
+      }
+      if (muteBtn) {
+        muteBtn.addEventListener('click', () => {
+          Players.forceMute = true
+          Players.mute(player)
+        })
+      }
+      if (unmuteBtn) {
+        unmuteBtn.addEventListener('click', () => {
+          Players.forceMute = false
+          Players.unmute(player)
+        })
+      }
+      if (fullscreenBtn) {
+        fullscreenBtn.addEventListener('click', () => {
+          Players.forceMute = false
+          player.fullscreen.enter()
+          Players.unmute(player)
+        })
+      }
+
+      const cursors = player.container.getElementsByClassName('video-cursor')
+
+
+      player.container.addEventListener('mousemove', event => {
+        for (var j = 0; j < cursors.length; j++) {
+          const elem = cursors[j]
+          const parentOffset = player.container.getBoundingClientRect();
+          elem.style.top = event.pageY - parentOffset.top - pageYOffset + "px";
+          elem.style.left = event.pageX - parentOffset.left + "px";
+        }
+
+      })
+    }
+  }
+}
+
+const Scroller = {
+  elements: [],
+  init: function() {
+    Scroller.elements = []
+    if (App.isMobile) return
+    const vscrollers = document.querySelectorAll('[data-scroll=y]')
+    for (var i = 0; i < vscrollers.length; i++) {
+      const s = new IScroll(vscrollers[i], {
+        mouseWheel: true,
+        freeScroll: true,
+        scrollbars: false,
+        interactiveScrollbars: false,
+        preventDefault: true,
+        bounce: false
+      })
+      Scroller.elements.push(s)
+    }
+    const xscrollers = document.querySelectorAll('[data-scroll=x]')
+    for (var i = 0; i < xscrollers.length; i++) {
+      const s = new IScroll(xscrollers[i], {
+        scrollX: true,
+        scrollY: false,
+        freeScroll: true,
+        mouseWheel: true,
+        scrollbars: false,
+        interactiveScrollbars: false,
+        preventDefault: true,
+        bounce: false
+      })
+      Scroller.elements.push(s)
+    }
+    document.addEventListener('lazybeforeunveil', Scroller.refresh);
+  },
+  enable: function() {
+    for (var i = 0; i < Scroller.elements.length; i++) {
+      Scroller.elements[i].enable();
+    }
+  },
+  disable: function() {
+    for (var i = 0; i < Scroller.elements.length; i++) {
+      Scroller.elements[i].disable();
+    }
+  },
+  refresh: function() {
+    for (var i = 0; i < Scroller.elements.length; i++) {
+      const elem = Scroller.elements[i]
+      setTimeout(function() {
+        elem.refresh();
+      }, 0);
+    }
+  }
+}
+
+const Audio = {
+  init: () => {
+    if (document.getElementById('player') && typeof songs != "undefined") {
+      Amplitude.init({
+        "bindings": {
+          37: 'prev',
+          39: 'next',
+          32: 'play_pause'
+        },
+        "songs": songs,
+        "continue_next": false,
+        "callbacks": {
+          'after_play': function() {
+            window.clearTimeout(Audio.stopTm)
+            document.body.classList.add('player-playing')
+          },
+          'after_stop': function() {
+            if (App.isMobile) {
+              Audio.stopTm = setTimeout(function() {
+                document.body.classList.remove('player-playing')
+              }, 300);
+            } else {
+              document.body.classList.remove('player-playing')
+            }
+          }
+        }
+      });
+      // var p = document.getElementById("player");
+      // var d = document.getElementById("duration");
+      // document.getElementById('progress-container').addEventListener('click', function(e) {
+      //   var offset = this.getBoundingClientRect();
+      //   var x = e.pageX - offset.left;
+
+      //   Amplitude.setSongPlayedPercentage((parseFloat(x) / parseFloat(this.offsetWidth)) * 100);
+      // });
+    }
+  }
+}
+
 const Pjax = {
   titleTransition: 0.7,
   init: function() {
@@ -231,6 +510,8 @@ const Pjax = {
     },
     startTransition: function() {
       document.body.classList.add('is-loading')
+      document.body.classList.remove('player-playing')
+      Amplitude.pause()
 
       let _this = this
       const newContent = _this.newContainer.querySelector('#page-content')
@@ -266,14 +547,13 @@ const Pjax = {
 
       App.sizeSet()
       App.interact.init()
-      Sliders.init()
       document.body.classList.remove('is-loading')
 
-      setTimeout(function() {
-        TweenMax.set(document.querySelector('#page-content'), {
-          clearProps: 'transform,opacity'
-        })
-      }, 500);
+      // setTimeout(function() {
+      //   TweenMax.set(document.querySelector('#page-content'), {
+      //     clearProps: 'transform,opacity'
+      //   })
+      // }, 500);
 
       if (window.ga) window.ga('send', 'pageview')
     }

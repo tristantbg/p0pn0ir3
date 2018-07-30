@@ -14,3 +14,10 @@ fields:
   title:
     label: Title
     type: title
+  pageindex:
+    label: Artists
+    type: index
+    options: children
+    columns:
+      title: Title
+      uid: Slug

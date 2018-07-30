@@ -1,5 +1,6 @@
 <?php
 
+l::set('more', 'More');
 l::set('close', 'Fermer');
 l::set('dates', 'Dates');
 l::set('listen', 'Écouter');

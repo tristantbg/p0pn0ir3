@@ -1,9 +1,12 @@
-<?php $about = $site->aboutPage()->toPage() ?>
+<?php
+$about = $site->aboutPage()->toPage();
+?>
 
 <div id="menu" class="visible">
 	<ul id="primary-nav">
 			<?php foreach($site->pages()->visible() as $item): ?>
-				<?php if (!$item->is($about)): ?>
+				<?php if ($about && $item->is($about)): ?>
+        <?php else: ?>
 					<li>
 						<a<?php e($item->isOpen(), ' class="active"') ?> href="<?= $item->url() ?>"><?= $item->title()->html() ?></a>
 
@@ -11,15 +14,15 @@
 						$children = $item->children()->visible();
 						if($children->count() > 0):
 							?>
-							
+
 							<ul>
 								<?php foreach($children as $child): ?>
 									<li>
 										<a
-										<?php e($child->isOpen(), ' class="active"') ?> 
-										href="<?= $child->url() ?>" 
-										data-id="<?= $child->uid() ?>" 
-										data-page="<?= $child->intendedTemplate() ?>" 
+										<?php e($child->isOpen(), ' class="active"') ?>
+										href="<?= $child->url() ?>"
+										data-id="<?= $child->uid() ?>"
+										data-page="<?= $child->intendedTemplate() ?>"
 										>
 										<?= $child->title()->html() ?>
 										</a>

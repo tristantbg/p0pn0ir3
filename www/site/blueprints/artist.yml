@@ -17,17 +17,20 @@ files:
       buttons:
         - link
         - email
-    videostream:
+    stream:
       label: Video external stream link (.M3U8)
       type: url
-    videoexternal:
+    mp4:
       label: Video external file link (.MP4)
       type: url
-    videofile:
+    mp4:
+      label: Video external file link (.WEBM)
+      type: url
+    filemp4:
       label: Video File (.MP4)
       type: select
       options: videos
-    videofilewebm:
+    filewebm:
       label: Video File (.WEBM)
       type: select
       options: videos

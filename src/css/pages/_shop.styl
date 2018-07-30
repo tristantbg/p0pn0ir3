@@ -1,0 +1,87 @@
+#shop
+	hideselect()
+	span(1)
+	height 100vh
+	position relative
+	background $primary
+	transition transform 500ms $kinetic
+	[data-scroll]
+		position relative
+		width 100vw
+		overflow hidden
+	.inner-scroll
+		height 100%
+		display table
+	.product-image
+		height 100vh
+		display table-cell
+		padding 0
+		margin 0
+		padding-top 1.5rem
+		overflow hidden
+		transition transform 500ms $kinetic
+		img
+			height 100%
+		video
+			object-fit cover
+		&:not(:last-child)
+			padding-right 5px
+	.product-infos
+		span(1)
+		width calc(100% - 5px)
+		position absolute
+		top 100%
+		left 0
+		color $secondary
+		background $primary
+		padding $padding
+		height 50vh
+		transition transform 500ms $kinetic
+	.product
+		position relative
+		&.opened
+			.product-image
+				transform translateY(-50vh) translateZ(0)
+			.product-infos
+				transform translateY(-50vh) translateZ(0)
+			.panel-open
+				display none
+		&:not(.opened)
+			.panel-close
+				display none
+
+.panel-close, .panel-open
+	align(horizontal)
+	text-transform uppercase
+	color $primary
+	mix-blend-mode difference
+	position absolute
+	bottom 0
+	padding $padding
+
+#product-infos
+	span(1/2)
+	height 100%
+	padding-right ($padding/2)
+	line-height 1.1
+	height calc(100% - 2rem)
+	position relative
+	overflow hidden
+	.inner-scroll
+		width 100%
+		float left
+	#product-title
+		margin-bottom $padding
+	#product-description, #product-links
+		span(1/2)
+	#product-description
+		padding-right $padding
+		// text-align justify
+	#product-links
+		& > div
+			&:not(:last-child)
+				margin-bottom $padding
+			div:first-child
+				span(1/4)
+			div:last-child
+				span(3/4)
