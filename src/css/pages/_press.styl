@@ -1,0 +1,60 @@
+[page-type=press]
+	background $secondary
+	color $primary
+	line-height $line-height
+	.breadcrumb
+		display inline-flex
+		flex-wrap wrap
+		a:not(:last-child)::after
+			content '\0000A0\00002F\0000A0'
+	#press-header
+		position fixed
+		z-index 10
+		top 0
+		left 0
+		width 100%
+		padding $padding
+		display flex
+		justify-content space-between
+		& > *
+			flex 1
+			text-align center
+			&:nth-child(1)
+				text-align left
+			&:nth-child(3)
+				text-align right
+	header
+		display none
+	ul
+		display flex
+		flex-direction column
+		text-transform uppercase
+		li:not(.depth-2)
+			padding-left $padding
+	#page-content
+		min-height 100vh
+		padding ($padding*3) $padding $padding
+	button
+		background transparent
+		border 0
+		padding 0
+		text-transform uppercase
+		font-family inherit
+		font-size inherit
+		color inherit
+		-moz-appearance none
+		-webkit-appearance none
+		cursor pointer
+		&:active, &:focus
+			outline none
+
+#press-tree, #page-files
+	span(1/6)
+	+below($md)
+		span(1/2)
+
+#press-tree
+	padding-right $padding
+	#tree
+		ul:first-child > li
+			padding-left 0

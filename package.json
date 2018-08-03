@@ -20,6 +20,7 @@
     "@babel/core": "^7.0.0-beta.44",
     "@babel/preset-env": "^7.0.0-beta.44",
     "babel-loader": "^8.0.0-beta.0",
+    "babel-polyfill": "^6.26.0",
     "grunt": "^1.0.3",
     "grunt-contrib-concat": "*",
     "grunt-contrib-cssmin": "^1.0.2",
@@ -38,10 +39,9 @@
     "webpack-cli": "^2.0.11"
   },
   "dependencies": {
+    "@egjs/infinitegrid": "^3.4.0",
     "amplitudejs": "^3.3.0",
-    "babel-polyfill": "^6.26.0",
     "barba.js": "^1.0.0",
-    "flickity": "^2.1.2",
     "gsap": "^2.0.1",
     "hls.js": "^0.10.1",
     "imagesloaded": "^4.1.4",

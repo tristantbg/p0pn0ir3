@@ -8,8 +8,9 @@
 
     <?php else: ?>
 
-      <div class="product-image">
+      <div class="product-image" event-target="product-panel">
         <?php
+        $ratio = 1/1;
         if(!isset($maxWidth)) $maxWidth = 3400;
         if (isset($ratio)) {
           $placeholder = $image->crop(10, floor(10/$ratio))->dataURI();
@@ -58,45 +59,74 @@
 
     <div class="product-infos" data-scroll="y">
       <div class="inner-scroll">
-        <div class="row uppercase" class="product-title"><?= $product->title()->html() ?></div>
+        <div class="product-title row uppercase text-center"><?= $product->title()->html() ?></div>
+        <div class="product-description row text-center"><?= $product->text()->kt() ?></div>
         <div class="row">
-          <div class="product-description"><?= $product->text()->kt() ?></div>
-          <div class="product-links">
-            <?php if ($product->socials()->isNotEmpty()): ?>
-              <div class="row uppercase">
-                <div><?= l::get('follow') ?></div>
-                <div>
-                  <?php foreach ($product->socials()->toStructure() as $key => $item): ?>
-                    <a class="row uppercase" href="<?= $item->url() ?>"><?= $item->title()->html() ?></a>
+          <div class="left">
+            <?php if ($product->tracklist()->isNotEmpty()): ?>
+            <div class="product-tracklist">
+              <table class="table">
+                <tbody>
+                  <?php foreach($product->tracklist()->toStructure()->table() as $tableRow): ?>
+                      <tr class="table-row">
+                        <?php foreach($tableRow as $tableCell): ?>
+                          <td class="table-cell"><?= $tableCell ?></td>
+                        <?php endforeach ?>
+                      </tr>
                   <?php endforeach ?>
-                </div>
-              </div>
+                </tbody>
+              </table>
+            </div>
             <?php endif ?>
-
-            <?php if ($product->listen()->isNotEmpty()): ?>
-              <div class="row uppercase">
-                <div><?= l::get('listen') ?></div>
-                <div>
-                  <?php foreach ($product->listen()->toStructure() as $key => $item): ?>
-                    <a class="row" href="<?= $item->url() ?>"><?= $item->title()->html() ?></a>
+            <?php if ($product->infos()->isNotEmpty()): ?>
+            <div class="product-moreinfos">
+              <table class="table">
+                <tbody>
+                  <?php foreach($product->infos()->toStructure()->table() as $tableRow): ?>
+                      <tr class="table-row">
+                        <?php foreach($tableRow as $tableCell): ?>
+                          <td class="table-cell"><?= $tableCell ?></td>
+                        <?php endforeach ?>
+                      </tr>
                   <?php endforeach ?>
-                </div>
-              </div>
-            <?php endif ?>
-
-            <?php if ($product->dates()->isNotEmpty()): ?>
-              <div class="row uppercase">
-                <div><?= l::get('dates') ?></div>
-                <div><?= $product->dates()->kt() ?></div>
-              </div>
+                </tbody>
+              </table>
+            </div>
             <?php endif ?>
           </div>
+          <div class="right">
+            <div class="product-links">
+              <?php if ($product->listen()->isNotEmpty()): ?>
+                <div class="row uppercase">
+                  <table class="table">
+                    <tbody>
+                          <tr class="table-row">
+                              <td class="table-cell"><?= l::get('listen') ?></td>
+                              <td class="table-cell">
+                                <?php foreach ($product->listen()->toStructure() as $key => $item): ?>
+                                  <a class="row" href="<?= $item->url() ?>"><?= $item->title()->html() ?></a>
+                                <?php endforeach ?>
+                              </td>
+                          </tr>
+                    </tbody>
+                  </table>
+                </div>
+              <?php endif ?>
+            </div>
+          </div>
+
+          <?php if ($product->buy()->isNotEmpty() && $buy = $product->buy()->toStructure()->first()): ?>
+            <div class="buy row">
+              <div class="price"><?= $buy->price()->html() ?></div>
+              <a href="<?= $buy->link() ?>" class="buy-button uppercase">Buy</a>
+            </div>
+          <?php endif ?>
         </div>
       </div>
     </div>
 
-      <div class="panel-close" event-target="product-panel"><?= l::get('close') ?></div>
-      <div class="panel-open" event-target="product-panel"><?= l::get('more') ?></div>
+    <div class="panel-close" event-target="product-panel"><?= l::get('close') ?></div>
+    <div class="panel-open" event-target="product-panel"><?= l::get('buy') ?></div>
 
   </div>
 

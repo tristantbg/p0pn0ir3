@@ -1,20 +1,23 @@
 /* jshint esversion: 6 */
 
-// import 'babel-polyfill'
+import 'babel-polyfill'
 import lazysizes from 'lazysizes'
 import optimumx from 'lazysizes'
 require('../../node_modules/lazysizes/plugins/object-fit/ls.object-fit.js')
 require('../../node_modules/lazysizes/plugins/unveilhooks/ls.unveilhooks.js')
 import Amplitude from 'amplitudejs'
 import imagesLoaded from 'imagesloaded'
-import Flickity from 'flickity'
+// import Packery from 'packery'
+import InfiniteGrid, {
+  FrameLayout
+} from "@egjs/infinitegrid";
 import IScroll from 'iscroll'
 import Hls from 'hls.js'
 import throttle from 'lodash.throttle'
-import {
-  TweenMax,
-  AttrPlugin
-} from 'gsap'
+// import {
+//   TweenMax,
+//   AttrPlugin
+// } from 'gsap'
 import Barba from 'barba.js'
 
 
@@ -51,9 +54,18 @@ const App = {
   init: () => {
     App.pageType = document.body.getAttribute('page-type');
     App.sizeSet()
+    App.hiddenNav.init()
     App.interact.init()
     window.addEventListener('resize', throttle(App.sizeSet, 128), false);
     document.getElementById('loader').style.display = 'none'
+    App.intro()
+
+    document.addEventListener('click', e => {
+      if (
+        e.target.getAttribute('event-target') !== 'about-panel' && document.body.classList.contains('about-panel') && !App.aboutPanel.contains(e.target)
+        ||
+        e.target.getAttribute('event-target') === 'about-panel' && document.body.classList.contains('about-panel') && App.aboutPanel.contains(e.target)) document.body.classList.remove('about-panel')
+    })
 
     // document.addEventListener('lazybeforeunveil', Scroller.refresh);
   },
@@ -68,18 +80,57 @@ const App = {
         App.isMobile = false;
       }
     }
-    App.sizeElements();
+    App.setElements();
   },
-  sizeElements: () => {
+  setElements: () => {
 
     App.header = document.querySelector('header')
     App.menu = document.getElementById('menu')
+    App.aboutPanel = document.getElementById('about-panel')
 
-    sizeElem('project-medias', null, App.height - (App.header.offsetHeight + App.menu.offsetHeight))
-    placeElem('project-medias', (App.header.offsetHeight + App.menu.offsetHeight), null)
 
-    if (App.isMobile && App.pageType !== 'about') margeElem('page-content', (App.header.offsetHeight + App.menu.offsetHeight))
-
+  },
+  intro: () => {
+    const intro = document.getElementById('intro')
+    if (intro) {
+      intro.classList.add('show')
+      setTimeout(function() {
+        intro.classList.add('animate')
+        setTimeout(function() {
+          intro.classList.add('hide')
+        }, 2000);
+      }, 800);
+    }
+  },
+  hiddenNav: {
+    distance: 0,
+    active: false,
+    init: () => {
+      window.addEventListener('mousemove', throttle(App.hiddenNav.check, 128), false);
+    },
+    check: event => {
+      App.hiddenNav.distance++
+        if (!App.hiddenNav.active) {
+          App.hiddenNav.distance = 0
+          App.hiddenNav.show()
+          window.clearTimeout(App.hiddenNav.tm)
+          App.hiddenNav.tm = setTimeout(function() {
+            App.hiddenNav.hide()
+          }, 1500);
+        } else
+      if (App.hiddenNav.distance > 4) {
+        App.hiddenNav.distance = 0
+        App.hiddenNav.show()
+      }
+    },
+    show: () => {
+      App.hiddenNav.active = false
+      document.querySelector('header').classList.remove('hidden')
+    },
+    hide: () => {
+      App.hiddenNav.active = true
+      document.querySelector('header').classList.add('hidden')
+    }
   },
   interact: {
     init: () => {
@@ -91,10 +142,17 @@ const App = {
       Sliders.init()
       Players.init()
       Scroller.init()
+      App.newsGrid.init()
       Pjax.init()
       imagesLoaded(document.getElementById('main'), Scroller.refresh)
     },
     previews: () => {
+      const previews = document.querySelectorAll('.artist-preview')
+
+      for (var i = 0; i < previews.length; i++) {
+        previews[i].style.visibility = "hidden"
+      }
+
       const artistsLinks = document.querySelectorAll('[data-page=artist][data-id]')
 
       for (var i = 0; i < artistsLinks.length; i++) {
@@ -129,12 +187,25 @@ const App = {
         })
       }
 
+      const aboutToggle = document.querySelectorAll('[event-target=about-panel]:not(.loaded)')
+
+      for (var i = 0; i < aboutToggle.length; i++) {
+        const elem = aboutToggle[i]
+        elem.addEventListener('click', e => {
+          e.preventDefault()
+          elem.classList.add('loaded')
+          document.body.classList.toggle('about-panel')
+        })
+      }
+
       const artistMedias = document.getElementById('artist-medias')
 
-      if(artistMedias) artistMedias.addEventListener('click', e => {
+      if (artistMedias) {
+        artistMedias.addEventListener('click', e => {
 
-          if(!e.target.getAttribute('event-target') && e.target.tagName !== 'SPAN' && e.target.tagName !== 'DIV') document.body.classList.remove('infos-panel')
+          if (!e.target.getAttribute('event-target') && e.target.tagName !== 'SPAN' && e.target.tagName !== 'DIV') document.body.classList.toggle('infos-panel')
         })
+      }
 
     },
     linkTargets: () => {
@@ -143,6 +214,7 @@ const App = {
         const element = links[i];
         if (element.host !== window.location.host) {
           element.setAttribute('target', '_blank');
+          element.setAttribute('rel', 'nofollow noopener');
         } else {
           element.setAttribute('target', '_self');
         }
@@ -165,6 +237,79 @@ const App = {
     },
 
   },
+  newsGrid: {
+    pattern: [
+      [1, 1, 1, 1, 3, 3, 5, 5],
+      [1, 1, 1, 1, 3, 3, 5, 5],
+      [2, 2, 2, 2, 4, 4, 6, 6],
+      [2, 2, 2, 2, 4, 4, 6, 6]
+    ],
+    init: () => {
+
+      if (App.isMobile) return
+
+      const news = document.getElementById('news')
+
+      if (news && news.dataset.grid !== '[]') {
+        App.newsGrid.pattern = JSON.parse(news.dataset.grid)
+      }
+
+      if (App.newsGrid.eg) {
+        App.newsGrid.eg.destroy()
+        App.newsGrid.eg = null
+      }
+
+      if (news) {
+        App.newsGrid.eg = new InfiniteGrid("#news .grid", {
+          margin: 10,
+          horizontal: true,
+        });
+
+        App.newsGrid.eg.setLayout(FrameLayout, {
+          margin: 10,
+          frame: App.newsGrid.pattern
+        });
+
+        App.newsGrid.eg.on('layoutComplete', e => {
+          Scroller.refresh()
+
+          for (var i = 0; i < e.target.length; i++) {
+            const elem = e.target[i].el
+            if (elem.style.left == "0px") {
+              elem.classList.add('side')
+            } else {
+              elem.classList.remove('side')
+            }
+
+            const caption = elem.querySelector('.caption')
+            elem.style.paddingBottom = caption.offsetHeight + 'px'
+          }
+        })
+
+        App.newsGrid.eg.layout()
+      }
+    },
+    init2: () => {
+      App.newsGrid.pckry = new Packery('#news .grid', {
+        itemSelector: '.item',
+        horizontal: true,
+        gutter: 10,
+        transitionDuration: 0
+      });
+      App.newsGrid.pckry.on('layoutComplete', function(laidOutItems) {
+        for (var i = 0; i < laidOutItems.length; i++) {
+          const elem = laidOutItems[i]
+          console.log(elem.style.left, laidOutItems)
+          // if (elem.style.left == 0) {
+          //   elem.classList.add('side')
+          // } else {
+          //   elem.classList.remove('side')
+
+          // }
+        }
+      })
+    }
+  }
 }
 
 const Sliders = {
@@ -451,14 +596,19 @@ const Scroller = {
 
 const Audio = {
   init: () => {
-    if (document.getElementById('player') && typeof songs != "undefined") {
+    Audio.songs = null
+    Audio.player = document.getElementById('player')
+
+    if (Audio.player) Audio.songs = JSON.parse(Audio.player.dataset.songs)
+
+    if (Audio.player && Audio.songs) {
       Amplitude.init({
         "bindings": {
           37: 'prev',
           39: 'next',
           32: 'play_pause'
         },
-        "songs": songs,
+        "songs": Audio.songs,
         "continue_next": false,
         "callbacks": {
           'after_play': function() {
@@ -497,6 +647,13 @@ const Pjax = {
     Barba.Dispatcher.on('linkClicked', function(el) {
       App.linkClicked = el
     });
+    Barba.Dispatcher.on('newPageReady', function(currentStatus, oldStatus, container) {
+      var js = container.querySelector("script");
+      if (js != null) {
+        eval(js.innerHTML);
+        Audio.init()
+      }
+    });
     Barba.Pjax.Dom.wrapperId = 'main'
     Barba.Pjax.Dom.containerClass = 'pjax'
     Barba.BaseCache.reset()
@@ -510,7 +667,7 @@ const Pjax = {
     },
     startTransition: function() {
       document.body.classList.add('is-loading')
-      document.body.classList.remove('player-playing')
+      document.body.classList.remove('player-playing', 'infos-panel', 'about-panel')
       Amplitude.pause()
 
       let _this = this

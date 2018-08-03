@@ -2,6 +2,7 @@ title: Product
 pages: false
 files: true
 fields:
+  prevnext: prevnext
   title:
     label: Title
     type: title
@@ -27,11 +28,26 @@ fields:
       maxColumns: 2
       minColumns: 2
       header: false
+  listen:
+    label: Listen
+    type: structure
+    style: table
+    width: 1/2
+    fields:
+      title:
+        label: Title
+        type: text
+        required: true
+      url:
+        label: URL
+        type: url
+        required: true
   buy:
     label: Buy
     type: structure
     style: table
     limit: 1
+    width: 1/2
     fields:
       link:
         label: URL

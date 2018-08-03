@@ -1,0 +1,70 @@
+#newsletter
+  div.x
+    display flex
+    flex-wrap wrap
+  #legal
+    span(1)
+    margin-top $padding
+  .form
+    span(1)
+    position relative
+    width 100%
+    .byline
+      float left
+    & > *, .sib-container
+      span(1)
+    #nom::before
+      content 'FIRST NAME'
+    #prenom::before
+      content 'LAST NAME'
+    #email::before
+      content 'E-MAIL'
+    .mandatory-email
+      flex-wrap wrap
+
+[page-type=about]
+  #newsletter
+    .message_area
+      margin 0
+      border none !important
+      background transparent !important
+      color $primary !important
+      margin ($padding/2) 0
+    .field
+      &:not(:first-child)
+        margin-top $padding
+      input
+        margin-top ($padding/2)
+    input, button
+      color $primary
+      -webkit-apparence none
+      -moz-apparence none
+      border 1px solid alpha($primary, 0.2)
+      background $secondary
+      font-family inherit
+      font-size 1rem
+      padding 0.3em
+      margin 0
+      align-items center
+      &:not([type="button"])
+        width 100%
+      &:active, &:focus
+        outline none
+      &::placeholder
+        color alpha($primary, 0.2)
+        font-size inherit
+        font-family inherit
+        text-transform uppercase
+    button
+      text-transform uppercase
+      border none
+      box-shadow none
+      font-size inherit
+      font-family inherit
+      cursor pointer
+      &[type="submit"]
+        margin-top $padding
+        border 1px solid alpha($primary, 0.2)
+        padding 0.3em 0.6em
+      &.close
+        padding 0 .5em

@@ -9,7 +9,9 @@
 
 	<div id="infos-btn" class="uppercase" event-target="panel"><?= l::get('infos-btn') ?></div>
 
-  <div id="player" class="uppercase">
+  <div id="player"
+  class="uppercase"
+  data-songs="<?= $songs ?>">
     <div id="song-infos">
       <span amplitude-song-info="song_title" amplitude-main-song-info="true"></span>
     </div>
@@ -39,7 +41,7 @@
 							<div><?= l::get('follow') ?></div>
 							<div>
 								<?php foreach ($page->socials()->toStructure() as $key => $item): ?>
-									<a class="row uppercase" href="<?= $item->url() ?>"><?= $item->title()->html() ?></a>
+									<a class="uppercase" href="<?= $item->url() ?>"><?= $item->title()->html() ?></a>
 								<?php endforeach ?>
 							</div>
 						</div>
@@ -50,7 +52,7 @@
 							<div><?= l::get('listen') ?></div>
 							<div>
 								<?php foreach ($page->listen()->toStructure() as $key => $item): ?>
-									<a class="row" href="<?= $item->url() ?>"><?= $item->title()->html() ?></a>
+									<a class="uppercase" href="<?= $item->url() ?>"><?= $item->title()->html() ?></a>
 								<?php endforeach ?>
 							</div>
 						</div>
@@ -71,7 +73,13 @@
     <div class="inner-scroll">
   		<?php foreach ($releases as $key => $release): ?>
   			<div class="release">
+          <?php if ($productLink = page($release->productLink())): ?>
+          <a href="<?= $productLink->url() ?>">
+          <?php endif ?>
   				<?php snippet('responsive-image', ['field' => $release->featured()]) ?>
+          <?php if ($productLink = page($release->productLink())): ?>
+          </a>
+          <?php endif ?>
   				<div class="release-infos">
   					<div class="release-title">
   						<span><?= $release->parent()->title()->html() ?></span>
@@ -95,21 +103,5 @@
 
 	<div id="panel-close" class="uppercase" event-target="panel"><?= l::get('close') ?></div>
 </div>
-
-<script>
-  var songs = [
-  <?php foreach ($releases as $key => $release): ?>
-    <?php $tracks = $release->tracklist()->toStructure(); ?>
-    <?php foreach ($tracks as $key => $track): ?>
-      <?php if ($file = $track->audioFile()->toFile()): ?>
-        {
-          "url": "<?= $file->url() ?>",
-          "song_title": "<?= $page->title()->html().'&nbsp;&nbsp;'.$track->title()->html() ?>"
-        },
-      <?php endif ?>
-    <?php endforeach ?>
-  <?php endforeach ?>
-  ]
-</script>
 
 <?php snippet('footer') ?>

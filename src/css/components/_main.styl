@@ -1,6 +1,10 @@
 body,html
 	width 100%
+  float left
 	background $primary
+
+body
+  float left
 
 *
 	box-sizing border-box
@@ -41,6 +45,9 @@ a, a:hover, a:visited, a:focus
 
 #main, #container, #page-content, .row
 	span(1)
+
+#page-content
+	min-height 100vh
 
 cross()
 	&::before, &::after

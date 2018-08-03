@@ -10,6 +10,15 @@ files:
   width: null
   height: null
   fields:
+    date:
+      label: Date
+      type: date
+      format: DD/MM/YYYY
+      width: 1/2
+    subtitle:
+      label: Subtitle
+      type: text
+      width: 1/2
     caption:
       label: Caption
       type: textarea
@@ -32,6 +41,11 @@ fields:
   title:
     label: Title
     type: title
+  gridLayout:
+    label: Grid Layout
+    type: tablex
+    options:
+      header: false
   medias:
     label: Medias
     type: images

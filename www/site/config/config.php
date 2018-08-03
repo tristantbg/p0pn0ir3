@@ -29,6 +29,7 @@ of the system, please check out http://getkirby.com/docs/advanced/options
 
 */
 
+c::set('home', 'news');
 c::set('debug', true);
 c::set('autobuster', true);
 c::set('plugin.embed.video.lazyload', true);
@@ -37,8 +38,8 @@ c::set('kirbytext.image.figure', false);
 
 c::set('plugin.updateid', array(
   array(
-    'pages'  => function () { return site()->find('categories')->children(); },
-    'fields' => 'category'
+    'pages'  => function () { return site()->index()->filterBy('intendedTemplate', 'release'); },
+    'fields' => 'productlink'
   )
 ));
 

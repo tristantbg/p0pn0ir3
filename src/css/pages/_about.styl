@@ -1,103 +1,113 @@
-#page-content[page-type=about]
-	position relative
-	padding $padding
-	+above($md + 1)
-		height calc(100vh - (45vmin - (1.6rem + 2px)))
-	+below($md)
-		padding-bottom 13.4rem
+[page-type=about]
+	background $secondary
+	color $primary
+	#page-content
+		padding ($padding*5) $padding
+	#about-logo
+		filter: invert(1)
 
-#about-image
-	span(1/3)
-	+above($md + 1)
-		padding-right $padding
-		height 100%
-	+below($md)
-		span(1/2)
-		margin-bottom $padding
-		padding-right $padding
-	+below($sm)
-		stack()
-	#about-image-mobile
-		+above($md + 1)
-			display none
-	#about-image-desktop
+#about-logo
+	span(1)
+	width 12rem
+	height 12rem
+	margin-bottom ($padding*3)
+	svg
 		width 100%
 		height 100%
-		.responsive-image, img
-			width 100%
-			height 100%
-			img
-				object-fit cover
-				width 100%
-				height 100%
-		+below($md)
-			display none
-
-#about-cv
-	span(1/3)
-	+above($md + 1)
-		height 100%
-		move(1/3, $col-or-span: span)
-	+below($md)
-		span(1/2)
-		margin-bottom $padding
-	+below($sm)
-		stack()
-	.infos--display
-		height calc(100% - 0.6rem)
-		overflow-y scroll
-		padding-bottom 0.9em
-	.infos--display::-webkit-scrollbar
-		display none
-	.row
-		small()
-		display flex
-		&> *
-			flex 1 1 50%
-			padding .5em 0
-		&:not(:last-child) > *
-			border-bottom 1px solid
-		&:first-child > *
-			padding-top 0
-	.infos--level-2
-		.row
-			&:first-child > *
-				border-top 1px solid
-				padding .5em 0
 
 #about-text
-	span(1/3)
-	+below($md)
-		span(1/2)
-	+below($sm)
-		stack()
-	+above($md + 1)
+	span(1)
+	margin-bottom ($padding*3)
+
+#about-socials
+	span(1)
+	line-height $line-height
+	column-count 3
+	margin-bottom ($padding*3)
+
+#newsletter
+	line-height $line-height
+	span(1)
+	margin-bottom ($padding*3)
+
+#credits
+	span(1)
+	line-height $line-height
+
+
+#about-panel
+	position fixed
+	z-index 50
+	top 0
+	right 0
+	width 50rem
+	padding ($padding*4) ($padding*5)
+	height 100%
+	background alpha($primary, 0.8)
+	color $secondary
+	transition transform 500ms $kinetic
+	transform translateX(100%) translateZ(0)
+	.about-close
+		position absolute
+		top 0
+		right 0
+		padding 1em $padding
+	[data-scroll]
+		width 100%
 		height 100%
-		move(-1/3, $col-or-span: span)
-		padding-right $padding
-	.infos--display
-		height calc(100% - 0.6rem)
-		overflow-y scroll
-		padding-bottom 0.9em
-	.infos--display::-webkit-scrollbar
-		display none
+		float left
+	.inner-scroll
+		width 100%
+		float left
+	.message_area
+		margin 0
+		border none !important
+		background transparent !important
+		color $secondary !important
+		margin ($padding/2) 0
+	.field
+		&:not(:first-child)
+			margin-top $padding
+		input
+			margin-top ($padding/2)
+	input, button
+		color $secondary
+		-webkit-apparence none
+		-moz-apparence none
+		border 1px solid alpha($secondary, 0.2)
+		background transparent
+		font-family inherit
+		font-size 1rem
+		padding 0.3em
+		margin 0
+		align-items center
+		&:not([type="button"])
+			width 100%
+		&:active, &:focus
+			outline none
+		&::placeholder
+			color $secondary
+			font-size inherit
+			font-family inherit
+			text-transform uppercase
+	button
+		text-transform uppercase
+		border none
+		box-shadow none
+		font-size inherit
+		font-family inherit
+		cursor pointer
+		&[type="submit"]
+			margin-top $padding
+			border 1px solid alpha($secondary, 0.2)
+			padding 0.3em 0.6em
+		&.close
+			padding 0 .5em
 
-#about-credits
-	margin-top $padding
-	.row
-		small()
-		display flex
-		&> *
-			flex 1 1 50%
-			padding .5em 0
-		&:not(:last-child) > *
-			border-bottom 1px solid
-		&:first-child > *
-			padding-top 0
-	.infos--level-2
-		.row
-			&:first-child > *
-				border-top 1px solid
-				padding .5em 0
-
-
+body.about-panel
+	#about-panel
+		transform none
+	#menu
+		width calc(100% - 50rem)
+	#player
+		transform translateX(-50rem) translateZ(0)

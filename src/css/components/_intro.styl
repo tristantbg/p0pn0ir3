@@ -1,0 +1,42 @@
+#intro
+  position fixed
+  width 100%
+  height 100%
+  top 0
+  left 0
+  background $primary
+  z-index 999
+  svg
+    align()
+    display block
+    width 40vmin
+    height 40vmin
+  #popnoire
+    opacity 0
+    transition opacity 500ms ease
+  #logo
+    transform rotate(-360deg)
+    transform-origin 544px 667px
+    transition transform 1.5s $kinetic
+  #circle
+    stroke $primary
+    transform-origin 598px 538px
+    transform rotateZ(45deg) rotateY(180deg)
+    stroke-dasharray 2834
+    stroke-dashoffset 0
+    transition stroke-dashoffset 1.5s $kinetic
+  &.show
+    #popnoire
+      opacity 1
+  &.animate
+    #logo
+      transform rotate(0deg)
+    #circle
+      stroke-dashoffset 2834
+  &.hide
+    transition opacity 200ms ease 500ms, visibility 200ms ease 500ms
+    opacity 0
+    visibility hidden
+    #popnoire
+      opacity 0
+      transition opacity 200ms ease

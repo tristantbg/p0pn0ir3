@@ -1,10 +1,14 @@
-$titleTransition = 0.7s
+$titleTransition = 0.2s
 
 header
 	hideselect()
 	position fixed
+	top 0
+	left 0
 	width 100%
 	z-index 10
-	transition top $titleTransition $kinetic
+	transition transform $titleTransition ease
+	&:not(:hover).hidden
+		transform translateY(-100%) translateZ(0)
 	h1
 		display none

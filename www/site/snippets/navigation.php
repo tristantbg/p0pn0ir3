@@ -8,7 +8,11 @@ $about = $site->aboutPage()->toPage();
 				<?php if ($about && $item->is($about)): ?>
         <?php else: ?>
 					<li>
-						<a<?php e($item->isOpen(), ' class="active"') ?> href="<?= $item->url() ?>"><?= $item->title()->html() ?></a>
+            <?php if (!in_array($item->intendedTemplate(), ['artists'])): ?>
+            <a<?php e($item->isOpen(), ' class="active"') ?> href="<?= $item->url() ?>"><?= $item->title()->html() ?></a>
+            <?php else: ?>
+            <span<?php e($item->isOpen(), ' class="active"') ?>><?= $item->title()->html() ?></span>
+            <?php endif ?>
 
 						<?php
 						$children = $item->children()->visible();
@@ -40,14 +44,14 @@ $about = $site->aboutPage()->toPage();
 		<div id="languages">
 			<?php foreach($site->languages()->flip() as $language): ?>
 				<?php if (true || $site->language() != $language): ?>
-					<a class="language" href="<?= $page->url($language->code()) ?>">
+					<a class="language no-barba" href="<?= $page->url($language->code()) ?>">
 						<?= ucfirst(html($language->code())) ?>
 					</a>
 				<?php endif ?>
 			<?php endforeach ?>
 		</div>
 		<?php if ($about): ?>
-		<a href="<?= $about->url() ?>" data-target="about"><?= $about->title()->html() ?></a>
+		<div event-target="about-panel"><?= $about->title()->html() ?></div>
 		<?php endif ?>
 	</ul>
 </div>

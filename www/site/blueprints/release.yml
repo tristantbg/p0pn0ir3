@@ -28,10 +28,21 @@ fields:
     label: Cat. number
     type: text
     width: 1/4
-  medias:
-    label: Additional images
-    type: images
+  # medias:
+  #   label: Additional images
+  #   type: images
+  #   width: 1/2
+  productLink:
+    label: Product link
+    type: quickselect
+    options: query
     width: 1/2
+    query:
+      page: /
+      fetch: pages
+      template: shop.product
+      text: '{{title}} ({{uri}})'
+      value: '{{uri}}'
   text:
     label: Description
     type: textarea

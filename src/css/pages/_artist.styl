@@ -5,11 +5,11 @@
 	position relative
 	background $primary
 	transition transform 500ms $kinetic
-	[data-scroll]
+	& > [data-scroll]
 		position relative
 		width 100vw
 		overflow hidden
-	.inner-scroll
+	& > .inner-scroll
 		height 100%
 		display table
 	.artist-image
@@ -17,7 +17,7 @@
 		display table-cell
 		padding 0
 		margin 0
-		padding-top 1.5rem
+		// padding-top 1.5rem
 		overflow hidden
 		img
 			height 100%
@@ -36,6 +36,7 @@
 	z-index 10
 
 #player
+	line-height $line-height
 	position absolute
 	bottom 0
 	right 0
@@ -44,6 +45,7 @@
 	color $primary
 	text-align right
 	z-index 10
+	transition transform 500ms $kinetic
 
 body:not(.player-playing)
 	#player
@@ -53,7 +55,7 @@ body:not(.player-playing)
 	span(1)
 	color $secondary
 	background $primary
-	padding $padding
+	padding 0 $padding
 	height 50vh
 	position fixed
 	width 100%
@@ -68,14 +70,16 @@ body:not(.player-playing)
 	padding $padding
 
 #artist-infos
-	span(1/2)
+	span(1/3)
 	height 100%
 	padding-right ($padding/2)
-	line-height 1.1
-	height calc(100% - 2rem)
+	line-height $line-height
+	height calc(100% - 3rem)
 	position relative
 	overflow hidden
-	.inner-scroll
+	& > .inner-scroll
+		padding-top $padding
+		padding-bottom $padding
 		width 100%
 		float left
 	#artist-title
@@ -83,7 +87,7 @@ body:not(.player-playing)
 	#artist-description, #artist-links
 		span(1/2)
 	#artist-description
-		padding-right $padding
+		padding-right ($padding*2)
 		// text-align justify
 	#artist-links
 		& > div
@@ -91,17 +95,25 @@ body:not(.player-playing)
 				margin-bottom $padding
 			div:first-child
 				span(1/4)
+				padding-right $padding
 			div:last-child
 				span(3/4)
+				a
+					display block
+					float left
+					clear both
 
 #artist-releases
-	span(1/2)
+	span(2/3)
 	height 100%
+	line-height $line-height
 	padding-left ($padding/2)
 	overflow hidden
 	.inner-scroll
 		width 100%
 		float left
+		padding-top $padding
+		padding-bottom $padding
 	.release
 		span(1)
 		height 100%
@@ -111,7 +123,7 @@ body:not(.player-playing)
 			span(1/2)
 		.responsive-image
 			padding-right ($padding/2)
-			height "calc(50vh - %s)" % ($padding*2)
+			height "calc(50vh - %s)" % ($padding*4)
 			img
 				height 100%
 				object-fit contain

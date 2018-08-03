@@ -5,11 +5,11 @@
 	position relative
 	background $primary
 	transition transform 500ms $kinetic
-	[data-scroll]
+	& > [data-scroll]
 		position relative
 		width 100vw
 		overflow hidden
-	.inner-scroll
+	& > .inner-scroll
 		height 100%
 		display table
 	.product-image
@@ -17,15 +17,13 @@
 		display table-cell
 		padding 0
 		margin 0
-		padding-top 1.5rem
+		// padding-top 1.5rem
 		overflow hidden
 		transition transform 500ms $kinetic
 		img
 			height 100%
 		video
 			object-fit cover
-		&:not(:last-child)
-			padding-right 5px
 	.product-infos
 		span(1)
 		width calc(100% - 5px)
@@ -34,11 +32,15 @@
 		left 0
 		color $secondary
 		background $primary
-		padding $padding
+		padding $padding 20%
 		height 50vh
 		transition transform 500ms $kinetic
 	.product
+		display table-cell
 		position relative
+		&:not(:last-child)
+			.product-image
+				padding-right 5px
 		&.opened
 			.product-image
 				transform translateY(-50vh) translateZ(0)
@@ -59,29 +61,66 @@
 	bottom 0
 	padding $padding
 
-#product-infos
+.buy
+	display flex
+	flex-direction column
+	align-items center
+	margin-top ($padding*3)
+	.price
+		margin-bottom ($padding/2)
+		&:empty
+			display none
+
+.buy-button
+	width 4.2rem
+	height 4.2rem
+	background $primary
+	color $secondary
+	color #009dff !important
+	border 1px solid
+	border-radius 100%
+	display flex
+	justify-content center
+	align-items center
+
+.product-infos
 	span(1/2)
 	height 100%
 	padding-right ($padding/2)
-	line-height 1.1
+	line-height $line-height
 	height calc(100% - 2rem)
 	position relative
 	overflow hidden
 	.inner-scroll
 		width 100%
 		float left
-	#product-title
-		margin-bottom $padding
-	#product-description, #product-links
+	.product-title
+		margin-bottom ($padding*3)
+	.product-description
+		margin-bottom ($padding*3)
+	.left, .right
 		span(1/2)
-	#product-description
-		padding-right $padding
-		// text-align justify
-	#product-links
+		& > *:not(:last-child)
+			margin-bottom $padding
+	.left
+		padding-right ($padding/2)
+	.right
+		padding-left ($padding/2)
+	.product-tracklist
+		.table
+			width 100%
+			tr
+				display flex
+	.product-links
+		.table
+			.table-row
+				.table-cell:last-child
+					width 100%
 		& > div
 			&:not(:last-child)
 				margin-bottom $padding
 			div:first-child
 				span(1/4)
+				padding-right $padding
 			div:last-child
 				span(3/4)

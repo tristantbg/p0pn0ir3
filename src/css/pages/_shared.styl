@@ -1,3 +1,17 @@
+[page-type=default],
+[page-type=about]
+  background $secondary
+  color $primary
+  #page-content
+    padding-top ($padding*2)
+  #page-text
+    span(1/6)
+    padding 0 $padding
+    +below($md)
+      span(1/2)
+    +below($sm)
+      stack()
+
 [event-target]
 	cursor pointer
 
@@ -24,3 +38,15 @@
 				height 100%
 				object-fit cover
 				font-family 'object-fit: cover'
+
+.table
+	width 100%
+.table-row
+	// display flex
+	.table-cell
+		vertical-align top
+		&:not(:last-child)
+			padding-right $padding
+		&:nth-child(2),
+		&:nth-child(3):not(:last-child)
+			flex 1
