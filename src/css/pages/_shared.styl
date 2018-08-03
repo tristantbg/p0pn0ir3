@@ -1,19 +1,22 @@
 [page-type=default],
 [page-type=about]
-  background $secondary
-  color $primary
-  #page-content
-    padding-top ($padding*2)
-  #page-text
-    span(1/6)
-    padding 0 $padding
-    +below($md)
-      span(1/2)
-    +below($sm)
-      stack()
+	background $secondary
+	color $primary
+	#page-content
+		padding-top ($padding*2)
+	#page-text
+		span(1/6)
+		padding 0 $padding
+		+below($md)
+			span(1/2)
+		+below($sm)
+			stack()
 
 [event-target]
 	cursor pointer
+
+[data-scroll]
+	overflow hidden
 
 #artists-preview
 	position fixed

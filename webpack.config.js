@@ -30,7 +30,7 @@ const modernizrConfig = {
     // "css/vwunit",
     // "img/srcset",
     // "img/webp",
-    // "storage/localstorage",
+    "storage/localstorage",
     // "storage/sessionstorage"
   ],
   minify: {

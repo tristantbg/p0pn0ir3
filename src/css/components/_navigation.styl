@@ -15,12 +15,12 @@
 #primary-nav
 	& > * > a, & > * > span
 		display block
-		padding 1em 0
+		padding 0.6em 0
 
 #secondary-nav
 	& > *
 		position relative
-		padding 1em 0
+		padding 0.6em 0
 
 #primary-nav, #secondary-nav
 	text-transform uppercase
@@ -35,14 +35,14 @@
 		position absolute
 		background $secondary
 		width 100vw
-		top 2.4em
+		top 1.8em
 		left 0
 		&::after
 			content ''
 			position fixed
 			z-index -1
 			background $secondary
-			height 5.4rem
+			height 4rem
 			width 100%
 			left 0
 			top 0
@@ -51,7 +51,7 @@
 			z-index 1
 			a
 				display block
-				padding 1em 0
+				padding 0.6em 0
 			&:not(:last-child) a
 				padding-right 1em
 	& > li:not(:hover) > ul
@@ -76,6 +76,14 @@
 		// color #ffec4b
 		// text-decoration line-through
 		// font-weight bolder
+
+#secondary-nav
+	a, [event-target]
+		transition opacity 150ms ease
+	a.active,
+	a:hover,
+	[event-target]:hover
+		opacity 0.6
 
 #languages
 	text-transform uppercase

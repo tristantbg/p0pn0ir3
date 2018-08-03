@@ -58,12 +58,11 @@ const App = {
     App.interact.init()
     window.addEventListener('resize', throttle(App.sizeSet, 128), false);
     document.getElementById('loader').style.display = 'none'
-    App.intro()
+    App.intro.init()
 
     document.addEventListener('click', e => {
       if (
-        e.target.getAttribute('event-target') !== 'about-panel' && document.body.classList.contains('about-panel') && !App.aboutPanel.contains(e.target)
-        ||
+        e.target.getAttribute('event-target') !== 'about-panel' && document.body.classList.contains('about-panel') && !App.aboutPanel.contains(e.target) ||
         e.target.getAttribute('event-target') === 'about-panel' && document.body.classList.contains('about-panel') && App.aboutPanel.contains(e.target)) document.body.classList.remove('about-panel')
     })
 
@@ -83,23 +82,58 @@ const App = {
     App.setElements();
   },
   setElements: () => {
-
     App.header = document.querySelector('header')
     App.menu = document.getElementById('menu')
     App.aboutPanel = document.getElementById('about-panel')
-
-
   },
-  intro: () => {
-    const intro = document.getElementById('intro')
-    if (intro) {
-      intro.classList.add('show')
-      setTimeout(function() {
-        intro.classList.add('animate')
-        setTimeout(function() {
-          intro.classList.add('hide')
-        }, 2000);
-      }, 800);
+  intro: {
+    init: () => {
+      const intro = document.getElementById('intro')
+      if (intro) {
+
+        if (App.intro.localstorage.load('intro')) {
+          intro.style.display = 'none'
+        } else {
+
+          intro.classList.add('show')
+          setTimeout(function() {
+            intro.classList.add('animate')
+            setTimeout(function() {
+              intro.classList.add('hide')
+            }, 2000);
+          }, 800);
+
+          intro.addEventListener('click', () => {
+            intro.classList.add('hide')
+          })
+
+          App.intro.localstorage.save('intro', '{introShown: true}', 1440/2)
+        }
+      }
+    },
+    localstorage: {
+      save: (key, jsonData, expirationMin) => {
+        if (!Modernizr.localstorage) {
+          return false;
+        }
+        var expirationMS = expirationMin * 60 * 1000;
+        var record = {
+          value: JSON.stringify(jsonData),
+          timestamp: new Date().getTime() + expirationMS
+        }
+        localStorage.setItem(key, JSON.stringify(record));
+        return jsonData;
+      },
+      load: (key) => {
+        if (!Modernizr.localstorage) {
+          return false;
+        }
+        var record = JSON.parse(localStorage.getItem(key));
+        if (!record) {
+          return false;
+        }
+        return (new Date().getTime() < record.timestamp && JSON.parse(record.value));
+      }
     }
   },
   hiddenNav: {
@@ -183,7 +217,7 @@ const App = {
       for (var i = 0; i < productToggle.length; i++) {
         const elem = productToggle[i]
         elem.addEventListener('click', e => {
-          elem.parentNode.classList.toggle('opened')
+          if (!document.body.classList.contains('about-panel')) elem.parentNode.classList.toggle('opened')
         })
       }
 

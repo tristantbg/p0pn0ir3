@@ -44,7 +44,7 @@ $about = $site->aboutPage()->toPage();
 		<div id="languages">
 			<?php foreach($site->languages()->flip() as $language): ?>
 				<?php if (true || $site->language() != $language): ?>
-					<a class="language no-barba" href="<?= $page->url($language->code()) ?>">
+					<a class="language no-barba<?php e($site->language() == $language, ' active') ?>" href="<?= $page->url($language->code()) ?>">
 						<?= ucfirst(html($language->code())) ?>
 					</a>
 				<?php endif ?>
