@@ -107,7 +107,7 @@ const App = {
             intro.classList.add('hide')
           })
 
-          App.intro.localstorage.save('intro', '{introShown: true}', 1440/2)
+          App.intro.localstorage.save('intro', '{introShown: true}', 1440 / 2)
         }
       }
     },
@@ -140,6 +140,7 @@ const App = {
     distance: 0,
     active: false,
     init: () => {
+      if (App.isMobile) return
       window.addEventListener('mousemove', throttle(App.hiddenNav.check, 128), false);
     },
     check: event => {
@@ -577,36 +578,54 @@ const Players = {
 
 const Scroller = {
   elements: [],
+  optionsX: {
+    scrollX: true,
+    scrollY: false,
+    freeScroll: true,
+    mouseWheel: true,
+    scrollbars: false,
+    interactiveScrollbars: false,
+    preventDefault: true,
+    preventDefaultException: {
+      tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT|A)$/
+    },
+    bounce: false
+  },
+  optionsY: {
+    mouseWheel: true,
+    freeScroll: true,
+    scrollbars: false,
+    interactiveScrollbars: false,
+    preventDefault: true,
+    preventDefaultException: {
+      tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT|A)$/
+    },
+    bounce: false
+  },
   init: function() {
     Scroller.elements = []
-    if (App.isMobile) return
-    const vscrollers = document.querySelectorAll('[data-scroll=y]')
-    for (var i = 0; i < vscrollers.length; i++) {
-      const s = new IScroll(vscrollers[i], {
-        mouseWheel: true,
-        freeScroll: true,
-        scrollbars: false,
-        interactiveScrollbars: false,
-        preventDefault: true,
-        bounce: false
+    if (!App.isMobile) {
+      document.querySelectorAll('[data-scroll=y]').forEach(scroller => {
+        const s = new IScroll(scroller, Scroller.optionsY)
+        Scroller.elements.push(s)
       })
-      Scroller.elements.push(s)
-    }
-    const xscrollers = document.querySelectorAll('[data-scroll=x]')
-    for (var i = 0; i < xscrollers.length; i++) {
-      const s = new IScroll(xscrollers[i], {
-        scrollX: true,
-        scrollY: false,
-        freeScroll: true,
-        mouseWheel: true,
-        scrollbars: false,
-        interactiveScrollbars: false,
-        preventDefault: true,
-        bounce: false
+
+      document.querySelectorAll('[data-scroll=x]').forEach(scroller => {
+        const s = new IScroll(scroller, Scroller.optionsX)
+        Scroller.elements.push(s)
       })
-      Scroller.elements.push(s)
+    } else {
+      document.querySelectorAll('[data-scrollmobile=y]').forEach(scroller => {
+        const s = new IScroll(scroller, Scroller.optionsY)
+        Scroller.elements.push(s)
+      })
+
+      document.querySelectorAll('[data-scrollmobile=x]').forEach(scroller => {
+        const s = new IScroll(scroller, Scroller.optionsX)
+        Scroller.elements.push(s)
+      })
     }
-    document.addEventListener('lazybeforeunveil', Scroller.refresh);
+    // document.addEventListener('lazybeforeunveil', Scroller.refresh);
   },
   enable: function() {
     for (var i = 0; i < Scroller.elements.length; i++) {

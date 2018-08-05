@@ -47,6 +47,11 @@
 	color $secondary
 	transition transform 500ms $kinetic
 	transform translateX(100%) translateZ(0)
+	+below($md)
+		width 100%
+		padding ($padding*3) $padding 0
+		#credits
+			margin-bottom ($padding*3)
 	.about-close
 		position absolute
 		top 0
@@ -72,8 +77,9 @@
 			margin-top ($padding/2)
 	input, button
 		color $secondary
-		-webkit-apparence none
-		-moz-apparence none
+		appearance none
+		border-radius 0
+		box-shadow 0
 		border 1px solid alpha($secondary, 0.2)
 		background transparent
 		font-family inherit

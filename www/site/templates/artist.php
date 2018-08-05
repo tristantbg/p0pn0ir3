@@ -1,13 +1,13 @@
 <?php snippet('header') ?>
 
-<div id="artist-medias" data-scroll="x">
+<div id="artist-medias" data-scroll="x" data-scrollmobile="x">
 	<div class="inner-scroll">
 		<?php foreach ($medias as $key => $item): ?>
 			<?php snippet('artist-image', ['field' => $item]) ?>
 		<?php endforeach ?>
 	</div>
 
-	<div id="infos-btn" class="uppercase" event-target="panel"><?= l::get('infos-btn') ?></div>
+	<a id="infos-btn" class="uppercase" event-target="panel"><?= l::get('infos-btn') ?></a>
 
   <div id="player"
   class="uppercase"
@@ -28,10 +28,12 @@
   </div>
 </div>
 
-<div id="artist-panel">
+<div id="artist-panel" data-scrollmobile="y">
 
-	<div id="artist-infos" data-scroll="y">
-		<div class="inner-scroll">
+	<div class="inner-scroll">
+
+  <div id="artist-infos" data-scroll="y">
+    <div class="inner-scroll">
 			<div class="row uppercase" id="artist-title"><?= $page->title()->html() ?></div>
 			<div class="row">
 				<div id="artist-description"><?= $page->text()->kt() ?></div>
@@ -101,7 +103,10 @@
     </div>
 	</div>
 
-	<div id="panel-close" class="uppercase" event-target="panel"><?= l::get('close') ?></div>
+	<a id="panel-close" class="uppercase" event-target="panel"><?= l::get('close') ?></a>
+
+  </div>
+
 </div>
 
 <?php snippet('footer') ?>
