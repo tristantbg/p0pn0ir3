@@ -1,6 +1,9 @@
 title: Site
 pages: true
 fields:
+  font:
+    label: Mono font
+    type: toggle
   generalSettings:
     label: Site Settings
     type: headline

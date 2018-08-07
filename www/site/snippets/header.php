@@ -68,7 +68,7 @@
 
 </head>
 
-<body page-type="<?= $page->intendedTemplate() ?>">
+<body page-type="<?= $page->intendedTemplate() ?>" <?php e(!$site->font()->bool(), 'class="sans-serif"') ?>>
 
 <div id="loader"></div>
 

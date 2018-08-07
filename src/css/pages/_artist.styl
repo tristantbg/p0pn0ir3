@@ -69,6 +69,8 @@ body:not(.player-playing)
 		& > .inner-scroll
 			width 100%
 			float left
+			+above($md + 1)
+				height 100%
 
 #panel-close
 	position absolute
@@ -114,10 +116,10 @@ body:not(.player-playing)
 			&:not(:last-child)
 				margin-bottom $padding
 			div:first-child
-				span(1/4)
+				span(1/3)
 				padding-right $padding
 			div:last-child
-				span(3/4)
+				span(2/3)
 				a
 					display block
 					float left
@@ -156,10 +158,10 @@ body:not(.player-playing)
 					height 100%
 					object-fit contain
 					object-position top left
-				.release-infos
-					padding-left ($padding/2)
 			+below($md)
 				margin-bottom $padding
+		.release-infos
+			padding-left ($padding)
 	.tracklist
 		margin-top $padding
 		.track
@@ -167,6 +169,8 @@ body:not(.player-playing)
 			width 100%
 			display inline-flex
 			flex-wrap wrap
+			.amplitude-duration-minutes:not(:empty)::after
+				content ':'
 		.track > div
 			&:first-child
 				flex-grow 1

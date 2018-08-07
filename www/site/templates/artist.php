@@ -83,7 +83,7 @@
           </a>
           <?php endif ?>
   				<div class="release-infos">
-  					<div class="release-title">
+  					<div class="release-title uppercase">
   						<span><?= $release->parent()->title()->html() ?></span>
   						<span><?= $release->title()->html() ?></span>
   					</div>

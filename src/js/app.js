@@ -238,7 +238,13 @@ const App = {
       if (artistMedias) {
         artistMedias.addEventListener('click', e => {
 
-          if (!e.target.getAttribute('event-target') && e.target.tagName !== 'SPAN' && e.target.tagName !== 'DIV') document.body.classList.toggle('infos-panel')
+          let isPlayer = false
+
+          Players.elements.forEach(elem => {
+            if (elem.container.contains(e.target)) isPlayer = true
+          })
+
+          if (!isPlayer && !e.target.getAttribute('event-target') && e.target.tagName !== 'SPAN' && e.target.tagName !== 'DIV') document.body.classList.toggle('infos-panel')
         })
       }
 
