@@ -36,3 +36,15 @@ fields:
     type: select
     options: pages
     width: 1/2
+  feedClientId:
+    label: Instagram Client ID
+    type: text
+    icon: code
+  feedClientSecret:
+    label: Instagram Client Secret
+    type: text
+    icon: code
+  feedAccessToken:
+    label: Instagram Access Token
+    type: text
+    icon: code

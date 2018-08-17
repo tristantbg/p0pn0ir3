@@ -15,7 +15,8 @@ for more information: http://getkirby.com/license
 
 */
 
-c::set('license', 'put your license key here');
+@include __DIR__ . DS . 'license.php';
+@include __DIR__ . DS . 'instagram.php';
 
 /*
 
