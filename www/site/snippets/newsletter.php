@@ -84,7 +84,7 @@
 <script type='text/javascript' src='https://my.sendinblue.com/public/theme/version4/assets/js/src/subscribe-validate.js?v=1528114688'></script>
 
     <div id="legal">
-    By subscribing to Pop Noire newsletter, you agree to receive exclusive email updates. You may unsubscribe at anytime. For any questions, please <a href="mailto:hugo@popnoire.com">contact us</a>.
+    By subscribing to Pop Noire newsletter, you agree to receive exclusive email updates. You may unsubscribe at anytime. For any questions, please <?= html::email('contact@popnoire.com', 'contact us') ?>.
     </div>
 
 </div>

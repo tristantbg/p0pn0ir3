@@ -83,6 +83,7 @@
 		border 1px solid alpha($secondary, 0.2)
 		background transparent
 		font-family inherit
+		letter-spacing inherit
 		font-size 1rem
 		padding 0.3em
 		margin 0
@@ -102,6 +103,7 @@
 		box-shadow none
 		font-size inherit
 		font-family inherit
+		letter-spacing inherit
 		cursor pointer
 		&[type="submit"]
 			margin-top $padding
@@ -111,9 +113,11 @@
 			padding 0 .5em
 
 body.about-panel
+	#main
+		pointer-events none
 	#about-panel
 		transform none
 	#menu
 		width calc(100% - 50rem)
-	#player
-		transform translateX(-50rem) translateZ(0)
+	#player, .shopify-buy-frame--toggle
+		transform translateX(-50rem) translateZ(0) !important

@@ -21,6 +21,34 @@ import throttle from 'lodash.throttle'
 import Barba from 'barba.js'
 
 
+function addListenerMulti(el, s, fn) {
+  s.split(' ').forEach(e => el.addEventListener(e, fn, false));
+}
+
+const getUrlParams = prop => {
+  var params = {};
+  var search = decodeURIComponent(window.location.href.slice(window.location.href.indexOf('?') + 1));
+  var definitions = search.split('&');
+
+  definitions.forEach(function(val, key) {
+    var parts = val.split('=', 2);
+    params[parts[0]] = parts[1];
+  });
+
+  return (prop && prop in params) ? params[prop] : params;
+}
+
+const simulateClick = elem => {
+  // Create our event (with options)
+  var evt = new MouseEvent('click', {
+    bubbles: true,
+    cancelable: true,
+    view: window
+  });
+  // If cancelled, don't dispatch our event
+  var canceled = !elem.dispatchEvent(evt);
+}
+
 const resizeWindow = () => {
   var event = document.createEvent('HTMLEvents');
   event.initEvent('resize', true, false);
@@ -66,7 +94,7 @@ const App = {
         e.target.getAttribute('event-target') === 'about-panel' && document.body.classList.contains('about-panel') && App.aboutPanel.contains(e.target)) document.body.classList.remove('about-panel')
     })
 
-    // document.addEventListener('lazybeforeunveil', Scroller.refresh);
+    document.addEventListener('lazybeforeunveil', Scroller.refresh);
   },
   sizeSet: () => {
     App.width = (window.innerWidth || document.documentElement.clientWidth);
@@ -85,6 +113,17 @@ const App = {
     App.header = document.querySelector('header')
     App.menu = document.getElementById('menu')
     App.aboutPanel = document.getElementById('about-panel')
+    // if (!App.isMobile) {
+    //   const elem = document.querySelector('#artist-releases .inner-scroll')
+    //   if (elem) {
+    //     let sizeW = 16
+    //     elem.querySelectorAll('.release').forEach(elem => {
+    //       sizeW += Math.floor(elem.offsetWidth + parseInt(getComputedStyle(elem).marginRight))
+    //     })
+    //     if (sizeW) elem.style.width = sizeW + 'px'
+    //   }
+    // }
+
   },
   intro: {
     init: () => {
@@ -219,7 +258,33 @@ const App = {
       for (var i = 0; i < productToggle.length; i++) {
         const elem = productToggle[i]
         elem.addEventListener('click', e => {
-          if (!document.body.classList.contains('about-panel')) elem.parentNode.classList.toggle('opened')
+
+          if (!document.body.classList.contains('about-panel')) {
+            if (App.productOpened) {
+              const opened = document.querySelector('.product.opened')
+              if (opened) {
+                opened.classList.remove('opened')
+                App.productOpened = false
+                document.body.classList.remove('product-opened')
+                Scroller.enable('x')
+              }
+            } else {
+              if (!elem.parentNode.classList.contains('opened')) {
+                elem.parentNode.classList.add('opened')
+                App.productOpened = true
+                document.body.classList.add('product-opened')
+                setTimeout(function() {
+                  Scroller.shop.scrollToElement(elem.parentNode, 1000, (App.width - App.height) / -2, 0, IScroll.utils.ease.circular)
+                }, 600);
+                Scroller.disable('x')
+              } else {
+                elem.parentNode.classList.remove('opened')
+                App.productOpened = false
+                document.body.classList.remove('product-opened')
+                Scroller.enable('x')
+              }
+            }
+          }
         })
       }
 
@@ -474,8 +539,16 @@ const Shop = {
         moneyFormat: '%E2%82%AC%7B%7Bamount_with_comma_separator%7D%7D',
         options: {
           "product": {
-            "variantId": "all",
+            iframe: false,
+            variantId: "all",
+            events: {
+              afterRender: Scroller.refresh
+            },
+            text: {
+              button: "BUY"
+            },
             "contents": {
+              "img": false,
               "imgWithCarousel": false,
               "variantTitle": false,
               "description": false,
@@ -489,6 +562,19 @@ const Shop = {
                   "margin-left": "20px",
                   "margin-bottom": "50px"
                 }
+              },
+              "button": {
+                "color": "#fff",
+                "background": "transparent",
+                ":hover": {
+                  "color": "#fff",
+                  "background": "transparent",
+                }
+              },
+              "price": {
+                "color": "#fff",
+                "fontSize": "15px",
+
               }
             }
           },
@@ -497,9 +583,52 @@ const Shop = {
               "button": true
             },
             "styles": {
+              "background-color": "#000",
+              "color": "#fff",
               "footer": {
-                "background-color": "#ffffff"
+                "background-color": "#000",
+                "color": "#fff"
+              },
+              "header": {
+                "background-color": "#000",
+                "color": "#fff"
+              },
+              "cartScroll": {
+                "background-color": "#000",
+                "color": "#fff"
+              },
+              "button": {
+                "background-color": "#000",
+                "color": "#fff",
+                "border": "1px solid rgba(255,255,255,0.3)",
+                ":hover": {
+                  "background-color": "#000",
+                  "color": "#fff",
+                  "border": "1px solid rgba(255,255,255,0.3)",
+                }
               }
+            }
+          },
+          "lineItem": {
+            "styles": {
+              "quantity": {
+                "filter": "invert(1)"
+              }
+            }
+          },
+          "toggle": {
+            iframe: false,
+            "contents": {
+              "title": true,
+              "icon": false
+            },
+            "text": {
+              title: "Cart"
+            },
+            "styles": {
+              "background-color": "#ffffff",
+              "color": "#000000"
+
             }
           },
           "modalProduct": {
@@ -576,7 +705,7 @@ const Players = {
       player.element.addEventListener('pause', e => {
         player.container.classList.remove('video-is-playing')
       })
-      player.container.addEventListener('click', e => {
+      player.element.addEventListener('click', e => {
         if (player.element.paused) {
           player.element.play()
         } else {
@@ -638,6 +767,7 @@ const Players = {
       const muteBtn = player.container.querySelector('[event-target=mute]')
       const unmuteBtn = player.container.querySelector('[event-target=unmute]')
       const fullscreenBtn = player.container.querySelector('[event-target=fullscreen]')
+      const seekbar = player.container.querySelector('.seekbar')
 
       if (playPause) {
         for (var j = 0; j < playPause.length; j++) {
@@ -670,8 +800,7 @@ const Players = {
           Players.unmute(player)
         })
       }
-
-      const cursors = player.container.getElementsByClassName('video-cursor')
+      const cursors = player.container.querySelectorAll('.video-cursor')
 
 
       player.container.addEventListener('mousemove', event => {
@@ -681,8 +810,34 @@ const Players = {
           elem.style.top = event.pageY - parentOffset.top - pageYOffset + "px";
           elem.style.left = event.pageX - parentOffset.left + "px";
         }
-
       })
+      if (seekbar) {
+        player.element.addEventListener('timeupdate', () => {
+          const percentage = (player.element.currentTime / player.element.duration) * 100;
+          seekbar.querySelector('.thumb').style.left = percentage + '%'
+        });
+
+        seekbar.addEventListener('mouseenter', () => {
+          cursors.forEach(el => {
+            el.style.display = 'none'
+          })
+        })
+
+        seekbar.addEventListener('mouseleave', () => {
+          cursors.forEach(el => {
+            el.removeAttribute('style')
+          })
+        })
+
+        seekbar.addEventListener('click', e => {
+          let offset = seekbar.getBoundingClientRect()
+          let left = (e.pageX - offset.left)
+          let totalWidth = seekbar.offsetWidth
+          let percentage = (left / totalWidth)
+          let vidTime = player.element.duration * percentage
+          player.element.currentTime = vidTime
+        });
+      }
     }
   }
 }
@@ -695,6 +850,7 @@ const Scroller = {
     freeScroll: true,
     mouseWheel: true,
     scrollbars: false,
+    tap: 'tapEvent',
     interactiveScrollbars: false,
     preventDefault: true,
     preventDefaultException: {
@@ -705,8 +861,10 @@ const Scroller = {
   optionsY: {
     mouseWheel: true,
     freeScroll: true,
-    scrollbars: false,
-    interactiveScrollbars: false,
+    scrollbars: true,
+    fadeScrollbars: true,
+    tap: 'tapEvent',
+    interactiveScrollbars: true,
     preventDefault: true,
     preventDefaultException: {
       tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT|A)$/
@@ -718,34 +876,66 @@ const Scroller = {
     if (!App.isMobile) {
       document.querySelectorAll('[data-scroll=y]').forEach(scroller => {
         const s = new IScroll(scroller, Scroller.optionsY)
+        s.direction = "y"
         Scroller.elements.push(s)
       })
 
       document.querySelectorAll('[data-scroll=x]').forEach(scroller => {
         const s = new IScroll(scroller, Scroller.optionsX)
+        s.direction = "x"
         Scroller.elements.push(s)
       })
     } else {
       document.querySelectorAll('[data-scrollmobile=y]').forEach(scroller => {
         const s = new IScroll(scroller, Scroller.optionsY)
+        s.direction = "y"
         Scroller.elements.push(s)
       })
 
       document.querySelectorAll('[data-scrollmobile=x]').forEach(scroller => {
         const s = new IScroll(scroller, Scroller.optionsX)
+        s.direction = "x"
         Scroller.elements.push(s)
       })
     }
+
+    Scroller.shop = null
+
+    Scroller.elements.forEach(s => {
+      if (s.wrapper.id === 'shop') {
+        Scroller.shop = s
+      }
+    })
+
+    if (Scroller.shop) {
+      const hash = getUrlParams()
+      if (hash.product) {
+        const elem = document.querySelector('[data-id="' + hash.product + '"] [event-target]')
+        if(elem) simulateClick(elem)
+      }
+    }
     // document.addEventListener('lazybeforeunveil', Scroller.refresh);
   },
-  enable: function() {
-    for (var i = 0; i < Scroller.elements.length; i++) {
-      Scroller.elements[i].enable();
+  enable: function(direction) {
+    if (direction) {
+      for (var i = 0; i < Scroller.elements.length; i++) {
+        if (Scroller.elements[i].direction === direction) Scroller.elements[i].enable();
+      }
+    } else {
+      for (var i = 0; i < Scroller.elements.length; i++) {
+        Scroller.elements[i].enable();
+      }
     }
   },
-  disable: function() {
-    for (var i = 0; i < Scroller.elements.length; i++) {
-      Scroller.elements[i].disable();
+  disable: function(direction) {
+    if (direction) {
+      for (var i = 0; i < Scroller.elements.length; i++) {
+        if (Scroller.elements[i].direction === direction) Scroller.elements[i].disable();
+      }
+    } else {
+      for (var i = 0; i < Scroller.elements.length; i++) {
+        Scroller.elements[i].disable();
+      }
     }
   },
   refresh: function() {
@@ -780,6 +970,7 @@ const Audio = {
             document.body.classList.add('player-playing')
           },
           'after_stop': function() {
+            window.clearTimeout(Audio.stopTm)
             if (App.isMobile) {
               Audio.stopTm = setTimeout(function() {
                 document.body.classList.remove('player-playing')
@@ -831,7 +1022,7 @@ const Pjax = {
     },
     startTransition: function() {
       document.body.classList.add('is-loading')
-      document.body.classList.remove('player-playing', 'infos-panel', 'about-panel')
+      document.body.classList.remove('player-playing', 'infos-panel', 'about-panel', 'product-opened')
       Amplitude.pause()
 
       let _this = this

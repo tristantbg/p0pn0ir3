@@ -37,6 +37,7 @@ if ($image) {
 
     $videoContainer->append('<div class="play-cursor video-cursor"></div>');
     $videoContainer->append('<div class="pause-cursor video-cursor"></div>');
+    $videoContainer->append('<div class="seekbar"><div class="thumb"></div></div>');
 
     echo $videoContainer;
   }

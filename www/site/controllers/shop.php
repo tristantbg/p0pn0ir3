@@ -6,7 +6,7 @@ return function ($site, $pages, $page) {
 	return array(
 		'ptemplate' => $page->intendedTemplate(),
 		'artists' => $site->index()->visible()->filterBy('intendedTemplate', 'artist'),
-		'products' => $products
+		'products' => $products->shuffle()
   );
 }
 

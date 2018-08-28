@@ -21,6 +21,11 @@
 		overflow hidden
 		img
 			height 100%
+			&.lazy
+				transition transform 800ms ease, opacity 400ms ease
+				transform translateX(100px) translateZ(0)
+				&.lazyloaded
+					transform none
 		video
 			object-fit cover
 		&:not(:last-child)
@@ -58,19 +63,13 @@ body:not(.player-playing)
 	background $primary
 	height 50vh
 	position fixed
-	width 100%
 	left 0
 	top 100%
 	transition transform 500ms $kinetic
-	+above($md + 1)
-		padding 0 $padding
 	&[data-scrollmobile]
 		overflow hidden
 		& > .inner-scroll
-			width 100%
 			float left
-			+above($md + 1)
-				height 100%
 
 #panel-close
 	position absolute
@@ -83,19 +82,22 @@ body:not(.player-playing)
 #artist-infos
 	span(1/2)
 	height 100%
-	padding-right ($padding/2)
 	line-height $line-height
-	height calc(100% - 3rem)
 	position relative
 	overflow hidden
+	+above($md + 1)
+		height calc(50vh - 3rem)
+		padding-right ($padding/2)
 	+below($md)
 		stack()
-		padding 0 $padding
 	& > .inner-scroll
+		padding-left $padding
 		padding-top $padding
 		padding-bottom $padding
 		width 100%
 		float left
+		+below($md)
+			padding-right $padding
 	#artist-title
 		margin-bottom $padding
 	#artist-description
@@ -127,25 +129,27 @@ body:not(.player-playing)
 
 #artist-releases
 	span(1/2)
+	width 50vw
 	height 100%
 	line-height $line-height
 	padding-left ($padding/2)
 	overflow hidden
+	+above($md + 1)
+		.inner-scroll
+			float left
+			display flex
+			padding-right $padding
 	+below($md)
 		stack()
 		padding 0 $padding
-	.inner-scroll
-		width 100%
-		float left
-		padding-top $padding
-		padding-bottom $padding
 	.release
 		span(1)
+		padding-top $padding
+		padding-bottom $padding
 		height 100%
-		&:not(:last-child)
-			margin-bottom $padding
-			+below($md)
-				margin-bottom ($padding*3)
+		+above($md + 1)
+			width 'calc(50vw - %s)' % ($padding*12)
+			margin-right ($padding*6)
 		.responsive-image, .release-infos
 			span(1/2)
 			+below($md)
@@ -161,7 +165,8 @@ body:not(.player-playing)
 			+below($md)
 				margin-bottom $padding
 		.release-infos
-			padding-left ($padding)
+			+above($md + 1)
+				padding-left ($padding)
 	.tracklist
 		margin-top $padding
 		.track

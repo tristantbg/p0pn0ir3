@@ -1,10 +1,11 @@
 #shop
-	hideselect()
+	// hideselect()
 	span(1)
 	height 100vh
 	position relative
 	background $primary
 	transition transform 500ms $kinetic
+	overflow-y hidden
 	& > [data-scroll]
 		position relative
 		width 100vw
@@ -32,16 +33,21 @@
 		left 0
 		color $secondary
 		background $primary
-		padding $padding 20%
 		height 50vh
 		transition transform 500ms $kinetic
+		.inner-scroll
+			padding $padding 20% ($padding*3)
 	.product
 		display table-cell
 		position relative
+		[event-target=product-panel]
+			cursor n-resize !important
 		&:not(:last-child)
 			.product-image
 				padding-right 5px
 		&.opened
+			[event-target=product-panel]
+				cursor s-resize !important
 			.product-image
 				transform translateY(-50vh) translateZ(0)
 			.product-infos
@@ -51,6 +57,12 @@
 		&:not(.opened)
 			.panel-close
 				display none
+
+body.product-opened
+	#shop
+		.product:not(.opened)
+			[event-target=product-panel]
+				cursor url('../../images/close-b.png') 8 8, not-allowed !important
 
 .panel-close, .panel-open
 	align(horizontal)
@@ -65,23 +77,34 @@
 	display flex
 	flex-direction column
 	align-items center
-	margin-top ($padding*3)
+	margin-bottom ($padding*3)
 	.price
 		margin-bottom ($padding/2)
 		&:empty
 			display none
 
-.buy-button
+.shopify-buy__btn
+	display flex
+	flex-direction column
+	align-items center
+	margin ($padding*3) 0
+
+.buy-button, .shopify-buy__btn
+	cursor pointer
 	width 4.2rem
 	height 4.2rem
-	background $primary
-	color $secondary
-	color #009dff !important
-	border 1px solid
+	background $secondary
+	color $primary
+	// color #009dff !important
+	border 1px solid $secondary
 	border-radius 100%
 	display flex
 	justify-content center
 	align-items center
+	transition color 150ms ease, background 150ms ease
+	&:hover
+		background $primary
+		color $secondary
 
 .product-infos
 	span(1/2)
@@ -124,3 +147,53 @@
 				padding-right $padding
 			div:last-child
 				span(3/4)
+
+.shopify-buy__product__price
+	margin-top $padding
+	
+.shopify-buy__option-select
+	.shopify-buy__option-select__label
+		span(1)
+	.shopify-buy__option-select-wrapper
+		position relative
+		margin-top $padding
+		.shopify-buy__option-select__select
+			display inline-block
+			background none
+			padding-right 2em
+			border 1px solid alpha($secondary, 0.3)
+			font-family inherit
+			font-size inherit
+			// -webkit-appearance none
+			// -moz-appearance none
+			border-radius 0
+			margin-top 0.2em
+		.shopify-buy__select-icon
+			display none
+			position absolute
+			pointer-events none
+			top 0
+			right 0
+			height 100%
+
+.shopify-buy-frame--toggle
+	transition transform 500ms $kinetic
+	z-index 10 !important
+	transform none !important
+	top initial !important
+	bottom 0
+	background $secondary
+	color $primary
+	cursor pointer
+	.shopify-buy__cart-toggle
+		padding $padding
+
+.shopify-buy__cart-toggle
+	display flex
+	flex-direction row-reverse
+	.shopify-buy__cart-toggle__title
+		margin-right 1em
+		text-transform uppercase
+
+.shopify-buy__btn-wrapper
+	display inline-block

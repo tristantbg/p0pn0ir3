@@ -71,12 +71,12 @@
 		</div>
 	</div>
 
-	<div id="artist-releases" data-scroll="y">
+	<div id="artist-releases" data-scroll="x">
     <div class="inner-scroll">
   		<?php foreach ($releases as $key => $release): ?>
   			<div class="release">
           <?php if ($productLink = page($release->productLink())): ?>
-          <a href="<?= $productLink->url() ?>">
+          <a href="<?= $site->index()->filterBy('intendedTemplate', 'shop')->first()->url().'?product='.$productLink->id() ?>">
           <?php endif ?>
   				<?php snippet('responsive-image', ['field' => $release->featured()]) ?>
           <?php if ($productLink = page($release->productLink())): ?>
@@ -89,7 +89,7 @@
   					</div>
   					<div class="release-year"><?= $release->date('Y') ?></div>
             <?php if ($release->tracklist()->isNotEmpty() && $playlist = $release->tracklist()->toStructure()): ?>
-              <div class="project-playlist">
+              <div class="release-playlist">
                 <div class="tracklist">
                   <?php foreach ($playlist as $key => $track): ?>
                     <?php snippet("track", array("track" => $track)) ?>

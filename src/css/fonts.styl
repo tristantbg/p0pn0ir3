@@ -1,5 +1,7 @@
 webfont('A', 'ApercuMono')
-webfont('TH', 'THGroteskMedium')
+// webfont('TH', 'THGroteskMedium')
+// webfont('H', 'HelveticaNeue')
+webfont('H', 'HelveticaLTStdRoman')
 
 $line-height = 1.3
 
@@ -37,11 +39,12 @@ body
 	text-rendering optimizeLegibility
 	font-smoothing()
 	&.sans-serif
-		font-family "TH", Helvetica Neue, Arial, sans-serif
-		// letter-spacing 0.1em
+		font-family "H", Helvetica, Arial, sans-serif
+		letter-spacing 0.1em
 
 p
 	line-height $line-height
+	text-align justify
 	&:not(:last-child)
 		margin-bottom 1em
 

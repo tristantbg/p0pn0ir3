@@ -1,6 +1,6 @@
 <?php if($image = $product->featured()->toFile()): ?>
 
-  <div class="product">
+  <div class="product" data-id="<?= $product->id() ?>">
 
     <?php if ($image->mp4()->isNotEmpty() || $image->filemp4()->isNotEmpty()): ?>
 
@@ -57,9 +57,14 @@
 
     <?php endif ?>
 
-    <div class="product-infos" data-scroll="y">
+    <div class="product-infos" data-scroll="y" data-scrollmobile="y">
       <div class="inner-scroll">
         <div class="product-title row uppercase text-center"><?= $product->title()->html() ?></div>
+      	<?php if ($product->shopifyID()->isNotEmpty()): ?>
+			<div class="buy row text-center uppercase">
+				<div id="product-component-<?= $product->shopifyID() ?>" class="row" data-shop="<?= $product->shopifyID() ?>"></div>
+			</div>
+		<?php endif ?>
         <div class="product-description row text-center"><?= $product->text()->kt() ?></div>
         <div class="row">
           <div class="left">
@@ -121,6 +126,7 @@
               <a href="<?= $buy->link() ?>" class="buy-button uppercase">Buy</a>
             </div>
           <?php endif ?>
+          
         </div>
       </div>
     </div>

@@ -59,34 +59,35 @@
 
 #primary-nav
 	& > li > a
-		transition opacity 150ms ease
+		transition color 150ms ease
 	& > li > a.active,
 	& > li > span.active,
 	& > li > a:hover
-		opacity 0.6
+		color alpha($primary, 0.6)
 		// color #009dff
 		// text-decoration line-through
 		// font-weight bolder
 	& > li > ul a
-		transition opacity 150ms ease
+		transition color 150ms ease
 	& > li > ul a.active,
 	& > li > ul span.active,
 	& > li > ul a:hover
-		opacity 0.6
+		color alpha($primary, 0.6)
 		// color #ffec4b
 		// text-decoration line-through
 		// font-weight bolder
 
 #secondary-nav
 	a, [event-target]
-		transition opacity 150ms ease
+		transition color 150ms ease
 	a.active,
 	a:hover,
 	[event-target]:hover
-		opacity 0.6
+		color alpha($primary, 0.6)
 
 #languages
 	text-transform uppercase
 	a:not(:last-child)
 		&::after
 			content ' / '
+			color alpha($primary, 1)

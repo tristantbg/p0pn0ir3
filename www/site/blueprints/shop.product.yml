@@ -42,17 +42,22 @@ fields:
         label: URL
         type: url
         required: true
-  buy:
-    label: Buy
-    type: structure
-    style: table
-    limit: 1
+  shopifyId:
+    label: Shopify ID
+    type: text
+    icon: code
     width: 1/2
-    fields:
-      link:
-        label: URL
-        type: url
-        required: true
-      price:
-        label: Price
-        type: text
+  # buy:
+  #   label: Buy
+  #   type: structure
+  #   style: table
+  #   limit: 1
+  #   width: 1/2
+  #   fields:
+  #     link:
+  #       label: URL
+  #       type: url
+  #       required: true
+  #     price:
+  #       label: Price
+  #       type: text
