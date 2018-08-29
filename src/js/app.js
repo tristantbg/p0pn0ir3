@@ -579,6 +579,7 @@ const Shop = {
             }
           },
           "cart": {
+            iframe: true,
             "contents": {
               "button": true
             },

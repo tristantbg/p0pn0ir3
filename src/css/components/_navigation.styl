@@ -1,93 +1,95 @@
 #menu
-	hideselect()
-	display flex
-	justify-content space-between
-	width 100%
-	background $secondary
-	color $primary
-	z-index 10
-	transition width 500ms $kinetic
-	&.visible
-		visibility visible
-	+below($sm)
-		display block
+  hideselect()
+  display flex
+  justify-content space-between
+  width 100%
+  background $secondary
+  color $primary
+  z-index 10
+  transition width 500ms $kinetic
+  height 2.2em
+  &.visible
+    visibility visible
+  +below($sm)
+    display block
 
 #primary-nav
-	& > * > a, & > * > span
-		display block
-		padding 0.6em 0
+  & > * > a, & > * > span
+    display block
+    padding 0.6em 0
 
 #secondary-nav
-	& > *
-		position relative
-		padding 0.6em 0
+  & > *
+    position relative
+    padding 0.6em 0
 
 #primary-nav, #secondary-nav
-	text-transform uppercase
-	display inline-flex
-	padding 0 ($padding)
-	& > *
-		position relative
-		&:not(:last-child)
-			padding-right 1em
-	& > li > ul
-		display inline-flex
-		position absolute
-		background $secondary
-		width 100vw
-		top 1.8em
-		left 0
-		&::after
-			content ''
-			position fixed
-			z-index -1
-			background $secondary
-			height 4rem
-			width 100%
-			left 0
-			top 0
-		& > li
-			position relative
-			z-index 1
-			a
-				display block
-				padding 0.6em 0
-			&:not(:last-child) a
-				padding-right 1em
-	& > li:not(:hover) > ul
-		display none
+  text-transform uppercase
+  display inline-flex
+  padding 0 ($padding)
+  height 2.2em
+  & > *
+    position relative
+    &:not(:last-child)
+      padding-right 1em
+  & > li > ul
+    display inline-flex
+    position absolute
+    background $secondary
+    width 100vw
+    top 1.8em
+    left 0
+    &::after
+      content ''
+      position fixed
+      z-index -1
+      background $secondary
+      height 4rem
+      width 100%
+      left 0
+      top 0
+    & > li
+      position relative
+      z-index 1
+      a
+        display block
+        padding 0.6em 0
+      &:not(:last-child) a
+        padding-right 1em
+  & > li:not(:hover) > ul
+    display none
 
 #primary-nav
-	& > li > a
-		transition color 150ms ease
-	& > li > a.active,
-	& > li > span.active,
-	& > li > a:hover
-		color alpha($primary, 0.6)
-		// color #009dff
-		// text-decoration line-through
-		// font-weight bolder
-	& > li > ul a
-		transition color 150ms ease
-	& > li > ul a.active,
-	& > li > ul span.active,
-	& > li > ul a:hover
-		color alpha($primary, 0.6)
-		// color #ffec4b
-		// text-decoration line-through
-		// font-weight bolder
+  & > li > a
+    transition color 150ms ease
+  & > li > a.active,
+  & > li > span.active,
+  & > li > a:hover
+    color alpha($primary, 0.6)
+    // color #009dff
+    // text-decoration line-through
+    // font-weight bolder
+  & > li > ul a
+    transition color 150ms ease
+  & > li > ul a.active,
+  & > li > ul span.active,
+  & > li > ul a:hover
+    color alpha($primary, 0.6)
+    // color #ffec4b
+    // text-decoration line-through
+    // font-weight bolder
 
 #secondary-nav
-	a, [event-target]
-		transition color 150ms ease
-	a.active,
-	a:hover,
-	[event-target]:hover
-		color alpha($primary, 0.6)
+  a, [event-target]
+    transition color 150ms ease
+  a.active,
+  a:hover,
+  [event-target]:hover
+    color alpha($primary, 0.6)
 
 #languages
-	text-transform uppercase
-	a:not(:last-child)
-		&::after
-			content ' / '
-			color alpha($primary, 1)
+  text-transform uppercase
+  a:not(:last-child)
+    &::after
+      content ' / '
+      color alpha($primary, 1)
