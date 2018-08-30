@@ -17,6 +17,9 @@ files:
       buttons:
         - link
         - email
+    embed:
+      label: Embed (Youtube, Vimeo…)
+      type: url
     stream:
       label: Video external stream link (.M3U8)
       type: url

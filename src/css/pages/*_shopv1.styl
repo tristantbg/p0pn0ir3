@@ -36,7 +36,7 @@
 		height 50vh
 		transition transform 500ms $kinetic
 		.inner-scroll
-			padding $padding ($padding*5) ($padding*3) $padding
+			padding $padding 20% ($padding*3)
 	.product
 		display table-cell
 		position relative
@@ -74,6 +74,10 @@ body.product-opened
 	padding $padding
 
 .buy
+	display flex
+	flex-direction column
+	align-items center
+	margin-bottom ($padding*3)
 	.price
 		margin-bottom ($padding/2)
 		&:empty
@@ -83,9 +87,7 @@ body.product-opened
 	display flex
 	flex-direction column
 	align-items center
-	margin $padding 0
-	position relative
-	left -0.6rem
+	margin ($padding*3) 0
 
 .buy-button, .shopify-buy__btn
 	cursor pointer
@@ -95,8 +97,6 @@ body.product-opened
 	color $primary
 	// color #009dff !important
 	border 1px solid $secondary
-	font-size inherit
-	letter-spacing inherit
 	border-radius 100%
 	display flex
 	justify-content center
@@ -120,11 +120,7 @@ body.product-opened
 	.product-title
 		margin-bottom ($padding*3)
 	.product-description
-		span(1/2)
 		margin-bottom ($padding*3)
-		padding-right ($padding*3)
-	.buy
-		span(1/2)
 	.left, .right
 		span(1/2)
 		& > *:not(:last-child)
@@ -135,8 +131,7 @@ body.product-opened
 	.right
 		display none
 		padding-left ($padding/2)
-	.product-tracklist, .product-moreinfos
-		span(1)
+	.product-tracklist
 		.table
 			line-height 1.3
 			width 100%
@@ -159,34 +154,33 @@ body.product-opened
 			div:last-child
 				span(3/4)
 
-.shopify-buy__option-select
-	span(1)
+.shopify-buy__product__price
 	margin-top $padding
+
+.shopify-buy__option-select
 	.shopify-buy__option-select__label
 		span(1)
 	.shopify-buy__option-select-wrapper
 		position relative
-		display inline-block
+		margin-top $padding
 		.shopify-buy__option-select__select
-			display block
-			text-transform uppercase
+			display inline-block
 			background none
 			padding-right 2em
-			border 0
-			letter-spacing inherit
+			border 1px solid alpha($secondary, 0.3)
 			font-family inherit
 			font-size inherit
-			-webkit-appearance none
-			-moz-appearance none
+			// -webkit-appearance none
+			// -moz-appearance none
 			border-radius 0
 			margin-top 0.2em
 		.shopify-buy__select-icon
-			// display none
+			display none
 			position absolute
 			pointer-events none
 			top 0
 			right 0
-			height 1.3em
+			height 100%
 
 .shopify-buy-frame--toggle
 	transition transform 500ms $kinetic

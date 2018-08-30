@@ -1,21 +1,20 @@
 <?php
 
-kirby()->hook('panel.page.*', function($page, $oldPage = null) {
-  if($page->intendedTemplate() == 'release') {
+// kirby()->hook('panel.page.*', function($page, $oldPage = null) {
+//   if($page->intendedTemplate() == 'release') {
 
-    $projects = site()->index()->filterBy('intendedTemplate', 'release');
-    $index = 0;
+//     $releases = site()->index()->filterBy('intendedTemplate', 'release');
 
-    foreach ($projects as $key => $p) {
-      $tracks = $p->tracklist()->toStructure();
+//     foreach ($releases as $key => $p) {
+//       $tracks = $p->tracklist()->toStructure();
 
-      foreach ($tracks as $key => $t) {
-        if($file = $t->audioFile()->toFile()) {
-          $file->update(['trackIndex' => $index]);
-          $index++;
-        }
-      }
-    }
+//       foreach ($tracks as $key => $t) {
+//         if($file = $t->audioFile()->toFile()) {
+//           $file->update(['trackIndex' => $index]);
+//           $index++;
+//         }
+//       }
+//     }
 
-  }
-});
+//   }
+// });

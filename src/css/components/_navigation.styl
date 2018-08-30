@@ -7,7 +7,7 @@
   color $primary
   z-index 10
   transition width 500ms $kinetic
-  height 2.2em
+  height 2em
   &.visible
     visibility visible
   +below($sm)
@@ -27,7 +27,7 @@
   text-transform uppercase
   display inline-flex
   padding 0 ($padding)
-  height 2.2em
+  height 2em
   & > *
     position relative
     &:not(:last-child)
@@ -39,12 +39,16 @@
     width 100vw
     top 1.8em
     left 0
+    height 2em
+    overflow hidden
+    transition height 200ms ease
     &::after
       content ''
       position fixed
       z-index -1
       background $secondary
       height 4rem
+      transition height 200ms ease
       width 100%
       left 0
       top 0
@@ -57,7 +61,9 @@
       &:not(:last-child) a
         padding-right 1em
   & > li:not(:hover) > ul
-    display none
+    height 0
+    &::after
+      height 2rem
 
 #primary-nav
   & > li > a

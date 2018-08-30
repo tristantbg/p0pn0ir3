@@ -91,8 +91,12 @@
             <?php if ($release->tracklist()->isNotEmpty() && $playlist = $release->tracklist()->toStructure()): ?>
               <div class="release-playlist">
                 <div class="tracklist">
+                  <?php $idx = 0 ?>
                   <?php foreach ($playlist as $key => $track): ?>
-                    <?php snippet("track", array("track" => $track)) ?>
+                    <?php if ($track->url()->isNotEmpty() || $track->file()->toFile()): ?>
+                      <?php $idx++ ?>
+                    <?php endif ?>
+                    <?php snippet("track", array("track" => $track, "key" => $idx)) ?>
                   <?php endforeach ?>
                 </div>
               </div>

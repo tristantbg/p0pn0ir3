@@ -36,6 +36,9 @@
       alt="<?= $page->title()->html().' - © '.$site->title()->html() ?>"
       <?php endif ?>
       height="100%" width="auto" />
+      <?php if($image->embed()->isNotEmpty()): ?>
+        <?= $image->embed()->embed(['thumb' => $image->width(1000)->url()]) ?>
+      <?php endif ?>
       <noscript>
         <img src="<?= $src ?>"
         <?php if (isset($caption) && $caption): ?>
@@ -50,6 +53,7 @@
       <?php if (isset($withCaption) && $image->caption()->isNotEmpty()): ?>
         <div class="row caption"><?= $image->caption()->kt() ?></div>
       <?php endif ?>
+
     </div>
 
   <?php endif ?>

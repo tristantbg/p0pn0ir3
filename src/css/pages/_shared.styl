@@ -42,6 +42,12 @@
 				object-fit cover
 				font-family 'object-fit: cover'
 
+.mb1
+	margin-bottom $padding
+
+.mb2
+	margin-top $padding
+
 .table
 	width 100%
 .table-row
@@ -50,9 +56,9 @@
 		vertical-align top
 		&:not(:last-child)
 			padding-right $padding
-		&:nth-child(2),
-		&:nth-child(3):not(:last-child)
-			flex 1
+		// &:nth-child(2),
+		// &:nth-child(3):not(:last-child)
+		// 	flex 1
 
 .iScrollVerticalScrollbar
 	top 0 !important

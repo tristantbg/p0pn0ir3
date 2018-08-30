@@ -1,6 +1,67 @@
 [page-type=news]
 	background $primary
 
+#news.justified
+	span(1)
+	background $primary
+	+above($md + 1)
+		&[data-scroll=x]
+			height 100vh
+			width 100vw
+			.inner-scroll
+				height 100%
+				float left
+	.grid
+		span(1)
+		.item
+			position relative
+			overflow hidden
+			+below($md)
+				span(1)
+				&:not(:last-child)
+					// margin-bottom $padding
+			a.link-overlay
+				position absolute
+				top 0
+				left 0
+				width 100%
+				height 100%
+				z-index 1
+			+above($md + 1)
+				.responsive-image
+					height 100%
+					img
+						width 100%
+						height 100%
+						object-fit cover
+						font-family 'object-fit: cover'
+			.caption
+				width 100%
+				position absolute
+				bottom 0
+				left 0
+				z-index 3
+				display flex
+				flex-wrap wrap
+				padding $padding 0
+				background $primary
+				+below($md)
+					position static
+					padding $padding
+				&:empty
+					display none
+			+above($md + 1)
+				&:not(:hover) .caption .text
+					display none
+			.subtitle
+				flex 1
+			.text
+				margin-top $padding
+				flex 1 0 100%
+			&.side
+				.caption
+					padding-left $padding
+
 #news
 	background $primary
 	+above($md + 1)
@@ -51,10 +112,13 @@
 					padding $padding
 				&:empty
 					display none
+			+above($md + 1)
+				&:not(:hover) .caption .text
+					display none
 			.subtitle
 				flex 1
-				margin-bottom $padding
 			.text
+				margin-top $padding
 				flex 1 0 100%
 			&.side
 				.caption

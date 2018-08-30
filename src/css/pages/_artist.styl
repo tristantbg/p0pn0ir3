@@ -13,23 +13,39 @@
 			height 100%
 			display table
 	.artist-image
+		position relative
 		height 100vh
 		display table-cell
 		padding 0
 		margin 0
 		// padding-top 1.5rem
 		overflow hidden
-		img
+		.embed
+			position absolute
+			top 0
+			z-index 1
 			height 100%
-			&.lazy
+			width 100%
+			.embed__thumb>img
+				opacity 1
+				pointer-events none
+				min-width 50px
+				max-width 50px
+		& > img
+			height 100%
+			&.lazy, & + .embed
 				transition transform 800ms ease, opacity 400ms ease
 				transform translateX(100px) translateZ(0)
 				&.lazyloaded
 					transform none
+					&+ .embed
+						transform none
 		video
 			object-fit cover
 		&:not(:last-child)
 			padding-right 5px
+			.embed
+				width calc(100% - 5px)
 
 #infos-btn
 	position absolute

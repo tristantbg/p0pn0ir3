@@ -14,7 +14,7 @@
           // $classes = $size[array_rand($size)];
           // $classes .= $position[array_rand($position)];
           ?>
-          <div class="item <?= $image->orientation() ?>">
+          <div class="item <?= $image->orientation() ?>" style="width:<?= $image->width() ?>px; height:<?= $image->height() ?>px">
             <?php if ($image->embedUrl()->isNotEmpty()): ?>
               <?= $image->embedUrl()->embed([
                 'lazyvideo' => true,

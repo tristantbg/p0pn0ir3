@@ -59,17 +59,18 @@
 
     <div class="product-infos" data-scroll="y" data-scrollmobile="y">
       <div class="inner-scroll">
-        <div class="product-title row uppercase text-center"><?= $product->title()->html() ?></div>
-      	<?php if ($product->shopifyID()->isNotEmpty()): ?>
-			<div class="buy row text-center uppercase">
-				<div id="product-component-<?= $product->shopifyID() ?>" class="row" data-shop="<?= $product->shopifyID() ?>"></div>
-			</div>
-		<?php endif ?>
-        <div class="product-description row text-center"><?= $product->text()->kt() ?></div>
+        <div class="product-title row uppercase"><?= $product->title()->html() ?></div>
+        <div class="product-description"><?= $product->text()->kt() ?></div>
+        <?php if ($product->shopifyID()->isNotEmpty()): ?>
+            <div class="buy uppercase">
+              <div id="product-component-<?= $product->shopifyID() ?>" class="row" data-shop="<?= $product->shopifyID() ?>"></div>
+            </div>
+          <?php endif ?>
         <div class="row">
           <div class="left">
-            <?php if ($product->tracklist()->isNotEmpty()): ?>
+            <?php if ($product->tracklist()->isNotEmpty() && $product->tracklist()->toStructure()->table()->first()->first()->isNotEmpty()): ?>
             <div class="product-tracklist">
+              <div class="row uppercase mb1">Tracklist</div>
               <table class="table">
                 <tbody>
                   <?php foreach($product->tracklist()->toStructure()->table() as $tableRow): ?>
@@ -83,8 +84,9 @@
               </table>
             </div>
             <?php endif ?>
-            <?php if ($product->infos()->isNotEmpty()): ?>
+            <?php if ($product->infos()->isNotEmpty() && $product->infos()->toStructure()->table()->first()->first()->isNotEmpty()): ?>
             <div class="product-moreinfos">
+              <div class="row uppercase mb1">Infos</div>
               <table class="table">
                 <tbody>
                   <?php foreach($product->infos()->toStructure()->table() as $tableRow): ?>
@@ -126,7 +128,7 @@
               <a href="<?= $buy->link() ?>" class="buy-button uppercase">Buy</a>
             </div>
           <?php endif ?>
-          
+
         </div>
       </div>
     </div>
