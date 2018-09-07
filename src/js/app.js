@@ -426,7 +426,7 @@ const App = {
         // });
 
         App.newsGrid.eg.setLayout(FrameLayout, {
-          margin: 10,
+          margin: 5,
           frame: App.newsGrid.pattern
         });
 
