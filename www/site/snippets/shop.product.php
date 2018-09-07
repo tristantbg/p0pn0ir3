@@ -66,6 +66,13 @@
               <div id="product-component-<?= $product->shopifyID() ?>" class="row" data-shop="<?= $product->shopifyID() ?>"></div>
             </div>
           <?php endif ?>
+          <?php if ($product->listen()->isNotEmpty()): ?>
+        	<div class="product-links row uppercase">
+                <?php foreach ($product->listen()->toStructure() as $key => $item): ?>
+                  <a class="row" href="<?= $item->url() ?>"><?= $item->title()->html() ?></a>
+                <?php endforeach ?>
+        	</div>
+          <?php endif ?>
         <div class="row">
           <div class="left">
             <?php if ($product->tracklist()->isNotEmpty() && $product->tracklist()->toStructure()->table()->first()->first()->isNotEmpty()): ?>
@@ -102,25 +109,16 @@
             <?php endif ?>
           </div>
           <div class="right">
-            <div class="product-links">
-              <?php if ($product->listen()->isNotEmpty()): ?>
-                <div class="row uppercase">
-                  <table class="table">
-                    <tbody>
-                          <tr class="table-row">
-                              <td class="table-cell"><?= l::get('listen') ?></td>
-                              <td class="table-cell">
-                                <?php foreach ($product->listen()->toStructure() as $key => $item): ?>
-                                  <a class="row" href="<?= $item->url() ?>"><?= $item->title()->html() ?></a>
-                                <?php endforeach ?>
-                              </td>
-                          </tr>
-                    </tbody>
-                  </table>
-                </div>
-              <?php endif ?>
-            </div>
+            
           </div>
+
+          <?php if ($product->medias()->isNotEmpty()): ?>
+          	<div class="product-medias row">
+          		<?php foreach ($product->medias()->toStructure() as $key => $m): ?>
+          			<?php snippet('responsive-image', ['field' => $m]) ?>
+          		<?php endforeach ?>
+          	</div>
+          <?php endif ?>
 
           <?php if ($product->buy()->isNotEmpty() && $buy = $product->buy()->toStructure()->first()): ?>
             <div class="buy row">

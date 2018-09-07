@@ -15,11 +15,11 @@
 			for ($i = 680; $i <= $maxWidth; $i += 340) $srcset .= $image->width($i)->url() . ' ' . $i . 'w,';
 		}
 		?>
-    <?php if (isset($ratio)): ?>
-    <div class="ph" style="padding-bottom: <?= number_format(100 / $ratio, 5, '.', '') ?>%"></div>
-    <?php else: ?>
-    <div class="ph" style="padding-bottom: <?= number_format(100 / $image->ratio(), 5, '.', '') ?>%"></div>
-    <?php endif ?>
+	    <?php if (isset($ratio)): ?>
+	    <div class="ph" style="padding-bottom: <?= number_format(100 / $ratio, 5, '.', '') ?>%"></div>
+	    <?php else: ?>
+	    <div class="ph" style="padding-bottom: <?= number_format(100 / $image->ratio(), 5, '.', '') ?>%"></div>
+	    <?php endif ?>
 		<img 
 		class="lazy lazyload<?php if(isset($preload)) echo ' lazypreload' ?>"
 		src="<?= $placeholder ?>"

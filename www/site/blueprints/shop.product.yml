@@ -6,11 +6,19 @@ fields:
   title:
     label: Title
     type: title
-    width: 3/4
+    width: 2/4
   featured:
     label: Featured image
     type: image
     width: 1/4
+  shopifyId:
+    label: Shopify ID
+    type: text
+    icon: code
+    width: 1/4
+  medias:
+    label: Images
+    type: images
   text:
     label: Description
     type: textarea
@@ -42,11 +50,6 @@ fields:
         label: URL
         type: url
         required: true
-  shopifyId:
-    label: Shopify ID
-    type: text
-    icon: code
-    width: 1/2
   # buy:
   #   label: Buy
   #   type: structure

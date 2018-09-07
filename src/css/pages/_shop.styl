@@ -23,6 +23,7 @@
 		transition transform 500ms $kinetic
 		img
 			height 100%
+			width auto
 		video
 			object-fit cover
 	.product-infos
@@ -33,10 +34,10 @@
 		left 0
 		color $secondary
 		background $primary
-		height 50vh
+		height 80vh
 		transition transform 500ms $kinetic
 		.inner-scroll
-			padding $padding ($padding*5) ($padding*3) $padding
+			padding $padding $padding ($padding*3) $padding
 	.product
 		display table-cell
 		position relative
@@ -49,9 +50,9 @@
 			[event-target=product-panel]
 				cursor url('../../images/arrow-bottom.png') 8 8, s-resize !important
 			.product-image
-				transform translateY(-50vh) translateZ(0)
+				transform translateY(-80vh) translateZ(0)
 			.product-infos
-				transform translateY(-50vh) translateZ(0)
+				transform translateY(-80vh) translateZ(0)
 			.panel-open
 				display none
 		&:not(.opened)
@@ -85,7 +86,7 @@ body.product-opened
 	align-items center
 	margin $padding 0
 	position relative
-	left -0.6rem
+	// left -0.6rem
 
 .buy-button, .shopify-buy__btn
 	cursor pointer
@@ -125,6 +126,7 @@ body.product-opened
 		padding-right ($padding*3)
 	.buy
 		span(1/2)
+		padding-left 1%
 	.left, .right
 		span(1/2)
 		& > *:not(:last-child)
@@ -137,6 +139,7 @@ body.product-opened
 		padding-left ($padding/2)
 	.product-tracklist, .product-moreinfos
 		span(1)
+		margin-bottom ($padding*3)
 		.table
 			line-height 1.3
 			width 100%
@@ -145,6 +148,8 @@ body.product-opened
 				td
 					width 50%
 	.product-links
+		margin-bottom ($padding*3)
+		line-height 1.3
 		.table
 			line-height 1.3
 			.table-row
@@ -158,6 +163,16 @@ body.product-opened
 				padding-right $padding
 			div:last-child
 				span(3/4)
+	.product-medias
+		margin-top ($padding*3)
+		.responsive-image
+			span(1/3)
+			width 'calc(33.33333333% - %s)' % $padding
+			margin-right $padding
+
+.shopify-buy__product__price
+	font-size 2rem
+	letter-spacing normal
 
 .shopify-buy__option-select
 	span(1)
