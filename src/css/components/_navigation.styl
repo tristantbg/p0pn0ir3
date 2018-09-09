@@ -62,12 +62,10 @@
         padding 0.6em 0
       &:not(:last-child) a
         padding-right 1em
-  & > li:not(:hover) > ul
+  & > li:not(.hover) > ul
     height 0
-    transition-delay 500ms
     &::after
       height 2rem
-      transition-delay 500ms
 
 #primary-nav
   & > li > a
@@ -95,7 +93,8 @@
   a.active,
   a:hover,
   [event-target]:hover
-    color alpha($primary, 0.6)
+    +above($md + 1)
+      color alpha($primary, 0.6)
 
 #languages
   text-transform uppercase

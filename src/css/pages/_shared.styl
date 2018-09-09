@@ -48,6 +48,14 @@
 .mb2
 	margin-top $padding
 
+.link-hover
+	+above($md + 1)
+		transition color 150ms ease
+		&.black:hover
+			color alpha($secondary, 0.6) !important
+		&.white:hover
+			color alpha($primary, 0.6) !important
+
 .table
 	width 100%
 .table-row

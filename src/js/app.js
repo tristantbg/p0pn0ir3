@@ -1,5 +1,4 @@
 /* jshint esversion: 6 */
-
 import 'babel-polyfill'
 import lazysizes from 'lazysizes'
 import optimumx from 'lazysizes'
@@ -8,10 +7,7 @@ require('../../node_modules/lazysizes/plugins/unveilhooks/ls.unveilhooks.js')
 import Amplitude from 'amplitudejs'
 import imagesLoaded from 'imagesloaded'
 // import Packery from 'packery'
-import InfiniteGrid, {
-  JustifiedLayout,
-  FrameLayout
-} from "@egjs/infinitegrid";
+import InfiniteGrid, { JustifiedLayout, FrameLayout } from "@egjs/infinitegrid";
 import IScroll from 'iscroll'
 import Hls from 'hls.js'
 import throttle from 'lodash.throttle'
@@ -21,68 +17,61 @@ import throttle from 'lodash.throttle'
 // } from 'gsap'
 import Barba from 'barba.js'
 
-function updateURLParameter(url, param, paramVal)
-{
-    var TheAnchor = null;
-    var newAdditionalURL = "";
-    var tempArray = url.split("?");
-    var baseURL = tempArray[0];
-    var additionalURL = tempArray[1];
-    var temp = "";
-
-    if (additionalURL)
-    {
-        var tmpAnchor = additionalURL.split("#");
-        var TheParams = tmpAnchor[0];
-            TheAnchor = tmpAnchor[1];
-        if(TheAnchor)
-            additionalURL = TheParams;
-
-        tempArray = additionalURL.split("&");
-
-        for (var i=0; i<tempArray.length; i++)
-        {
-            if(tempArray[i].split('=')[0] != param)
-            {
-                newAdditionalURL += temp + tempArray[i];
-                temp = "&";
-            }
-        }
+function updateURLParameter(url, param, paramVal) {
+  var TheAnchor = null;
+  var newAdditionalURL = "";
+  var tempArray = url.split("?");
+  var baseURL = tempArray[0];
+  var additionalURL = tempArray[1];
+  var temp = "";
+  if (additionalURL) {
+    var tmpAnchor = additionalURL.split("#");
+    var TheParams = tmpAnchor[0];
+    TheAnchor = tmpAnchor[1];
+    if (TheAnchor)
+      additionalURL = TheParams;
+    tempArray = additionalURL.split("&");
+    for (var i = 0; i < tempArray.length; i++) {
+      if (tempArray[i].split('=')[0] != param) {
+        newAdditionalURL += temp + tempArray[i];
+        temp = "&";
+      }
     }
-    else
-    {
-        var tmpAnchor = baseURL.split("#");
-        var TheParams = tmpAnchor[0];
-            TheAnchor  = tmpAnchor[1];
-
-        if(TheParams)
-            baseURL = TheParams;
-    }
-
-    if(TheAnchor)
-        paramVal += "#" + TheAnchor;
-
-    var rows_txt = temp + "" + param + "=" + paramVal;
-    return baseURL + "?" + newAdditionalURL + rows_txt;
+  } else {
+    var tmpAnchor = baseURL.split("#");
+    var TheParams = tmpAnchor[0];
+    TheAnchor = tmpAnchor[1];
+    if (TheParams)
+      baseURL = TheParams;
+  }
+  if (TheAnchor)
+    paramVal += "#" + TheAnchor;
+  var rows_txt = temp + "" + param + "=" + paramVal;
+  return baseURL + "?" + newAdditionalURL + rows_txt;
 }
 
 function addListenerMulti(el, s, fn) {
   s.split(' ').forEach(e => el.addEventListener(e, fn, false));
 }
-
+const isInViewport = (elem) => {
+  const bounding = elem.getBoundingClientRect();
+  return (
+      bounding.top >= 0 &&
+      bounding.left >= 0 &&
+      bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+      bounding.right <= (window.innerWidth || document.documentElement.clientWidth)
+  );
+};
 const getUrlParams = prop => {
   var params = {};
   var search = decodeURIComponent(window.location.href.slice(window.location.href.indexOf('?') + 1));
   var definitions = search.split('&');
-
   definitions.forEach(function(val, key) {
     var parts = val.split('=', 2);
     params[parts[0]] = parts[1];
   });
-
   return (prop && prop in params) ? params[prop] : params;
 }
-
 const simulateClick = elem => {
   // Create our event (with options)
   var evt = new MouseEvent('click', {
@@ -93,36 +82,36 @@ const simulateClick = elem => {
   // If cancelled, don't dispatch our event
   var canceled = !elem.dispatchEvent(evt);
 }
-
 const resizeWindow = () => {
   var event = document.createEvent('HTMLEvents');
   event.initEvent('resize', true, false);
   window.dispatchEvent(event);
 }
-
 const sizeElem = (id, sizeW, sizeH) => {
   const elem = document.getElementById(id)
   if (elem) {
-    if (sizeW) elem.style.width = sizeW + 'px'
-    if (sizeH) elem.style.height = sizeH + 'px'
+    if (sizeW)
+      elem.style.width = sizeW + 'px'
+    if (sizeH)
+      elem.style.height = sizeH + 'px'
   }
 }
-
 const placeElem = (id, top, left) => {
   const elem = document.getElementById(id)
   if (elem) {
-    if (top) elem.style.top = top + 'px'
-    if (left) elem.style.left = left + 'px'
+    if (top)
+      elem.style.top = top + 'px'
+    if (left)
+      elem.style.left = left + 'px'
   }
 }
-
 const margeElem = (id, top) => {
   const elem = document.getElementById(id)
   if (elem) {
-    if (top) elem.style.marginTop = top + 'px'
+    if (top)
+      elem.style.marginTop = top + 'px'
   }
 }
-
 const App = {
   init: () => {
     App.pageType = document.body.getAttribute('page-type');
@@ -132,13 +121,9 @@ const App = {
     window.addEventListener('resize', throttle(App.sizeSet, 128), false);
     document.getElementById('loader').style.display = 'none'
     App.intro.init()
-
     document.addEventListener('click', e => {
-      if (
-        e.target.getAttribute('event-target') !== 'about-panel' && document.body.classList.contains('about-panel') && !App.aboutPanel.contains(e.target) ||
-        e.target.getAttribute('event-target') === 'about-panel' && document.body.classList.contains('about-panel') && App.aboutPanel.contains(e.target)) document.body.classList.remove('about-panel')
+      if (e.target.getAttribute('event-target') !== 'about-panel' && document.body.classList.contains('about-panel') && !App.aboutPanel.contains(e.target) || e.target.getAttribute('event-target') === 'about-panel' && document.body.classList.contains('about-panel') && App.aboutPanel.contains(e.target)) document.body.classList.remove('about-panel')
     })
-
     document.addEventListener('lazybeforeunveil', Scroller.refresh);
   },
   sizeSet: () => {
@@ -158,27 +143,24 @@ const App = {
     App.header = document.querySelector('header')
     App.menu = document.getElementById('menu')
     App.aboutPanel = document.getElementById('about-panel')
-    // if (!App.isMobile) {
-    //   const elem = document.querySelector('#artist-releases .inner-scroll')
-    //   if (elem) {
-    //     let sizeW = 16
-    //     elem.querySelectorAll('.release').forEach(elem => {
-    //       sizeW += Math.floor(elem.offsetWidth + parseInt(getComputedStyle(elem).marginRight))
-    //     })
-    //     if (sizeW) elem.style.width = sizeW + 'px'
-    //   }
-    // }
-
+  // if (!App.isMobile) {
+  //   const elem = document.querySelector('#artist-releases .inner-scroll')
+  //   if (elem) {
+  //     let sizeW = 16
+  //     elem.querySelectorAll('.release').forEach(elem => {
+  //       sizeW += Math.floor(elem.offsetWidth + parseInt(getComputedStyle(elem).marginRight))
+  //     })
+  //     if (sizeW) elem.style.width = sizeW + 'px'
+  //   }
+  // }
   },
   intro: {
     init: () => {
       const intro = document.getElementById('intro')
       if (intro) {
-
         if (App.intro.localstorage.load('intro')) {
           intro.style.display = 'none'
         } else {
-
           intro.classList.add('show')
           setTimeout(function() {
             intro.classList.add('animate')
@@ -186,11 +168,9 @@ const App = {
               intro.classList.add('hide')
             }, 2000);
           }, 800);
-
           intro.addEventListener('click', () => {
             intro.classList.add('hide')
           })
-
           App.intro.localstorage.save('intro', '{introShown: true}', 1440 / 2)
         }
       }
@@ -229,15 +209,16 @@ const App = {
     },
     check: event => {
       App.hiddenNav.distance++
-        if (!App.hiddenNav.active) {
-          App.hiddenNav.distance = 0
-          App.hiddenNav.show()
-          window.clearTimeout(App.hiddenNav.tm)
+      if (!App.hiddenNav.active) {
+        App.hiddenNav.distance = 0
+        App.hiddenNav.show()
+        window.clearTimeout(App.hiddenNav.tm)
+        if (event.pageY > App.height / 5) {
           App.hiddenNav.tm = setTimeout(function() {
             App.hiddenNav.hide()
           }, 1500);
-        } else
-      if (App.hiddenNav.distance > 4) {
+        }
+      } else if (App.hiddenNav.distance > 4) {
         App.hiddenNav.distance = 0
         App.hiddenNav.show()
       }
@@ -268,17 +249,13 @@ const App = {
     },
     previews: () => {
       const previews = document.querySelectorAll('.artist-preview')
-
       for (var i = 0; i < previews.length; i++) {
         previews[i].style.visibility = "hidden"
       }
-
       const artistsLinks = document.querySelectorAll('[data-page=artist][data-id]')
-
       for (var i = 0; i < artistsLinks.length; i++) {
         const elem = artistsLinks[i]
         const preview = document.querySelector('.artist-preview[data-id="' + elem.dataset.id + '"]')
-
         if (preview) {
           elem.addEventListener('mouseenter', e => {
             preview.style.visibility = 'visible'
@@ -292,19 +269,15 @@ const App = {
     eventTargets: () => {
       App.productOpened = false
       const panelToggle = document.querySelectorAll('[event-target=panel]')
-
       for (var i = 0; i < panelToggle.length; i++) {
         panelToggle[i].addEventListener('click', e => {
           document.body.classList.toggle('infos-panel')
         })
       }
-
       const productToggle = document.querySelectorAll('[event-target=product-panel]')
-
       for (var i = 0; i < productToggle.length; i++) {
         const elem = productToggle[i]
         elem.addEventListener('click', e => {
-
           if (!document.body.classList.contains('about-panel')) {
             if (App.productOpened) {
               const opened = document.querySelector('.product.opened')
@@ -334,9 +307,7 @@ const App = {
           }
         })
       }
-
       const aboutToggle = document.querySelectorAll('[event-target=about-panel]:not(.loaded)')
-
       for (var i = 0; i < aboutToggle.length; i++) {
         const elem = aboutToggle[i]
         elem.addEventListener('click', e => {
@@ -345,22 +316,34 @@ const App = {
           document.body.classList.toggle('about-panel')
         })
       }
-
       const artistMedias = document.getElementById('artist-medias')
-
       if (artistMedias) {
         artistMedias.addEventListener('click', e => {
-
           let isPlayer = false
-
           Players.elements.forEach(elem => {
-            if (elem.container.contains(e.target)) isPlayer = true
+            if (elem.container.contains(e.target))
+              isPlayer = true
           })
-
           if (!isPlayer && !e.target.getAttribute('event-target') && e.target.tagName !== 'SPAN' && e.target.className !== 'embed__thumb' && e.target.tagName !== 'DIV') document.body.classList.toggle('infos-panel')
         })
       }
+      const menus = document.querySelectorAll('#primary-nav > li')
+      console.log(menus)
+      menus.forEach(element => {
+        element.addEventListener('mouseenter', e => {
+          menus.forEach(menuElem => {
+            menuElem.classList.remove('hover')
+          })
+          e.currentTarget.classList.add('hover')
+        })
+        element.addEventListener('mouseleave', e => {
+          const target = e.currentTarget
+          setTimeout(function() {
+            target.classList.remove('hover')
+          }, 500);
 
+        })
+      })
     },
     linkTargets: () => {
       const links = document.querySelectorAll("a");
@@ -382,14 +365,11 @@ const App = {
         embed.src = script ? script.getAttribute('data-src') + '&autoplay=1' : embed.getAttribute('data-src') + '&autoplay=1';
         wrapper.removeChild(this);
       };
-
       var thumb = document.getElementsByClassName('embed__thumb');
-
       for (var i = 0; i < thumb.length; i++) {
         thumb[i].addEventListener('click', pluginEmbedLoadLazyVideo, false);
       }
     },
-
   },
   newsGrid: {
     pattern: [
@@ -399,40 +379,31 @@ const App = {
       [2, 2, 2, 2, 4, 4, 6, 6]
     ],
     init: () => {
-
       if (App.isMobile) return
-
       const news = document.getElementById('news')
-
       if (news && news.dataset.grid !== '[]') {
         App.newsGrid.pattern = JSON.parse(news.dataset.grid)
       }
-
       if (App.newsGrid.eg) {
         App.newsGrid.eg.destroy()
         App.newsGrid.eg = null
       }
-
       if (news) {
         App.newsGrid.eg = new InfiniteGrid("#news .grid", {
           margin: 10,
           horizontal: true,
         });
-
         // App.newsGrid.eg.setLayout(JustifiedLayout, {
         //   margin: 10,
         //   minSize: 500,
         //   maxSize: 1200,
         // });
-
         App.newsGrid.eg.setLayout(FrameLayout, {
           margin: 5,
           frame: App.newsGrid.pattern
         });
-
         App.newsGrid.eg.on('layoutComplete', e => {
           Scroller.refresh()
-
           for (var i = 0; i < e.target.length; i++) {
             const elem = e.target[i].el
             if (elem.style.left == "0px") {
@@ -440,12 +411,10 @@ const App = {
             } else {
               elem.classList.remove('side')
             }
-
-            // const caption = elem.querySelector('.caption')
-            // elem.style.paddingBottom = caption.offsetHeight + 'px'
+          // const caption = elem.querySelector('.caption')
+          // elem.style.paddingBottom = caption.offsetHeight + 'px'
           }
         })
-
         App.newsGrid.eg.layout()
       }
     },
@@ -460,18 +429,16 @@ const App = {
         for (var i = 0; i < laidOutItems.length; i++) {
           const elem = laidOutItems[i]
           console.log(elem.style.left, laidOutItems)
-          // if (elem.style.left == 0) {
-          //   elem.classList.add('side')
-          // } else {
-          //   elem.classList.remove('side')
-
-          // }
+        // if (elem.style.left == 0) {
+        //   elem.classList.add('side')
+        // } else {
+        //   elem.classList.remove('side')
+        // }
         }
       })
     }
   }
 }
-
 const Sliders = {
   flickitys: [],
   init: () => {
@@ -499,7 +466,6 @@ const Sliders = {
     Sliders.slider = new Flickity(element, options);
     Sliders.flickitys.push(Sliders.slider);
     if (Sliders.slider.slides.length < 1) return; // Stop if no slides
-
     Sliders.slider.on('change', function() {
       if (this.selectedElement) {
         const caption = this.element.parentNode.querySelector('.caption');
@@ -535,7 +501,6 @@ const Sliders = {
   },
   accessibility: () => {
     const prevNext = document.getElementsByClassName('flickity-prev-next-button')
-
     for (var i = 0; i < prevNext.length; i++) {
       const elem = prevNext[i]
       elem.addEventListener('mousemove', event => {
@@ -543,13 +508,10 @@ const Sliders = {
         var parentOffset = elem.getBoundingClientRect();
         svg.style.top = event.pageY - parentOffset.top - pageYOffset + "px";
         svg.style.left = event.pageX - parentOffset.left + "px";
-
       })
     }
-
   }
 }
-
 const Shop = {
   scriptURL: 'https://sdks.shopifycdn.com/buy-button/latest/buy-button-storefront.min.js',
   init: () => {
@@ -577,16 +539,13 @@ const Shop = {
       apiKey: '31682f9bb9f4efdfdcfd96fb08af4c27',
       appId: '6',
     });
-
     const items = document.querySelectorAll('[data-shop]')
-
     items.forEach(el => {
       Shop.createButton(el.dataset.shop)
     })
   },
   createButton: id => {
     const node = document.getElementById('product-component-' + id)
-
     ShopifyBuy.UI.onReady(Shop.client).then(function(ui) {
       ui.createComponent('product', {
         id: [id],
@@ -630,7 +589,6 @@ const Shop = {
               "price": {
                 "color": "#fff",
                 "fontSize": "15px",
-
               }
             }
           },
@@ -685,7 +643,6 @@ const Shop = {
             "styles": {
               "background-color": "#ffffff",
               "color": "#000000"
-
             }
           },
           "modalProduct": {
@@ -721,12 +678,10 @@ const Shop = {
     });
   }
 }
-
 const Players = {
   elements: [],
   init: () => {
     const videoPlayers = document.getElementsByClassName('video-player')
-
     const options = {
       controls: [''],
       fullscreen: {
@@ -734,10 +689,8 @@ const Players = {
         fallback: true,
         iosNative: true
       },
-      // iconUrl: _root + "/assets/images/player.svg"
+    // iconUrl: _root + "/assets/images/player.svg"
     }
-
-
     for (var i = 0; i < videoPlayers.length; i++) {
       const videoElement = videoPlayers[i]
       const player = {
@@ -746,14 +699,11 @@ const Players = {
       }
       Players.elements.push(player)
     }
-
     Players.prepareStream(Players.elements)
     Players.events()
     Players.accessibility()
-
   },
   events: () => {
-
     for (var i = 0; i < Players.elements.length; i++) {
       const player = Players.elements[i]
       player.element.addEventListener('playing', e => {
@@ -770,12 +720,9 @@ const Players = {
         }
       })
     }
-
   },
   prepareStream: (players) => {
-
     if (players.length === 0) return;
-
     const attachStream = (player) => {
       if (player.element.dataset.stream && Hls.isSupported()) {
         player.hls = new Hls({
@@ -785,7 +732,6 @@ const Players = {
         player.hls.attachMedia(player.element);
       }
     };
-
     for (var i = 0; i < players.length; i++) {
       attachStream(players[i]);
     }
@@ -819,13 +765,11 @@ const Players = {
   accessibility: () => {
     for (var i = 0; i < Players.elements.length; i++) {
       const player = Players.elements[i];
-
       const playPause = player.container.querySelectorAll('[event-target=playpause]')
       const muteBtn = player.container.querySelector('[event-target=mute]')
       const unmuteBtn = player.container.querySelector('[event-target=unmute]')
       const fullscreenBtn = player.container.querySelector('[event-target=fullscreen]')
       const seekbar = player.container.querySelector('.seekbar')
-
       if (playPause) {
         for (var j = 0; j < playPause.length; j++) {
           playPause[j].addEventListener('click', () => {
@@ -858,8 +802,6 @@ const Players = {
         })
       }
       const cursors = player.container.querySelectorAll('.video-cursor')
-
-
       player.container.addEventListener('mousemove', event => {
         for (var j = 0; j < cursors.length; j++) {
           const elem = cursors[j]
@@ -873,19 +815,16 @@ const Players = {
           const percentage = (player.element.currentTime / player.element.duration) * 100;
           seekbar.querySelector('.thumb').style.left = percentage + '%'
         });
-
         seekbar.addEventListener('mouseenter', () => {
           cursors.forEach(el => {
             el.style.display = 'none'
           })
         })
-
         seekbar.addEventListener('mouseleave', () => {
           cursors.forEach(el => {
             el.removeAttribute('style')
           })
         })
-
         seekbar.addEventListener('click', e => {
           let offset = seekbar.getBoundingClientRect()
           let left = (e.pageX - offset.left)
@@ -898,15 +837,16 @@ const Players = {
     }
   }
 }
-
 const Scroller = {
   elements: [],
   optionsX: {
     scrollX: true,
+    mouseWheelScrollsHorizontally: true,
     scrollY: false,
     freeScroll: true,
     mouseWheel: true,
     scrollbars: false,
+    probeType: 3,
     tap: 'tapEvent',
     interactiveScrollbars: false,
     preventDefault: true,
@@ -920,6 +860,7 @@ const Scroller = {
     freeScroll: true,
     scrollbars: true,
     fadeScrollbars: true,
+    probeType: 3,
     tap: 'tapEvent',
     interactiveScrollbars: true,
     preventDefault: true,
@@ -936,7 +877,6 @@ const Scroller = {
         s.direction = "y"
         Scroller.elements.push(s)
       })
-
       document.querySelectorAll('[data-scroll=x]').forEach(scroller => {
         const s = new IScroll(scroller, Scroller.optionsX)
         s.direction = "x"
@@ -948,30 +888,31 @@ const Scroller = {
         s.direction = "y"
         Scroller.elements.push(s)
       })
-
       document.querySelectorAll('[data-scrollmobile=x]').forEach(scroller => {
         const s = new IScroll(scroller, Scroller.optionsX)
         s.direction = "x"
         Scroller.elements.push(s)
       })
     }
-
     Scroller.shop = null
-
     Scroller.elements.forEach(s => {
       if (s.wrapper.id === 'shop') {
         Scroller.shop = s
       }
+      // s.on('scrollEnd', () => {
+      //   Players.elements.forEach(v => {
+      //     if (isInViewport(v.element)) v.element.play()
+      //   })
+      // });
     })
-
     if (Scroller.shop) {
       const hash = getUrlParams()
       if (hash.product) {
         const elem = document.querySelector('[data-id="' + hash.product + '"] [event-target]')
-        if(elem) simulateClick(elem)
+        if (elem) simulateClick(elem)
       }
     }
-    // document.addEventListener('lazybeforeunveil', Scroller.refresh);
+  // document.addEventListener('lazybeforeunveil', Scroller.refresh);
   },
   enable: function(direction) {
     if (direction) {
@@ -1004,14 +945,12 @@ const Scroller = {
     }
   }
 }
-
 const Audio = {
   init: () => {
     Audio.songs = null
     Audio.player = document.getElementById('player')
-
-    if (Audio.player) Audio.songs = JSON.parse(Audio.player.dataset.songs)
-
+    if (Audio.player)
+      Audio.songs = JSON.parse(Audio.player.dataset.songs)
     if (Audio.player && Audio.songs) {
       Amplitude.init({
         "bindings": {
@@ -1038,18 +977,16 @@ const Audio = {
           }
         }
       });
-      // var p = document.getElementById("player");
-      // var d = document.getElementById("duration");
-      // document.getElementById('progress-container').addEventListener('click', function(e) {
-      //   var offset = this.getBoundingClientRect();
-      //   var x = e.pageX - offset.left;
-
-      //   Amplitude.setSongPlayedPercentage((parseFloat(x) / parseFloat(this.offsetWidth)) * 100);
-      // });
+    // var p = document.getElementById("player");
+    // var d = document.getElementById("duration");
+    // document.getElementById('progress-container').addEventListener('click', function(e) {
+    //   var offset = this.getBoundingClientRect();
+    //   var x = e.pageX - offset.left;
+    //   Amplitude.setSongPlayedPercentage((parseFloat(x) / parseFloat(this.offsetWidth)) * 100);
+    // });
     }
   }
 }
-
 const Pjax = {
   titleTransition: 0.7,
   init: function() {
@@ -1081,54 +1018,39 @@ const Pjax = {
       document.body.classList.add('is-loading')
       document.body.classList.remove('player-playing', 'infos-panel', 'about-panel', 'product-opened')
       Amplitude.pause()
-
       let _this = this
       const newContent = _this.newContainer.querySelector('#page-content')
-
       // const currentLink = document.querySelector('a.active')
       // if (currentLink) currentLink.classList.remove('active')
       // if (App.linkClicked) App.linkClicked.classList.add('active')
-
       App.nextPageType = newContent.getAttribute('page-type')
-
       if (App.pageType == 'ok') {
-
       } else {
         document.body.setAttribute('page-type', App.nextPageType)
         _this.endTransition(_this, newContent)
       }
-
     },
     endTransition: function(_this, newContent) {
       window.scroll(0, 0)
       resizeWindow()
-
       if (App.nextPageType == 'ok') {
-
       } else {
         _this.finish(_this, newContent)
       }
     },
     finish: function(_this, newContent) {
-
       _this.done()
       App.pageType = App.nextPageType
-
       App.sizeSet()
       App.interact.init()
       document.body.classList.remove('is-loading')
-
       // setTimeout(function() {
       //   TweenMax.set(document.querySelector('#page-content'), {
       //     clearProps: 'transform,opacity'
       //   })
       // }, 500);
-
       if (window.ga) window.ga('send', 'pageview')
     }
-
-
   })
 }
-
 document.addEventListener("DOMContentLoaded", App.init);

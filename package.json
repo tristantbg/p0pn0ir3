@@ -45,7 +45,7 @@
     "gsap": "^2.0.1",
     "hls.js": "^0.10.1",
     "imagesloaded": "^4.1.4",
-    "iscroll": "^5.2.0",
+    "iscroll": "https://github.com/tristantbg/iscroll",
     "lazysizes": "^4.0.4",
     "lodash.throttle": "^4.1.1",
     "viewport-units-buggyfill": "^0.6.2"

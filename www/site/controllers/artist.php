@@ -9,7 +9,7 @@ return function ($site, $pages, $page) {
     $tracks = $release->tracklist()->toStructure();
     foreach ($tracks as $key => $track){
       if ($file = $track->audioFile()->toFile()){
-         $songs .= esc('{"url": "'.$file->url().'","song_title": "'.$page->title()->html().'&nbsp;&nbsp;'.$track->title()->html().'"},');
+         $songs .= esc('{"url": "'.$file->url().'","song_title": "'.$page->title()->html().'&nbsp;—&nbsp;'.$track->title()->html().'"},');
       }
     }
   }

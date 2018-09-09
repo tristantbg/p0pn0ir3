@@ -57,13 +57,11 @@ fields:
         label: Title
         type: text
         required: true
-      audioLink:
-        label: URL
-        type: url
       audioFile:
         label: File
         type: quickselect
         options: audio
+        required: true
   # playlistLink:
   #   label: Tracklist
   #   type: url

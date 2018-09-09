@@ -32,6 +32,7 @@
 				min-width 50px
 				max-width 50px
 		& > img
+			cursor url('../../images/arrow-top.png') 8 8, n-resize !important
 			height 100%
 			&.lazy, & + .embed
 				transition transform 800ms ease, opacity 400ms ease
@@ -208,5 +209,7 @@ body:not(.player-playing)
 body.infos-panel
 	#artist-medias
 		transform translateY(-50vh) translateZ(0)
+		.artist-image > img
+			cursor url('../../images/arrow-bottom.png') 8 8, s-resize !important
 	#artist-panel
 		transform translateY(-50vh) translateZ(0)

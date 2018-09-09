@@ -7,7 +7,7 @@
 		<?php endforeach ?>
 	</div>
 
-	<a id="infos-btn" class="uppercase" event-target="panel"><?= l::get('infos-btn') ?></a>
+	<a id="infos-btn" class="uppercase link-hover white" event-target="panel"><?= l::get('infos-btn') ?></a>
 
   <div id="player"
   class="uppercase"
@@ -16,11 +16,10 @@
       <span amplitude-song-info="song_title" amplitude-main-song-info="true"></span>
     </div>
     <div id="controls">
-      <span class="amplitude-prev">PREV</span>
-      <span class="amplitude-current-time" amplitude-main-current-time="true"></span>
-      <span id="play-pause" class="amplitude-play-pause" amplitude-main-play-pause="true"></span>
-      <span class="amplitude-stop">STOP</span>
-      <span class="amplitude-next">NEXT</span>
+      <span class="amplitude-stop link-hover white">STOP</span>&nbsp;|&nbsp;
+      <span id="play-pause" class="amplitude-play-pause link-hover white" amplitude-main-play-pause="true"></span>&nbsp;|&nbsp;
+      <span class="amplitude-current-time" amplitude-main-current-time="true"></span>&nbsp;|&nbsp;
+      <span class="amplitude-prev link-hover white">PREV</span>&nbsp;|&nbsp;<span class="amplitude-next link-hover white">NEXT</span>
     </div>
     <!-- <div id="progress-container">
       <input type="range" amplitude-main-song-slider="true" class="amplitude-song-slider">
@@ -43,7 +42,7 @@
 							<div><?= l::get('follow') ?></div>
 							<div>
 								<?php foreach ($page->socials()->toStructure() as $key => $item): ?>
-									<a class="uppercase" href="<?= $item->url() ?>"><?= $item->title()->html() ?></a>
+									<a class="uppercase link-hover black" href="<?= $item->url() ?>"><?= $item->title()->html() ?></a>
 								<?php endforeach ?>
 							</div>
 						</div>
@@ -54,7 +53,7 @@
 							<div><?= l::get('listen') ?></div>
 							<div>
 								<?php foreach ($page->listen()->toStructure() as $key => $item): ?>
-									<a class="uppercase" href="<?= $item->url() ?>"><?= $item->title()->html() ?></a>
+									<a class="uppercase link-hover black" href="<?= $item->url() ?>"><?= $item->title()->html() ?></a>
 								<?php endforeach ?>
 							</div>
 						</div>
@@ -84,8 +83,7 @@
           <?php endif ?>
   				<div class="release-infos">
   					<div class="release-title uppercase">
-  						<span><?= $release->parent()->title()->html() ?></span>
-  						<span><?= $release->title()->html() ?></span>
+  						<span><?= $release->parent()->title()->html() ?></span>&nbsp;—&nbsp;<span><?= $release->title()->html() ?></span>
   					</div>
   					<div class="release-year"><?= $release->date('Y') ?></div>
             <?php if ($release->tracklist()->isNotEmpty() && $playlist = $release->tracklist()->toStructure()): ?>
@@ -107,7 +105,7 @@
     </div>
 	</div>
 
-	<a id="panel-close" class="uppercase" event-target="panel"><?= l::get('close') ?></a>
+	<a id="panel-close" class="uppercase link-hover black" event-target="panel"><?= l::get('close') ?></a>
 
   </div>
 
