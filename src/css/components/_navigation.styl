@@ -42,6 +42,7 @@
     height 2em
     overflow hidden
     transition height 200ms ease
+    transition-delay 0ms
     &::after
       content ''
       position fixed
@@ -49,6 +50,7 @@
       background $secondary
       height 4rem
       transition height 200ms ease
+      transition-delay 0ms
       width 100%
       left 0
       top 0
@@ -62,8 +64,10 @@
         padding-right 1em
   & > li:not(:hover) > ul
     height 0
+    transition-delay 500ms
     &::after
       height 2rem
+      transition-delay 500ms
 
 #primary-nav
   & > li > a

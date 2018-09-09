@@ -441,8 +441,8 @@ const App = {
               elem.classList.remove('side')
             }
 
-            const caption = elem.querySelector('.caption')
-            elem.style.paddingBottom = caption.offsetHeight + 'px'
+            // const caption = elem.querySelector('.caption')
+            // elem.style.paddingBottom = caption.offsetHeight + 'px'
           }
         })
 

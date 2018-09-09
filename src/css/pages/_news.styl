@@ -52,7 +52,6 @@
 					display none
 			+above($md + 1)
 				&:not(:hover) .caption .text
-					display none
 					transform translateY(100%) translateZ(0)
 					transition transform 200ms ease
 			.subtitle
@@ -111,6 +110,8 @@
 				flex-wrap wrap
 				padding $padding $padding ($padding/2)
 				background $primary
+				transition transform 150ms ease
+				transform translateY(0) translateZ(0)
 				+below($md)
 					position static
 					padding $padding
@@ -118,7 +119,8 @@
 					display none
 			+above($md + 1)
 				&:not(:hover) .caption
-					display none
+					transform translateY(100%) translateZ(0)
+					transition transform 400ms ease
 			.subtitle
 				flex 1
 			.text
