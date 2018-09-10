@@ -7,7 +7,10 @@ require('../../node_modules/lazysizes/plugins/unveilhooks/ls.unveilhooks.js')
 import Amplitude from 'amplitudejs'
 import imagesLoaded from 'imagesloaded'
 // import Packery from 'packery'
-import InfiniteGrid, { JustifiedLayout, FrameLayout } from "@egjs/infinitegrid";
+import InfiniteGrid, {
+  JustifiedLayout,
+  FrameLayout
+} from "@egjs/infinitegrid";
 import IScroll from 'iscroll'
 import Hls from 'hls.js'
 import throttle from 'lodash.throttle'
@@ -56,10 +59,10 @@ function addListenerMulti(el, s, fn) {
 const isInViewport = (elem) => {
   const bounding = elem.getBoundingClientRect();
   return (
-      bounding.top >= 0 &&
-      bounding.left >= 0 &&
-      bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-      bounding.right <= (window.innerWidth || document.documentElement.clientWidth)
+    bounding.top >= 0 &&
+    bounding.left >= 0 &&
+    bounding.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+    bounding.right <= (window.innerWidth || document.documentElement.clientWidth)
   );
 };
 const getUrlParams = prop => {
@@ -143,16 +146,16 @@ const App = {
     App.header = document.querySelector('header')
     App.menu = document.getElementById('menu')
     App.aboutPanel = document.getElementById('about-panel')
-  // if (!App.isMobile) {
-  //   const elem = document.querySelector('#artist-releases .inner-scroll')
-  //   if (elem) {
-  //     let sizeW = 16
-  //     elem.querySelectorAll('.release').forEach(elem => {
-  //       sizeW += Math.floor(elem.offsetWidth + parseInt(getComputedStyle(elem).marginRight))
-  //     })
-  //     if (sizeW) elem.style.width = sizeW + 'px'
-  //   }
-  // }
+    // if (!App.isMobile) {
+    //   const elem = document.querySelector('#artist-releases .inner-scroll')
+    //   if (elem) {
+    //     let sizeW = 16
+    //     elem.querySelectorAll('.release').forEach(elem => {
+    //       sizeW += Math.floor(elem.offsetWidth + parseInt(getComputedStyle(elem).marginRight))
+    //     })
+    //     if (sizeW) elem.style.width = sizeW + 'px'
+    //   }
+    // }
   },
   intro: {
     init: () => {
@@ -209,16 +212,17 @@ const App = {
     },
     check: event => {
       App.hiddenNav.distance++
-      if (!App.hiddenNav.active) {
-        App.hiddenNav.distance = 0
-        App.hiddenNav.show()
-        window.clearTimeout(App.hiddenNav.tm)
-        if (event.pageY > App.height / 5) {
-          App.hiddenNav.tm = setTimeout(function() {
-            App.hiddenNav.hide()
-          }, 1500);
-        }
-      } else if (App.hiddenNav.distance > 4) {
+        if (!App.hiddenNav.active) {
+          App.hiddenNav.distance = 0
+          App.hiddenNav.show()
+          window.clearTimeout(App.hiddenNav.tm)
+          if (event.pageY > App.height / 5) {
+            App.hiddenNav.tm = setTimeout(function() {
+              App.hiddenNav.hide()
+            }, 1500);
+          }
+        } else
+      if (App.hiddenNav.distance > 4) {
         App.hiddenNav.distance = 0
         App.hiddenNav.show()
       }
@@ -412,8 +416,8 @@ const App = {
             } else {
               elem.classList.remove('side')
             }
-          // const caption = elem.querySelector('.caption')
-          // elem.style.paddingBottom = caption.offsetHeight + 'px'
+            // const caption = elem.querySelector('.caption')
+            // elem.style.paddingBottom = caption.offsetHeight + 'px'
           }
         })
         App.newsGrid.eg.layout()
@@ -430,11 +434,11 @@ const App = {
         for (var i = 0; i < laidOutItems.length; i++) {
           const elem = laidOutItems[i]
           console.log(elem.style.left, laidOutItems)
-        // if (elem.style.left == 0) {
-        //   elem.classList.add('side')
-        // } else {
-        //   elem.classList.remove('side')
-        // }
+          // if (elem.style.left == 0) {
+          //   elem.classList.add('side')
+          // } else {
+          //   elem.classList.remove('side')
+          // }
         }
       })
     }
@@ -690,7 +694,7 @@ const Players = {
         fallback: true,
         iosNative: true
       },
-    // iconUrl: _root + "/assets/images/player.svg"
+      // iconUrl: _root + "/assets/images/player.svg"
     }
     for (var i = 0; i < videoPlayers.length; i++) {
       const videoElement = videoPlayers[i]
@@ -912,7 +916,7 @@ const Scroller = {
         if (elem) simulateClick(elem)
       }
     }
-  // document.addEventListener('lazybeforeunveil', Scroller.refresh);
+    // document.addEventListener('lazybeforeunveil', Scroller.refresh);
   },
   enable: function(direction) {
     if (direction) {
@@ -977,13 +981,13 @@ const Audio = {
           }
         }
       });
-    // var p = document.getElementById("player");
-    // var d = document.getElementById("duration");
-    // document.getElementById('progress-container').addEventListener('click', function(e) {
-    //   var offset = this.getBoundingClientRect();
-    //   var x = e.pageX - offset.left;
-    //   Amplitude.setSongPlayedPercentage((parseFloat(x) / parseFloat(this.offsetWidth)) * 100);
-    // });
+      // var p = document.getElementById("player");
+      // var d = document.getElementById("duration");
+      // document.getElementById('progress-container').addEventListener('click', function(e) {
+      //   var offset = this.getBoundingClientRect();
+      //   var x = e.pageX - offset.left;
+      //   Amplitude.setSongPlayedPercentage((parseFloat(x) / parseFloat(this.offsetWidth)) * 100);
+      // });
     }
   }
 }
@@ -995,13 +999,6 @@ const Pjax = {
     };
     Barba.Dispatcher.on('linkClicked', function(el) {
       App.linkClicked = el
-    });
-    Barba.Dispatcher.on('newPageReady', function(currentStatus, oldStatus, container) {
-      var js = container.querySelector("script");
-      if (js != null) {
-        eval(js.innerHTML);
-        Audio.init()
-      }
     });
     Barba.Pjax.Dom.wrapperId = 'main'
     Barba.Pjax.Dom.containerClass = 'pjax'
@@ -1024,19 +1021,15 @@ const Pjax = {
       // if (currentLink) currentLink.classList.remove('active')
       // if (App.linkClicked) App.linkClicked.classList.add('active')
       App.nextPageType = newContent.getAttribute('page-type')
-      if (App.pageType == 'ok') {
-      } else {
-        document.body.setAttribute('page-type', App.nextPageType)
-        _this.endTransition(_this, newContent)
-      }
+
+      document.body.setAttribute('page-type', App.nextPageType)
+      _this.endTransition(_this, newContent)
+
     },
     endTransition: function(_this, newContent) {
       window.scroll(0, 0)
       resizeWindow()
-      if (App.nextPageType == 'ok') {
-      } else {
-        _this.finish(_this, newContent)
-      }
+      _this.finish(_this, newContent)
     },
     finish: function(_this, newContent) {
       _this.done()
@@ -1044,11 +1037,6 @@ const Pjax = {
       App.sizeSet()
       App.interact.init()
       document.body.classList.remove('is-loading')
-      // setTimeout(function() {
-      //   TweenMax.set(document.querySelector('#page-content'), {
-      //     clearProps: 'transform,opacity'
-      //   })
-      // }, 500);
       if (window.ga) window.ga('send', 'pageview')
     }
   })
