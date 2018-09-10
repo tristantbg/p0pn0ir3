@@ -61,7 +61,7 @@
       <div class="inner-scroll">
         <div class="product-title row uppercase"><?= $product->title()->html() ?></div>
         <div class="product-description"><?= $product->text()->kt() ?></div>
-        <?php if ($product->shopifyID()->isNotEmpty()): ?>
+          <?php if ($product->shopifyID()->isNotEmpty()): ?>
             <div class="buy uppercase">
               <div id="product-component-<?= $product->shopifyID() ?>" class="row" data-shop="<?= $product->shopifyID() ?>"></div>
             </div>
@@ -120,12 +120,12 @@
           	</div>
           <?php endif ?>
 
-          <?php if ($product->buy()->isNotEmpty() && $buy = $product->buy()->toStructure()->first()): ?>
+          <!-- <?php if ($product->buy()->isNotEmpty() && $buy = $product->buy()->toStructure()->first()): ?>
             <div class="buy row">
               <div class="price"><?= $buy->price()->html() ?></div>
               <a href="<?= $buy->link() ?>" class="buy-button uppercase">Buy</a>
             </div>
-          <?php endif ?>
+          <?php endif ?> -->
 
         </div>
       </div>

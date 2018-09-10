@@ -16,10 +16,7 @@
       <span amplitude-song-info="song_title" amplitude-main-song-info="true"></span>
     </div>
     <div id="controls">
-      <span class="amplitude-stop link-hover white">STOP</span>&nbsp;|&nbsp;
-      <span id="play-pause" class="amplitude-play-pause link-hover white" amplitude-main-play-pause="true"></span>&nbsp;|&nbsp;
-      <span class="amplitude-current-time" amplitude-main-current-time="true"></span>&nbsp;|&nbsp;
-      <span class="amplitude-prev link-hover white">PREV</span>&nbsp;|&nbsp;<span class="amplitude-next link-hover white">NEXT</span>
+      <span class="amplitude-stop link-hover white">STOP</span>&nbsp;|&nbsp;<span id="play-pause" class="amplitude-play-pause link-hover white" amplitude-main-play-pause="true"></span>&nbsp;|&nbsp;<span class="amplitude-current-time" amplitude-main-current-time="true"></span>&nbsp;|&nbsp;<span class="amplitude-prev link-hover white">PREV</span>&nbsp;|&nbsp;<span class="amplitude-next link-hover white">NEXT</span>
     </div>
     <!-- <div id="progress-container">
       <input type="range" amplitude-main-song-slider="true" class="amplitude-song-slider">
@@ -73,12 +70,13 @@
 	<div id="artist-releases" data-scroll="x">
     <div class="inner-scroll">
   		<?php foreach ($releases as $key => $release): ?>
+  			<?php $productLink = page($release->productLink()) ?>
   			<div class="release">
-          <?php if ($productLink = page($release->productLink())): ?>
+          <?php if ($productLink): ?>
           <a href="<?= $site->index()->filterBy('intendedTemplate', 'shop')->first()->url().'?product='.$productLink->id() ?>">
           <?php endif ?>
   				<?php snippet('responsive-image', ['field' => $release->featured()]) ?>
-          <?php if ($productLink = page($release->productLink())): ?>
+          <?php if ($productLink): ?>
           </a>
           <?php endif ?>
   				<div class="release-infos">
@@ -99,6 +97,13 @@
                 </div>
               </div>
             <?php endif ?>
+            <?php if ($productLink): ?>
+				<?php if ($productLink->shopifyID()->isNotEmpty()): ?>
+				<div class="buy uppercase mt1 row">
+				  <div id="product-component-<?= $productLink->shopifyID() ?>" class="row" data-shop="<?= $productLink->shopifyID() ?>"></div>
+				</div>
+				<?php endif ?>
+			<?php endif ?>
   				</div>
   			</div>
   		<?php endforeach ?>

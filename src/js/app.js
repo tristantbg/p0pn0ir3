@@ -328,9 +328,9 @@ const App = {
         })
       }
       const menus = document.querySelectorAll('#primary-nav > li')
-      console.log(menus)
       menus.forEach(element => {
         element.addEventListener('mouseenter', e => {
+          window.clearTimeout(App.hiddenNav.tm2)
           menus.forEach(menuElem => {
             menuElem.classList.remove('hover')
           })
@@ -338,7 +338,8 @@ const App = {
         })
         element.addEventListener('mouseleave', e => {
           const target = e.currentTarget
-          setTimeout(function() {
+          window.clearTimeout(App.hiddenNav.tm2)
+          App.hiddenNav.tm2 = setTimeout(function() {
             target.classList.remove('hover')
           }, 500);
 
@@ -559,7 +560,7 @@ const Shop = {
               afterRender: Scroller.refresh
             },
             text: {
-              button: "BUY"
+              button: App.pageType == 'artist' ? 'ADD TO CART' : 'BUY'
             },
             "contents": {
               "img": false,
@@ -715,6 +716,7 @@ const Players = {
       player.element.addEventListener('click', e => {
         if (player.element.paused) {
           player.element.play()
+          document.body.classList.remove('infos-panel')
         } else {
           player.element.pause()
         }
@@ -846,7 +848,6 @@ const Scroller = {
     freeScroll: true,
     mouseWheel: true,
     scrollbars: false,
-    probeType: 3,
     tap: 'tapEvent',
     interactiveScrollbars: false,
     preventDefault: true,
@@ -860,7 +861,6 @@ const Scroller = {
     freeScroll: true,
     scrollbars: true,
     fadeScrollbars: true,
-    probeType: 3,
     tap: 'tapEvent',
     interactiveScrollbars: true,
     preventDefault: true,

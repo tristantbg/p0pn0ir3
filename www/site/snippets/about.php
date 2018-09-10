@@ -9,10 +9,13 @@
 <div id="about-socials">
   <?php if ($aboutPage->socials()->isNotEmpty()): ?>
     <?php foreach ($aboutPage->socials()->toStructure() as $key => $item): ?>
-      <a class="row uppercase" href="<?= $item->url() ?>"><?= $item->title()->html() ?></a>
+      <a class="row uppercase link-hover black" href="<?= $item->url() ?>"><?= $item->title()->html() ?></a>
     <?php endforeach ?>
   <?php endif ?>
 </div>
+
+<div id="about-contact"><?= $aboutPage->contact()->kt() ?></div>
+<div id="about-address"><?= $aboutPage->address()->kt() ?></div>
 
 <?php snippet('newsletter') ?>
 

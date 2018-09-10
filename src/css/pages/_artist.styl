@@ -205,6 +205,21 @@ body:not(.player-playing)
 			&:last-child
 				&::after
 					content 'PAUSE'
+	.buy
+		padding-top $padding
+		// border-top 1px solid
+
+[page-type=artist]
+	.shopify-buy__option-select
+		margin $padding 0
+	.shopify-buy__btn
+		cursor pointer
+		border 0
+		padding 0
+		font-size inherit
+		letter-spacing inherit
+		margin 0
+		border-radius 0
 
 body.infos-panel
 	#artist-medias

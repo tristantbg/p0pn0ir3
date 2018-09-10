@@ -1,7 +1,7 @@
 <?php
 
 return function ($site, $pages, $page) {
-	$medias = $page->medias()->toStructure();
+  $medias = $page->medias()->toStructure();
   $releases = $page->children()->visible();
 
   $songs = '[';

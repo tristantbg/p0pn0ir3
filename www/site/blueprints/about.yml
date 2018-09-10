@@ -8,6 +8,12 @@ fields:
   text:
     label: Description
     type:  textarea
+  contact:
+    label: Contact
+    type:  textarea
+  address:
+    label: Address
+    type:  textarea
   socials:
     label: Socials
     type: structure

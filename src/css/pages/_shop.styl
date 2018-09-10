@@ -88,24 +88,26 @@ body.product-opened
 	position relative
 	// left -0.6rem
 
-.buy-button, .shopify-buy__btn
-	cursor pointer
-	width 4.2rem
-	height 4.2rem
-	background $secondary
-	color $primary
-	// color #009dff !important
-	border 1px solid $secondary
-	font-size inherit
-	letter-spacing inherit
-	border-radius 100%
-	display flex
-	justify-content center
-	align-items center
-	transition color 150ms ease, background 150ms ease
-	&:hover
-		background $primary
-		color $secondary
+[page-type*=shop]
+	.buy-button, .shopify-buy__btn
+		cursor pointer
+		width 4.2rem
+		height 4.2rem
+		background $secondary
+		color $primary
+		padding 1.3rem
+		// color #009dff !important
+		border 1px solid $secondary
+		font-size inherit
+		letter-spacing inherit
+		border-radius 100%
+		display flex
+		justify-content center
+		align-items center
+		transition color 150ms ease, background 150ms ease
+		&:hover
+			background $primary
+			color $secondary
 
 .product-infos
 	span(1/2)
@@ -170,9 +172,10 @@ body.product-opened
 			width 'calc(33.33333333% - %s)' % $padding
 			margin-right $padding
 
-.shopify-buy__product__price
-	font-size 2rem
-	letter-spacing normal
+[page-type*=shop]
+	.shopify-buy__product__price
+		font-size 2rem
+		letter-spacing normal
 
 .shopify-buy__option-select
 	span(1)

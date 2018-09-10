@@ -8,7 +8,7 @@
 </div>
 
 <div id="about-panel">
-  <div class="about-close uppercase" event-target="about-panel"><?= l::get('close') ?></div>
+  <div class="about-close uppercase link-hover black" event-target="about-panel"><?= l::get('close') ?></div>
   <div data-scroll="y" data-scrollmobile="y">
     <div class="inner-scroll"><?php snippet('about') ?></div>
   </div>
