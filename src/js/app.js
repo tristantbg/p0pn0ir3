@@ -404,7 +404,7 @@ const App = {
         //   maxSize: 1200,
         // });
         App.newsGrid.eg.setLayout(FrameLayout, {
-          margin: 5,
+          margin: 4,
           frame: App.newsGrid.pattern
         });
         App.newsGrid.eg.on('layoutComplete', e => {

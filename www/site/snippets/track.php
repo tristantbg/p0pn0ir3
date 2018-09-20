@@ -13,7 +13,7 @@
   <?php $key = $track->audioFile()->toFile()->trackIndex() ?>
   <div class="track amplitude-play-pause amplitude-paused link-hover black" amplitude-song-index="<?= $key ?>">
   <div><?= $track->title()->html() ?></div>
-  <div><span class="amplitude-duration-minutes" amplitude-song-index="<?= $key ?>"><?= $minutes ?></span><span class="amplitude-duration-seconds" amplitude-song-index="<?= $key ?>"><?= $seconds ?></span></div>
+  <div><?= $track->duration()->html() ?><span class="amplitude-duration-minutes-disable" amplitude-song-index="<?= $key ?>"></span><span class="amplitude-duration-seconds-disable" amplitude-song-index="<?= $key ?>"></span></div>
   <div></div>
   </div>
 <?php endif ?>

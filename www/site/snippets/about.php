@@ -14,8 +14,7 @@
   <?php endif ?>
 </div>
 
-<div id="about-contact"><?= $aboutPage->contact()->kt() ?></div>
-<div id="about-address"><?= $aboutPage->address()->kt() ?></div>
+<div id="about-contact"><?= $aboutPage->contact()->kt() ?><div id="about-address"><?= $aboutPage->address()->kt() ?></div></div>
 
 <?php snippet('newsletter') ?>
 

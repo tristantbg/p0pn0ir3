@@ -34,7 +34,9 @@
 				<i class="fa fa-chevron-up" v-bind:class="{ disabled: rowIndex == 0 }" v-on:click="moveRow(rowIndex, 'up')"></i>
 				<i class="fa fa-chevron-down" v-bind:class="{ disabled: rowIndex == rowCount-1 }" v-on:click="moveRow(rowIndex,	'down')"></i>
 			</div>
-			<input class="row-cell input" type="text" :name="'<?= $field['name'] ?>[table]['+ rowIndex +']'"  v-model="row[cellIndex]"  v-for="(cell, cellIndex) in row">
+			<div class="row-cell" v-model="row[cellIndex]"  v-for="(cell, cellIndex) in row">
+				<input class="row-cell input" type="text" :name="'<?= $field['name'] ?>[table]['+ rowIndex +']'" v-model="row[cellIndex]">
+			</div>
 			<div class="row-ctrl delete-row">
 				<i class="fa fa-times-circle" v-on:click="deleteRow(rowIndex)" v-show="rowCount > 1"></i>
 			</div>

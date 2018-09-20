@@ -28,7 +28,7 @@
 			object-fit cover
 	.product-infos
 		span(1)
-		width calc(100% - 5px)
+		width calc(100% - 4px)
 		position absolute
 		top 100%
 		left 0
@@ -45,7 +45,7 @@
 			cursor url('../../images/arrow-top.png') 8 8, n-resize !important
 		&:not(:last-child)
 			.product-image
-				padding-right 5px
+				padding-right 4px
 		&.opened
 			[event-target=product-panel]
 				cursor url('../../images/arrow-bottom.png') 8 8, s-resize !important
@@ -99,6 +99,7 @@ body.product-opened
 		// color #009dff !important
 		border 1px solid $secondary
 		font-size inherit
+		font-family inherit
 		letter-spacing inherit
 		border-radius 100%
 		display flex
@@ -140,7 +141,7 @@ body.product-opened
 		display none
 		padding-left ($padding/2)
 	.product-tracklist, .product-moreinfos
-		span(1)
+		span(1/2)
 		margin-bottom ($padding*3)
 		.table
 			line-height 1.3
@@ -204,7 +205,7 @@ body.product-opened
 			pointer-events none
 			top 0
 			right 0
-			height 1.3em
+			height 1em
 
 .shopify-buy-frame--toggle
 	transition transform 500ms $kinetic

@@ -62,6 +62,9 @@ fields:
         type: quickselect
         options: audio
         required: true
+      duration:
+        label: Duration
+        type: text
   # playlistLink:
   #   label: Tracklist
   #   type: url

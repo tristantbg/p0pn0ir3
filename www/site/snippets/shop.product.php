@@ -69,7 +69,7 @@
           <?php if ($product->listen()->isNotEmpty()): ?>
         	<div class="product-links row uppercase">
                 <?php foreach ($product->listen()->toStructure() as $key => $item): ?>
-                  <a class="row" href="<?= $item->url() ?>"><?= $item->title()->html() ?></a>
+                  <a class="row link-hover black" href="<?= $item->url() ?>"><?= $item->title()->html() ?></a>
                 <?php endforeach ?>
         	</div>
           <?php endif ?>

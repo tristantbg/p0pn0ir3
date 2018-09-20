@@ -53,8 +53,16 @@
 	+below($md)
 		span(1/2)
 
+#page-files
+	+above($md + 1)
+		span(3/6)
+
 #press-tree
 	padding-right $padding
 	#tree
+		a.active
+			color alpha($primary, 0.6) !important
+			&::before
+				// content '\002192\0000A0'
 		ul:first-child > li
 			padding-left 0
