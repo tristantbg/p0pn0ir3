@@ -1,25 +1,45 @@
+#page-content[page-type=artist]
+	+below($md)
+		span(1)
+		height calc(100vh - 4rem)
+		min-height calc(100vh - 4rem)
+
 #artist-medias
 	hideselect()
 	span(1)
-	height 100vh
 	position relative
 	background $primary
 	transition transform 500ms $kinetic
+	+above($md + 1)
+		height 100vh
 	&[data-scroll]
 		position relative
 		width 100vw
 		overflow hidden
-		& > .inner-scroll
+		+below($md)
+			span(1)
 			height 100%
-			display table
+			overflow-y scroll
+			overflow-scrolling touch
+			position initial
+		& > .inner-scroll
+			+below($md)
+				span(1)
+			+above($md + 1)
+				height 100%
+				display table
 	.artist-image
 		position relative
-		height 100vh
-		display table-cell
 		padding 0
 		margin 0
 		// padding-top 1.5rem
-		overflow hidden
+		+above($md + 1)
+			height 100vh
+			overflow hidden
+			display table-cell
+		+below($md)
+			span(1)
+			height auto
 		.embed
 			position absolute
 			top 0
@@ -33,20 +53,31 @@
 				max-width 50px
 		& > img
 			cursor url('../../images/arrow-top.png') 8 8, n-resize !important
-			height 100%
-			&.lazy, & + .embed
-				transition transform 800ms ease, opacity 400ms ease
-				transform translateX(100px) translateZ(0)
-				&.lazyloaded
-					transform none
-					&+ .embed
+			+below($md)
+				width 100%
+				display block
+			+above($md + 1)
+				height 100%
+				&.lazy, & + .embed
+					transition transform 800ms ease, opacity 400ms ease
+					transform translateX(100px) translateZ(0)
+					&.lazyloaded
 						transform none
+						&+ .embed
+							transform none
 		video
-			object-fit cover
+			+above($md + 1)
+				object-fit cover
+			+below($md)
+				width 100%
+				height auto
 		&:not(:last-child)
-			padding-right 4px
-			.embed
-				width calc(100% - 4px)
+			+below($md)
+				margin-bottom 4px
+			+above($md + 1)
+				padding-right 4px
+				.embed
+					width calc(100% - 4px)
 
 #infos-btn
 	position absolute
@@ -56,6 +87,20 @@
 	mix-blend-mode difference
 	color $primary
 	z-index 10
+	+below($md)
+		display none
+
+#infos-btn-mobile
+	position fixed
+	bottom 0
+	left 0
+	padding 0.6em $padding
+	color $primary
+	background $secondary
+	width 100%
+	z-index 10
+	+above($md + 1)
+		display none
 
 #player
 	line-height $line-height
@@ -68,6 +113,16 @@
 	text-align right
 	z-index 10
 	transition transform 500ms $kinetic
+	+below($md)
+		bottom 2rem
+		right initial
+		left 0
+		text-align left
+		padding 0.6em $padding
+		width 100%
+		background $secondary
+		mix-blend-mode normal
+		text-align left
 
 body:not(.player-playing)
 	#player
@@ -83,6 +138,8 @@ body:not(.player-playing)
 	left 0
 	top 100%
 	transition transform 500ms $kinetic
+	+below($md)
+		height calc(100vh - 2rem)
 	&[data-scrollmobile]
 		overflow hidden
 		& > .inner-scroll
@@ -128,8 +185,9 @@ body:not(.player-playing)
 			stack()
 			margin-bottom $padding
 	#artist-description
-		padding-right ($padding*2)
-		// text-align justify
+		+above($md + 1)
+			padding-right ($padding*2)
+			// text-align justify
 	#artist-links
 		& > div
 			&:not(:last-child)
@@ -146,19 +204,19 @@ body:not(.player-playing)
 
 #artist-releases
 	span(1/2)
-	width 50vw
 	height 100%
 	line-height $line-height
 	padding-left ($padding/2)
 	overflow hidden
 	+above($md + 1)
+		width 50vw
 		.inner-scroll
 			float left
 			display flex
 			padding-right $padding
 	+below($md)
 		stack()
-		padding 0 $padding
+		padding 0 $padding 10rem
 	.release
 		span(1)
 		padding-top $padding
@@ -225,7 +283,16 @@ body:not(.player-playing)
 body.infos-panel
 	#artist-medias
 		transform translateY(-50vh) translateZ(0)
+		+below($md)
+			transform translateY(calc(-100vh + 2rem)) translateZ(0)
 		.artist-image > img
 			cursor url('../../images/arrow-bottom.png') 8 8, s-resize !important
 	#artist-panel
 		transform translateY(-50vh) translateZ(0)
+		+below($md)
+			transform translateY(calc(-100vh + 2rem)) translateZ(0)
+	#infos-btn-mobile
+		color $secondary
+		&::before
+			content 'Close'
+			color $primary

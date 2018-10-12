@@ -43,7 +43,7 @@
     "amplitudejs": "^3.3.0",
     "barba.js": "^1.0.0",
     "gsap": "^2.0.1",
-    "hls.js": "^0.10.1",
+    "hls.js": "^0.11.0",
     "imagesloaded": "^4.1.4",
     "iscroll": "https://github.com/tristantbg/iscroll",
     "lazysizes": "^4.0.4",

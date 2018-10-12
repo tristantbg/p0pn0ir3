@@ -19,6 +19,7 @@ import throttle from 'lodash.throttle'
 //   AttrPlugin
 // } from 'gsap'
 import Barba from 'barba.js'
+require('viewport-units-buggyfill').init()
 
 function updateURLParameter(url, param, paramVal) {
   var TheAnchor = null;
@@ -136,7 +137,7 @@ const App = {
       App.isMobile = true;
     if (App.isMobile) {
       if (App.width > 767) {
-        // location.reload();
+        location.reload();
         App.isMobile = false;
       }
     }
@@ -242,6 +243,7 @@ const App = {
       App.interact.linkTargets()
       App.interact.eventTargets()
       App.interact.previews()
+      App.interact.lightbox()
       Shop.init()
       Audio.init()
       Sliders.init()
@@ -252,6 +254,7 @@ const App = {
       imagesLoaded(document.getElementById('main'), Scroller.refresh)
     },
     previews: () => {
+      if (App.isMobile) return
       const previews = document.querySelectorAll('.artist-preview')
       for (var i = 0; i < previews.length; i++) {
         previews[i].style.visibility = "hidden"
@@ -318,6 +321,7 @@ const App = {
           e.preventDefault()
           elem.classList.add('loaded')
           document.body.classList.toggle('about-panel')
+          App.menu.classList.remove('opened')
         })
       }
       const artistMedias = document.getElementById('artist-medias')
@@ -331,22 +335,30 @@ const App = {
           if (!isPlayer && !e.target.getAttribute('event-target') && e.target.tagName !== 'SPAN' && e.target.className !== 'embed__thumb' && e.target.tagName !== 'DIV') document.body.classList.toggle('infos-panel')
         })
       }
-      const menus = document.querySelectorAll('#primary-nav > li')
-      menus.forEach(element => {
-        element.addEventListener('mouseenter', e => {
-          window.clearTimeout(App.hiddenNav.tm2)
-          menus.forEach(menuElem => {
-            menuElem.classList.remove('hover')
+      if (!App.isMobile) {
+        const menus = document.querySelectorAll('#primary-nav > li')
+        menus.forEach(element => {
+          element.addEventListener('mouseenter', e => {
+            window.clearTimeout(App.hiddenNav.tm2)
+            menus.forEach(menuElem => {
+              menuElem.classList.remove('hover')
+            })
+            e.currentTarget.classList.add('hover')
           })
-          e.currentTarget.classList.add('hover')
-        })
-        element.addEventListener('mouseleave', e => {
-          const target = e.currentTarget
-          window.clearTimeout(App.hiddenNav.tm2)
-          App.hiddenNav.tm2 = setTimeout(function() {
-            target.classList.remove('hover')
-          }, 500);
+          element.addEventListener('mouseleave', e => {
+            const target = e.currentTarget
+            window.clearTimeout(App.hiddenNav.tm2)
+            App.hiddenNav.tm2 = setTimeout(function() {
+              target.classList.remove('hover')
+            }, 500);
 
+          })
+        })
+      }
+      const menuTargets = document.querySelectorAll('[event-target=menu]')
+      menuTargets.forEach(element => {
+        element.addEventListener('click', e => {
+          App.menu.classList.toggle('opened')
         })
       })
     },
@@ -375,6 +387,21 @@ const App = {
         thumb[i].addEventListener('click', pluginEmbedLoadLazyVideo, false);
       }
     },
+    lightbox: () => {
+      const elems = document.querySelectorAll('.product-medias .responsive-image')
+
+      elems.forEach(el => {
+        el.addEventListener('click', () => {
+          var cln = el.cloneNode(true)
+          cln.classList.add('lightbox')
+          document.getElementById("main").appendChild(cln)
+          resizeWindow()
+          cln.addEventListener('click', i => {
+            cln.remove()
+          })
+        })
+      })
+    }
   },
   newsGrid: {
     pattern: [
@@ -719,7 +746,22 @@ const Players = {
       })
       player.element.addEventListener('click', e => {
         if (player.element.paused) {
-          player.element.play()
+
+          var playPromise = player.element.play()
+
+          if (playPromise !== undefined) {
+            playPromise.then(_ => {
+                // Automatic playback started!
+                // Show playing UI.
+              })
+              .catch(error => {
+                // Auto-play was prevented
+                // Show paused UI.
+                player.hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                  player.element.play()
+                });
+              });
+          }
           document.body.classList.remove('infos-panel')
         } else {
           player.element.pause()
@@ -856,7 +898,8 @@ const Scroller = {
     interactiveScrollbars: false,
     preventDefault: true,
     preventDefaultException: {
-      tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT|A)$/
+      tagName: /^(VIDEO|INPUT|TEXTAREA|BUTTON|SELECT|A)$/,
+      className: /(^|\s)click-enabled(\s|$)/,
     },
     bounce: false
   },
@@ -869,7 +912,8 @@ const Scroller = {
     interactiveScrollbars: true,
     preventDefault: true,
     preventDefaultException: {
-      tagName: /^(INPUT|TEXTAREA|BUTTON|SELECT|A)$/
+      tagName: /^(VIDEO|INPUT|TEXTAREA|BUTTON|SELECT|A)$/,
+      className: /(^|\s)click-enabled(\s|$)/,
     },
     bounce: false
   },
@@ -988,6 +1032,7 @@ const Audio = {
       //   var x = e.pageX - offset.left;
       //   Amplitude.setSongPlayedPercentage((parseFloat(x) / parseFloat(this.offsetWidth)) * 100);
       // });
+      if (App.isMobile) document.getElementById('page-content').appendChild(Audio.player)
     }
   }
 }

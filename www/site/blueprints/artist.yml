@@ -26,9 +26,6 @@ files:
     mp4:
       label: Video external file link (.MP4)
       type: url
-    mp4:
-      label: Video external file link (.WEBM)
-      type: url
     filemp4:
       label: Video File (.MP4)
       type: select

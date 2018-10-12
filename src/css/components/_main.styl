@@ -1,10 +1,10 @@
 body,html
 	width 100%
-  float left
+	float left
 	background $primary
 
 body
-  float left
+	float left
 
 *
 	box-sizing border-box
@@ -48,6 +48,8 @@ a, a:hover, a:visited, a:focus
 
 #page-content
 	min-height 100vh
+	+below($md)
+		margin-top 2rem
 
 cross()
 	&::before, &::after
@@ -86,6 +88,9 @@ minus()
 		right 0.8em
 	&::after
 		transform rotate(90deg)
+
+select, button
+	outline 0 !important
 
 body.is-loading
 	cursor wait

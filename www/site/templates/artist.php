@@ -1,6 +1,8 @@
 <?php snippet('header') ?>
 
-<div id="artist-medias" data-scroll="x" data-scrollmobile="x">
+<a id="infos-btn-mobile" class="uppercase link-hover white" event-target="panel"><?= l::get('infos-btn') ?></a>
+
+<div id="artist-medias" data-scroll="x">
 	<div class="inner-scroll">
 		<?php foreach ($medias as $key => $item): ?>
 			<?php snippet('artist-image', ['field' => $item]) ?>

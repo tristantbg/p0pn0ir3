@@ -48,7 +48,7 @@
 	top 0
 	right 0
 	width 50rem
-	padding ($padding*4) ($padding*5)
+	padding ($padding*4) ($padding*5) 0
 	height 100%
 	background alpha($primary, 0.83)
 	color $secondary
@@ -63,7 +63,9 @@
 		position absolute
 		top 0
 		right 0
-		padding 1em $padding
+		padding 0.4rem $padding
+		+below($md)
+			padding 0.5em $padding
 	[data-scroll]
 		width 100%
 		height 100%
@@ -71,6 +73,7 @@
 	.inner-scroll
 		width 100%
 		float left
+		padding-bottom ($padding*5)
 	.message_area
 		margin 0
 		border none !important
@@ -116,7 +119,7 @@
 			margin-top $padding
 			border 1px solid alpha($secondary, 0.2)
 			padding 0.6em .6em 0.3em
-      line-height 1
+			line-height 1
 		&.close
 			padding 0 .5em
 
@@ -125,7 +128,8 @@ body.about-panel
 		pointer-events none
 	#about-panel
 		transform none
-	#menu
-		width calc(100% - 50rem)
-	#player, .shopify-buy-frame--toggle
-		transform translateX(-50rem) translateZ(0) !important
+	+above($md + 1)
+		#menu
+			width calc(100% - 50rem)
+		#player, .shopify-buy-frame--toggle
+			transform translateX(-50rem) translateZ(0) !important

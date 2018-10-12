@@ -69,7 +69,9 @@
           <?php if ($product->listen()->isNotEmpty()): ?>
         	<div class="product-links row uppercase">
                 <?php foreach ($product->listen()->toStructure() as $key => $item): ?>
-                  <a class="row link-hover black" href="<?= $item->url() ?>"><?= $item->title()->html() ?></a>
+                  <div class="row">
+                    <a class="link-hover black" href="<?= $item->url() ?>"><?= $item->title()->html() ?></a>
+                  </div>
                 <?php endforeach ?>
         	</div>
           <?php endif ?>
@@ -109,7 +111,7 @@
             <?php endif ?>
           </div>
           <div class="right">
-            
+
           </div>
 
           <?php if ($product->medias()->isNotEmpty()): ?>

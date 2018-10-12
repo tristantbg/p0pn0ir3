@@ -15,6 +15,7 @@ if ($image) {
           ->attr('poster', $poster)
           ->attr('height', '100%')
           ->attr('width', 'auto')
+          ->attr('playsinline', 'true')
           ->attr('preload', 'auto');
 
     if ($image->stream()->isNotEmpty()) $video->attr('data-stream', $image->stream());

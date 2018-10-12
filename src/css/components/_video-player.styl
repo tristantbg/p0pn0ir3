@@ -24,6 +24,8 @@
 		left $padding
 		width 'calc(100% - %s)' % ($padding*2)
 		padding ($padding*1.5) 0
+		+below($md)
+			display block !important
 		&::after
 			content ''
 			position absolute

@@ -3,6 +3,19 @@ $about = $site->aboutPage()->toPage();
 ?>
 
 <div id="menu" class="visible">
+  <div id="mobile-toggle-header">
+    <div event-target="menu">
+      <div id="burger">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+    <?php if ($about): ?>
+    <div event-target="about-panel"><?= $about->title()->html() ?></div>
+    <?php endif ?>
+  </div>
 	<ul id="primary-nav">
 			<?php foreach($site->pages()->visible() as $item): ?>
 				<?php if ($about && $item->is($about)): ?>
