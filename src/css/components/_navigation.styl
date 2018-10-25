@@ -1,4 +1,4 @@
-$burgerTransition = 200ms
+$burgerTransition = 300ms
 
 #burger
   position relative
@@ -147,6 +147,9 @@ $burgerTransition = 200ms
         height 2rem
 
 #primary-nav
+  +below($md)
+    width 100%
+    float left
   & > li > a
     transition color 150ms ease
   & > li > a.active,
@@ -171,6 +174,9 @@ $burgerTransition = 200ms
       // font-weight bolder
 
 #secondary-nav
+  +below($md)
+    width 100%
+    float left
   a, [event-target]
     transition color 150ms ease
   a.active,
@@ -178,6 +184,13 @@ $burgerTransition = 200ms
   [event-target]:hover
     +above($md + 1)
       color alpha($primary, 0.6)
+
+#menu-socials
+  width 100%
+  float left
+  margin 2em 0
+  +above($md + 1)
+    display none
 
 #languages
   text-transform uppercase

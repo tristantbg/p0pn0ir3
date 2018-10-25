@@ -8,7 +8,11 @@
 
     <?php else: ?>
 
-      <div class="product-image" event-target="product-panel">
+      <div class="product-image"
+      <?php if (!isset($noMobileScroll) || isset($noMobileScroll) && !$noMobileScroll): ?>
+      event-target="product-panel"
+      <?php endif ?>
+      >
         <?php
         $ratio = 1/1;
         if(!isset($maxWidth)) $maxWidth = 3400;
@@ -57,7 +61,12 @@
 
     <?php endif ?>
 
-    <div class="product-infos" data-scroll="y" data-scrollmobile="y">
+    <div class="product-infos"
+    data-scroll="y"
+    <?php if (!isset($noMobileScroll) || isset($noMobileScroll) && !$noMobileScroll): ?>
+    data-scrollmobile="y"
+    <?php endif ?>
+    >
       <div class="inner-scroll">
         <div class="product-title row uppercase"><?= $product->title()->html() ?></div>
         <div class="product-description"><?= $product->text()->kt() ?></div>

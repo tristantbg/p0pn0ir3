@@ -117,6 +117,7 @@ const margeElem = (id, top) => {
   }
 }
 const App = {
+  root: '/',
   init: () => {
     App.pageType = document.body.getAttribute('page-type');
     App.sizeSet()
@@ -250,7 +251,7 @@ const App = {
       Players.init()
       Scroller.init()
       App.newsGrid.init()
-      Pjax.init()
+      // if(!Pjax.loaded || !App.isMobile) Pjax.init()
       imagesLoaded(document.getElementById('main'), Scroller.refresh)
     },
     previews: () => {
@@ -285,6 +286,10 @@ const App = {
       for (var i = 0; i < productToggle.length; i++) {
         const elem = productToggle[i]
         elem.addEventListener('click', e => {
+          if(App.isMobile) {
+            window.location.href = window.location.origin + App.root + elem.parentNode.dataset.id
+            return
+          }
           if (!document.body.classList.contains('about-panel')) {
             if (App.productOpened) {
               const opened = document.querySelector('.product.opened')
@@ -352,6 +357,18 @@ const App = {
               target.classList.remove('hover')
             }, 500);
 
+          })
+        })
+      }
+      if (App.isMobile) {
+        const releases = document.querySelectorAll('[data-href]')
+        releases.forEach(element => {
+          element.addEventListener('click', e => {
+            e.preventDefault()
+          })
+          element.addEventListener('tapEvent', e => {
+            e.preventDefault()
+            window.location.href = element.dataset.href
           })
         })
       }
@@ -953,8 +970,9 @@ const Scroller = {
       //   })
       // });
     })
-    if (Scroller.shop) {
       const hash = getUrlParams()
+      if (hash.product && App.isMobile) window.location.href = window.location.origin + App.root + hash.product
+    if (Scroller.shop) {
       if (hash.product) {
         const elem = document.querySelector('[data-id="' + hash.product + '"] [event-target]')
         if (elem) simulateClick(elem)

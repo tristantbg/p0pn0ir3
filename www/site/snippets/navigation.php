@@ -51,7 +51,17 @@ $about = $site->aboutPage()->toPage();
 					</li>
 				<?php endif ?>
 		<?php endforeach ?>
-	</ul>
+    <?php if ($aboutPage = $site->aboutPage()->toPage()): ?>
+    <ul id="menu-socials">
+      <?php if ($aboutPage->socials()->isNotEmpty()): ?>
+        <?php foreach ($aboutPage->socials()->toStructure()->limit(4) as $key => $item): ?>
+          <a class="row uppercase link-hover black" href="<?= $item->url() ?>"><?= $item->title()->html() ?></a>
+        <?php endforeach ?>
+      <?php endif ?>
+    </ul>
+    <?php endif ?>
+  </ul>
+
 
 	<ul id="secondary-nav">
 		<div id="languages">
