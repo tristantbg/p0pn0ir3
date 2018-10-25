@@ -31,6 +31,9 @@
 		img
 			height 100%
 			width auto
+			+below($md)
+				width 100%
+				height auto
 		video
 			object-fit cover
 	.product-infos
@@ -59,7 +62,8 @@
 			cursor url('../../images/arrow-top.png') 8 8, n-resize !important
 		&:not(:last-child)
 			.product-image
-				padding-right 4px
+				+above($md + 1)
+					padding-right 4px
 		&.opened
 			[event-target=product-panel]
 				cursor url('../../images/arrow-bottom.png') 8 8, s-resize !important
