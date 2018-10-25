@@ -216,7 +216,7 @@ body:not(.player-playing)
 			padding-right $padding
 	+below($md)
 		stack()
-		padding 0 $padding 10rem
+		padding 0 $padding 3rem
 	.release
 		span(1)
 		padding-top $padding
@@ -244,6 +244,8 @@ body:not(.player-playing)
 				padding-left ($padding)
 	.tracklist
 		margin-top $padding
+		+below($md)
+			display none
 		.track
 			cursor pointer
 			width 100%

@@ -229,6 +229,8 @@ body.product-opened
 			display block
 			text-transform uppercase
 			background none
+			padding 0
+			margin 0
 			padding-right 1.2em
 			border 0
 			letter-spacing inherit
@@ -269,3 +271,12 @@ body.product-opened
 
 .shopify-buy__btn-wrapper
 	display inline-block
+
++below($md)
+	[page-type="shop.product"]
+		#shop
+			.panel-close, .panel-open
+				display none
+			.product-infos
+				height auto !important
+				position initial
