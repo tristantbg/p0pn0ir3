@@ -134,14 +134,9 @@ const App = {
   sizeSet: () => {
     App.width = (window.innerWidth || document.documentElement.clientWidth);
     App.height = (window.innerHeight || document.documentElement.clientHeight);
-    if (App.width <= 1024)
-      App.isMobile = true;
-    if (App.isMobile) {
-      if (App.width > 1024) {
-        location.reload();
-        App.isMobile = false;
-      }
-    }
+    if (App.isMobile === true && App.width > 1024) location.reload();
+    if (App.isMobile === false && App.width <= 1024) location.reload();
+    App.isMobile = App.width <= 1024;
     App.setElements();
   },
   setElements: () => {
@@ -364,7 +359,7 @@ const App = {
         const releases = document.querySelectorAll('[data-href]')
         releases.forEach(element => {
           element.addEventListener('click', e => {
-            e.preventDefault()
+            if(App.isMobile) e.preventDefault()
           })
           element.addEventListener('tapEvent', e => {
             e.preventDefault()

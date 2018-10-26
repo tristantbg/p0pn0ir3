@@ -9,10 +9,7 @@ header
 	z-index 15
 	transition transform $titleTransition ease
 	&:not(:hover).hidden
-		transform translateY(-100%) translateZ(0)
-	+below($md)
-		max-height 100vh
-		overflow-y scroll
-		overflow-scrolling touch
+		+above($md + 1)
+			transform translateY(-100%) translateZ(0)
 	h1
 		display none

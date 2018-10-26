@@ -14,14 +14,11 @@
 		height 100vh
 	&[data-scroll]
 		position relative
-		width 100vw
 		overflow hidden
+		+above($md + 1)
+			width 100vw
 		+below($md)
 			span(1)
-			height 100%
-			overflow-y scroll
-			overflow-scrolling touch
-			position initial
 		& > .inner-scroll
 			+below($md)
 				span(1)
@@ -184,6 +181,10 @@ body:not(.player-playing)
 		+below($md)
 			stack()
 			margin-bottom $padding
+			a
+				padding-bottom 0.2em
+				&:not(:first-child)
+					padding-top 0.2em
 	#artist-description
 		+above($md + 1)
 			padding-right ($padding*2)
