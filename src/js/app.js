@@ -1,5 +1,6 @@
 /* jshint esversion: 6 */
 import 'babel-polyfill'
+import 'nodelist-foreach-polyfill'
 import lazysizes from 'lazysizes'
 import optimumx from 'lazysizes'
 require('../../node_modules/lazysizes/plugins/object-fit/ls.object-fit.js')
