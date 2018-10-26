@@ -134,10 +134,10 @@ const App = {
   sizeSet: () => {
     App.width = (window.innerWidth || document.documentElement.clientWidth);
     App.height = (window.innerHeight || document.documentElement.clientHeight);
-    if (App.width <= 767)
+    if (App.width <= 1024)
       App.isMobile = true;
     if (App.isMobile) {
-      if (App.width > 767) {
+      if (App.width > 1024) {
         location.reload();
         App.isMobile = false;
       }
