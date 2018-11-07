@@ -742,6 +742,7 @@ const Players = {
         element: videoElement,
         container: videoElement.parentNode
       }
+      if (App.isMobile) videoElement.removeAttribute('playsinline')
       Players.elements.push(player)
     }
     Players.prepareStream(Players.elements)

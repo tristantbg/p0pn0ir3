@@ -7,7 +7,7 @@ $burgerTransition = 300ms
   transform rotate(0deg)
   transition all $burgerTransition
   cursor pointer
-  margin 0.6em $padding
+  margin 0.7em $padding
   +above($sm + 1)
     display none
   span
@@ -84,21 +84,21 @@ $burgerTransition = 300ms
       [event-target="about-panel"]
         display block
       & > *:not([event-target="menu"])
-        padding 0.6em $padding
+        padding 0.7em $padding
 
 #primary-nav
   & > * a, & > * span
     display block
     padding 0.6em 0
     +below($sm)
-      padding 0.5em 0
+      padding 0.7em 0
 
 #secondary-nav
   & > *
     position relative
     padding 0.6em 0
     +below($sm)
-      padding 0.5em 0
+      padding 0.7em 0
 
 #primary-nav, #secondary-nav
   text-transform uppercase
@@ -198,8 +198,9 @@ $burgerTransition = 300ms
 #languages
   text-transform uppercase
   +below($sm)
-    padding 0.3em 0 0.6em
+    padding 0.3em 0 0.7em
     margin-top 0.5em
+    margin-bottom 0.5em
   a:not(:last-child)
     &::after
       content ' / '
