@@ -345,12 +345,18 @@ const App = {
               menuElem.classList.remove('hover')
             })
             e.currentTarget.classList.add('hover')
+            if(e.currentTarget.querySelector('ul')) {
+              App.menu.classList.add('hover')
+            } else {
+              App.menu.classList.remove('hover')
+            }
           })
           element.addEventListener('mouseleave', e => {
             const target = e.currentTarget
             window.clearTimeout(App.hiddenNav.tm2)
             App.hiddenNav.tm2 = setTimeout(function() {
               target.classList.remove('hover')
+              App.menu.classList.remove('hover')
             }, 500);
 
           })
@@ -581,7 +587,7 @@ const Shop = {
   ShopifyBuyInit: () => {
     Shop.client = ShopifyBuy.buildClient({
       domain: 'bigwax.myshopify.com',
-      apiKey: '31682f9bb9f4efdfdcfd96fb08af4c27',
+      storefrontAccessToken: '31682f9bb9f4efdfdcfd96fb08af4c27',
       appId: '6',
     });
     const items = document.querySelectorAll('[data-shop]')

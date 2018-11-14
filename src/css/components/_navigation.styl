@@ -40,13 +40,15 @@ $burgerTransition = 300ms
   background $secondary
   color $primary
   z-index 10
-  transition width 500ms $kinetic
+  transition width 500ms $kinetic, height 200ms ease
   +above($sm + 1)
     height 2em
     #mobile-toggle-header
       display none
   &.visible
     visibility visible
+  &.hover
+    height 4rem
   +below($sm)
     display block
     max-height 100vh
@@ -125,17 +127,17 @@ $burgerTransition = 300ms
       overflow hidden
       transition height 200ms ease
       transition-delay 0ms
-      &::after
-        content ''
-        position fixed
-        z-index -1
-        background $secondary
-        height 4rem
-        transition height 200ms ease
-        transition-delay 0ms
-        width 100%
-        left 0
-        top 0
+      // &::after
+      //   content ''
+      //   position fixed
+      //   z-index -1
+      //   background $secondary
+      //   height 4rem
+      //   transition height 200ms ease
+      //   transition-delay 0ms
+      //   width 100%
+      //   left 0
+      //   top 0
       & > li
         position relative
         z-index 1
