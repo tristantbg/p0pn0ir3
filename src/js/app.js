@@ -1,6 +1,5 @@
 /* jshint esversion: 6 */
 import 'babel-polyfill'
-import 'nodelist-foreach-polyfill'
 import lazysizes from 'lazysizes'
 import optimumx from 'lazysizes'
 require('../../node_modules/lazysizes/plugins/object-fit/ls.object-fit.js')
@@ -135,9 +134,14 @@ const App = {
   sizeSet: () => {
     App.width = (window.innerWidth || document.documentElement.clientWidth);
     App.height = (window.innerHeight || document.documentElement.clientHeight);
-    if (App.isMobile === true && App.width > 1024) location.reload();
-    if (App.isMobile === false && App.width <= 1024) location.reload();
-    App.isMobile = App.width <= 1024;
+    if (App.width <= 1024)
+      App.isMobile = true;
+    if (App.isMobile) {
+      if (App.width > 1024) {
+        location.reload();
+        App.isMobile = false;
+      }
+    }
     App.setElements();
   },
   setElements: () => {
@@ -159,7 +163,7 @@ const App = {
     init: () => {
       const intro = document.getElementById('intro')
       if (intro) {
-        if (false && App.intro.localstorage.load('intro')) {
+        if (App.intro.localstorage.load('intro')) {
           intro.style.display = 'none'
         } else {
           intro.classList.add('show')
@@ -345,18 +349,12 @@ const App = {
               menuElem.classList.remove('hover')
             })
             e.currentTarget.classList.add('hover')
-            if(e.currentTarget.querySelector('ul')) {
-              App.menu.classList.add('hover')
-            } else {
-              App.menu.classList.remove('hover')
-            }
           })
           element.addEventListener('mouseleave', e => {
             const target = e.currentTarget
             window.clearTimeout(App.hiddenNav.tm2)
             App.hiddenNav.tm2 = setTimeout(function() {
               target.classList.remove('hover')
-              App.menu.classList.remove('hover')
             }, 500);
 
           })
@@ -366,7 +364,7 @@ const App = {
         const releases = document.querySelectorAll('[data-href]')
         releases.forEach(element => {
           element.addEventListener('click', e => {
-            if(App.isMobile) e.preventDefault()
+            e.preventDefault()
           })
           element.addEventListener('tapEvent', e => {
             e.preventDefault()
@@ -587,7 +585,7 @@ const Shop = {
   ShopifyBuyInit: () => {
     Shop.client = ShopifyBuy.buildClient({
       domain: 'bigwax.myshopify.com',
-      storefrontAccessToken: '31682f9bb9f4efdfdcfd96fb08af4c27',
+      apiKey: '31682f9bb9f4efdfdcfd96fb08af4c27',
       appId: '6',
     });
     const items = document.querySelectorAll('[data-shop]')
@@ -748,7 +746,6 @@ const Players = {
         element: videoElement,
         container: videoElement.parentNode
       }
-      if (App.isMobile) videoElement.removeAttribute('playsinline')
       Players.elements.push(player)
     }
     Players.prepareStream(Players.elements)
