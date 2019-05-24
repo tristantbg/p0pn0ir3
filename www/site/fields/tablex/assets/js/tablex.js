@@ -64,6 +64,13 @@
             this.table.splice(rowIndex + direction, 0, changing);
           }
         },
+        prependColumn: function() {
+          _.forEach(this.table, function(value) {
+            value.unshift("");
+          });
+
+          this.header.unshift("");
+        },
         addColumn: function() {
           _.forEach(this.table, function(value) {
             value.push("");

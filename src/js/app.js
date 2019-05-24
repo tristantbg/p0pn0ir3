@@ -163,7 +163,7 @@ const App = {
     init: () => {
       const intro = document.getElementById('intro')
       if (intro) {
-        if (App.intro.localstorage.load('intro')) {
+        if (false && App.intro.localstorage.load('intro')) {
           intro.style.display = 'none'
         } else {
           intro.classList.add('show')

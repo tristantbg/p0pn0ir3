@@ -7,7 +7,9 @@
 
 	<!-- Column Controls -->
 	<div class="tablex-ctrl">
-		<div class="row-ctrl filling-block"></div>
+		<div class="row-ctrl add-column">
+			<i class="fa fa-plus" v-bind:class="{ disabled: columnCount >= options.maxColumns }" v-on:click="prependColumn()"></i>
+		</div>
 		<div class="row-cell column-ctrl" v-for="n in columnCount">
 			<i class="fa fa-chevron-left"  v-bind:class="{ disabled: n == 1 }" v-on:click="moveColumn(n-1, 'left')"></i>
 			<i class="fa fa-times-circle"  v-bind:class="{ disabled: columnCount <= options.minColumns }" v-on:click="deleteColumn(n)"></i>
