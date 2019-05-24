@@ -75,7 +75,7 @@
   			<?php $productLink = page($release->productLink()) ?>
   			<div class="release">
           <?php if ($productLink): ?>
-          <a data-href="<?= $productLink->url() ?>" >
+          <a href="<?= $site->index()->filterBy('intendedTemplate', 'shop')->first()->url().'?product='.$productLink->id() ?>" data-href="<?= $productLink->url() ?>">
           <?php endif ?>
   				<?php snippet('responsive-image', ['field' => $release->featured()]) ?>
           <?php if ($productLink): ?>

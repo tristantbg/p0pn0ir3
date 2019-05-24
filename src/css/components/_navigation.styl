@@ -7,7 +7,7 @@ $burgerTransition = 300ms
   transform rotate(0deg)
   transition all $burgerTransition
   cursor pointer
-  margin 0.6em $padding
+  margin 0.7em $padding
   +above($sm + 1)
     display none
   span
@@ -40,15 +40,20 @@ $burgerTransition = 300ms
   background $secondary
   color $primary
   z-index 10
-  transition width 500ms $kinetic
+  transition width 500ms $kinetic, height 200ms ease
   +above($sm + 1)
     height 2em
     #mobile-toggle-header
       display none
   &.visible
     visibility visible
+  &.hover
+    height 4rem
   +below($sm)
     display block
+    max-height 100vh
+    overflow-y scroll
+    overflow-scrolling touch
     &.opened
       height 100vh
       #burger
@@ -81,21 +86,21 @@ $burgerTransition = 300ms
       [event-target="about-panel"]
         display block
       & > *:not([event-target="menu"])
-        padding 0.6em $padding
+        padding 0.7em $padding
 
 #primary-nav
   & > * a, & > * span
     display block
     padding 0.6em 0
     +below($sm)
-      padding 0.3em 0
+      padding 0.7em 0
 
 #secondary-nav
   & > *
     position relative
     padding 0.6em 0
     +below($sm)
-      padding 0.3em 0
+      padding 0.7em 0
 
 #primary-nav, #secondary-nav
   text-transform uppercase
@@ -122,17 +127,17 @@ $burgerTransition = 300ms
       overflow hidden
       transition height 200ms ease
       transition-delay 0ms
-      &::after
-        content ''
-        position fixed
-        z-index -1
-        background $secondary
-        height 4rem
-        transition height 200ms ease
-        transition-delay 0ms
-        width 100%
-        left 0
-        top 0
+      // &::after
+      //   content ''
+      //   position fixed
+      //   z-index -1
+      //   background $secondary
+      //   height 4rem
+      //   transition height 200ms ease
+      //   transition-delay 0ms
+      //   width 100%
+      //   left 0
+      //   top 0
       & > li
         position relative
         z-index 1
@@ -195,8 +200,9 @@ $burgerTransition = 300ms
 #languages
   text-transform uppercase
   +below($sm)
-    padding 0.3em 0 0.6em
+    padding 0.3em 0 0.7em
     margin-top 0.5em
+    margin-bottom 0.5em
   a:not(:last-child)
     &::after
       content ' / '
